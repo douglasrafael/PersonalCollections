@@ -35,20 +35,19 @@ public class Item {
      * @param nota
      * @param estado
      * @param emprestado
+     * @param tipo
      */
-    public Item(String titulo, String observacao, String dataDeCompra, double precoDeCompra,
-            int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo) {
-        super();
-        setId(++auto_increment);
-        setTitulo(titulo);
-        setObservacao(observacao);
-        setDataDeCompra(dataDeCompra);
-        setPrecoDeCompra(precoDeCompra);
-        setTotalEmprestado(totalEmprestado);
-        setNota(nota);
-        setEstado(estado);
-        setEmprestado(emprestado);
-        setTipo(tipo);
+    public Item(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo) {
+        this.id = ++auto_increment;
+        this.titulo = titulo;
+        this.observacao = observacao;
+        this.dataDeCompra = dataDeCompra;
+        this.precoDeCompra = precoDeCompra;
+        this.nota = nota;
+        this.totalEmprestado = totalEmprestado;
+        this.estado = estado;
+        this.emprestado = emprestado;
+        this.tipo = tipo;
     }
 
     /**
@@ -63,7 +62,7 @@ public class Item {
     /**
      * Seta o título do item.
      *
-     * @param título
+     * @param titulo
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;

@@ -21,10 +21,9 @@ public class Pessoa {
      * @param sexo
      */
     public Pessoa(String nome, char sexo) {
-        super();
-        setId(++auto_increment);
-        setNome(nome);
-        setSexo(sexo);
+        this.id = ++auto_increment;
+        this.nome = nome;
+        this.sexo = sexo;
     }
 
     /**

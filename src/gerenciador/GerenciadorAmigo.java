@@ -11,7 +11,7 @@ public class GerenciadorAmigo implements Gerenciador<Amigo> {
     private List<Amigo> listaDeAmigos;
 
     public GerenciadorAmigo() {
-        listaDeAmigos = new LinkedList<Amigo>();
+        listaDeAmigos = new LinkedList<>();
     }
 
     @Override
@@ -48,15 +48,14 @@ public class GerenciadorAmigo implements Gerenciador<Amigo> {
      * @return Lista com Amigos encontradas
      */
     public List<Amigo> pesquisar(String nome) {
-        List<Amigo> amigosEncontrados = new LinkedList<Amigo>();
+        List<Amigo> amigosEncontrados = new LinkedList<>();
         if (!listaDeAmigos.isEmpty()) {
             for (Amigo a : listaDeAmigos) {
                 /**
-                 * Verifica se o nome do Amigo estar contido no amigo da vez Se
-                 * estiver contido o amigo é adicionada na lista de amigos
-                 * encontrados
+                 * Verifica se o nome do Amigo estar contido no amigo da vez 
+                 * Se estiver contido o amigo é adicionada na lista de amigos  encontrados
                  */
-                if (a.getNome().toLowerCase().indexOf(nome.toLowerCase()) != -1) {
+                if (a.getNome().toLowerCase().contains(nome.toLowerCase())) {
                     amigosEncontrados.add(a);
                 }
             }

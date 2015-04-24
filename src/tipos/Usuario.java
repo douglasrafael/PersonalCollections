@@ -15,8 +15,8 @@ public class Usuario extends Pessoa {
      */
     public Usuario(String nome, char sexo, String login, String password) {
         super(nome, sexo);
-        setLogin(login);
-        setPassword(password);
+        this.login = login;
+        this.password = password;
     }
 
     /**

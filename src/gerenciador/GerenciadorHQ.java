@@ -12,7 +12,7 @@ public class GerenciadorHQ implements Gerenciador<HQ> {
     private List<HQ> listaDeHQs;
 
     public GerenciadorHQ() {
-        listaDeHQs = new ArrayList<HQ>();
+        listaDeHQs = new ArrayList<>();
     }
 
     @Override
@@ -44,12 +44,12 @@ public class GerenciadorHQ implements Gerenciador<HQ> {
      * Procura HQs pelo título. Caso não seja encontrado nenhum item, a lista é
      * retornada vazia. Método útil quando se quer listar todos os HQs que tem
      * título igual ou parecido, mais que são diferentes
-     *
-     * @param titulo O título do HQ a ser procurado
+     * 
+     * @param titulo_item O título do HQ a ser procurado
      * @return Lista com HQs encontrados
      */
     public List<HQ> pesquisar(String titulo_item) {
-        List<HQ> itemsEncontardos = new LinkedList<HQ>();
+        List<HQ> itemsEncontardos = new LinkedList<>();
         if (!listaDeHQs.isEmpty()) {
             for (HQ hq : listaDeHQs) {
                 /**
@@ -57,7 +57,7 @@ public class GerenciadorHQ implements Gerenciador<HQ> {
                  * vez Se estiver contido o HQ é adicionado na lista de items
                  * encontrados
                  */
-                if (hq.getTitulo().toLowerCase().indexOf(titulo_item.toLowerCase()) != -1) {
+                if (hq.getTitulo().toLowerCase().contains(titulo_item.toLowerCase())) {
                     itemsEncontardos.add(hq);
                 }
             }

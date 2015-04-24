@@ -11,7 +11,7 @@ public class GerenciadorTabuleiro implements Gerenciador<Tabuleiro> {
     private List<Tabuleiro> listaDeJogosTabuleiro;
 
     public GerenciadorTabuleiro() {
-        listaDeJogosTabuleiro = new LinkedList<Tabuleiro>();
+        listaDeJogosTabuleiro = new LinkedList<>();
     }
 
     @Override
@@ -44,11 +44,11 @@ public class GerenciadorTabuleiro implements Gerenciador<Tabuleiro> {
      * a lista é retornada vazia. Método útil quando se quer listar todos os
      * Tabuleiros que tem título igual ou parecido, mais que são diferentes
      *
-     * @param titulo O título do Tabuleiro a ser procurado
+     * @param titulo_item O título do Tabuleiro a ser procurado
      * @return Lista com Tabuleiros encontrados
      */
     public List<Tabuleiro> pesquisar(String titulo_item) {
-        List<Tabuleiro> itemsEncontardos = new LinkedList<Tabuleiro>();
+        List<Tabuleiro> itemsEncontardos = new LinkedList<>();
         if (!listaDeJogosTabuleiro.isEmpty()) {
             for (Tabuleiro t : listaDeJogosTabuleiro) {
                 /**
@@ -56,7 +56,7 @@ public class GerenciadorTabuleiro implements Gerenciador<Tabuleiro> {
                  * objeto da vez Se estiver contido o objeto é adicionado na
                  * lista de items encontrados
                  */
-                if (t.getTitulo().toLowerCase().indexOf(titulo_item.toLowerCase()) != -1) {
+                if (t.getTitulo().toLowerCase().contains(titulo_item.toLowerCase())) {
                     itemsEncontardos.add(t);
                 }
             }

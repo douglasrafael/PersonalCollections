@@ -37,16 +37,12 @@ public class Game extends Item {
      * @param possuiDLC
      * @param dlcs
      */
-    public Game(String titulo, String observacao, String dataDeCompra,
-            double precoDeCompra, int totalEmprestado, double nota, Estado estado,
-            boolean emprestado, TipoItem tipo, Console console, boolean zerado,
-            boolean possuiDLC, List<DLC> dlcs) {
-        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado,
-                nota, estado, emprestado, tipo);
-        setConsole(console);
-        setZerado(zerado);
-        setPossuiDLC(possuiDLC);
-        setDLCs(dlcs);
+    public Game(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, Console console, boolean zerado, boolean possuiDLC, List<DLC> dlcs) {
+        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
+        this.console = console;
+        this.zerado = zerado;
+        this.possuiDLC = possuiDLC;
+        this.DLCs = DLCs;
     }
 
     /**
@@ -64,16 +60,13 @@ public class Game extends Item {
      * @param console
      * @param zerado
      */
-    public Game(String titulo, String observacao, String dataDeCompra,
-            double precoDeCompra, int totalEmprestado, double nota, Estado estado,
-            boolean emprestado, TipoItem tipo, Console console, boolean zerado) {
-        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado,
-                nota, estado, emprestado, tipo);
-        setConsole(console);
-        setZerado(zerado);
-        setPossuiDLC(false);
-        List<DLC> semDLCs = new ArrayList<DLC>();
-        setDLCs(semDLCs);
+    public Game(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, Console console, boolean zerado) {
+        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
+        this.console = console;
+        this.zerado = zerado;
+        this.possuiDLC = false;
+        List<DLC> semDLCs = new ArrayList<>();
+        this.DLCs = semDLCs;
     }
 
     /**

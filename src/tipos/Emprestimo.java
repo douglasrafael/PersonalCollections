@@ -6,11 +6,18 @@ public class Emprestimo {
     private String dataRetono;
     private Item item;
 
+    
+    /**
+     * Método Construtor. 
+     * 
+     * @param dataEmprestimo
+     * @param dataRetono
+     * @param item 
+     */
     public Emprestimo(String dataEmprestimo, String dataRetono, Item item) {
-        super();
-        setDataEmprestimo(dataEmprestimo);
-        setDataRetono(dataRetono);
-        setItem(item);
+        this.dataEmprestimo = dataEmprestimo;
+        this.dataRetono = dataRetono;
+        this.item = item;
     }
 
     public String getDataEmprestimo() {

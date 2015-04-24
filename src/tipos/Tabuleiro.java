@@ -24,11 +24,8 @@ public class Tabuleiro extends Item {
      * @param emprestado
      * @param tipo
      */
-    public Tabuleiro(String titulo, String observacao, String dataDeCompra,
-            double precoDeCompra, int totalEmprestado, double nota, Estado estado,
-            boolean emprestado, TipoItem tipo) {
-        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota,
-                estado, emprestado, tipo);
+    public Tabuleiro(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo) {
+        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
     }
 
     @Override

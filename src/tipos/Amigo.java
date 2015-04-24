@@ -1,6 +1,7 @@
 package tipos;
 
 import enums.Parentesco;
+import java.util.Objects;
 
 /**
  * Representa um amigo do usuário.
@@ -11,7 +12,7 @@ import enums.Parentesco;
 public class Amigo extends Pessoa {
 
     private String endereco;
-    private String Telefone;
+    private String telefone;
     private String email;
     private Parentesco parentesco;
 
@@ -25,15 +26,14 @@ public class Amigo extends Pessoa {
      * @param email
      * @param parentesco
      */
-    public Amigo(String nome, char sexo, String endereco, String telefone,
-            String email, Parentesco parentesco) {
+    public Amigo(String nome, char sexo, String endereco, String telefone, String email, Parentesco parentesco) {
         super(nome, sexo);
-        setEndereco(endereco);
-        setTelefone(telefone);
-        setEmail(email);
-        setParentesco(parentesco);
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
+        this.parentesco = parentesco;
     }
-
+    
     /**
      * Recupera o endereço do amigo do usuário.
      *
@@ -58,7 +58,7 @@ public class Amigo extends Pessoa {
      * @return o telefone
      */
     public String getTelefone() {
-        return Telefone;
+        return telefone;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Amigo extends Pessoa {
      * @param telefone
      */
     public void setTelefone(String telefone) {
-        Telefone = telefone;
+        this.telefone = telefone;
     }
 
     /**

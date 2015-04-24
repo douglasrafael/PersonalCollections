@@ -20,9 +20,8 @@ public class DLC {
      * @param localizacao
      */
     public DLC(String titulo, LocalizacaoDLC localizacao) {
-        super();
-        setTitulo(titulo);
-        setLocalizacao(localizacao);
+        this.titulo = titulo;
+        this.localizacao = localizacao;
     }
 
     /**

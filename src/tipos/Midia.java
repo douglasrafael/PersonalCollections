@@ -31,14 +31,11 @@ public class Midia extends Item {
      * @param conteudo
      * @param assistido
      */
-    public Midia(String titulo, String observacao, String dataDeCompra,
-            double precoDeCompra, int totalEmprestado, double nota, Estado estado,
-            boolean emprestado, TipoItem tipo, String marca, String conteudo, boolean assistido) {
-        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado,
-                nota, estado, emprestado, tipo);
-        setMarca(marca);
-        setConteudo(conteudo);
-        setAssistido(assistido);
+    public Midia(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, String marca, String conteudo, boolean assistido) {
+        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
+        this.marca = marca;
+        this.conteudo = conteudo;
+        this.assistido = assistido;
     }
 
     /**

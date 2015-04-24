@@ -11,7 +11,7 @@ public class GerenciadorGame implements Gerenciador<Game> {
     private List<Game> listaDeGames;
 
     public GerenciadorGame() {
-        listaDeGames = new LinkedList<Game>();
+        listaDeGames = new LinkedList<>();
     }
 
     @Override
@@ -44,13 +44,11 @@ public class GerenciadorGame implements Gerenciador<Game> {
      * retornada vazia. Método útil quando se quer listar todas os games que tem
      * título igual ou parecido, mais que são diferentes
      *
-     * @param titulo_item O título do Game a ser procurado
+     * @param titulo_item
      * @return Lista com Games encontrados
      */
-    /**
-     */
     public List<Game> pesquisar(String titulo_item) {
-        List<Game> itemsEncontardos = new LinkedList<Game>();
+        List<Game> itemsEncontardos = new LinkedList<>();
         if (!listaDeGames.isEmpty()) {
             for (Game g : listaDeGames) {
                 /**
@@ -58,7 +56,7 @@ public class GerenciadorGame implements Gerenciador<Game> {
                  * da vez Se estiver contido o Game é adicionado na lista de
                  * items encontrados
                  */
-                if (g.getTitulo().toLowerCase().indexOf(titulo_item.toLowerCase()) != -1) {
+                if (g.getTitulo().toLowerCase().contains(titulo_item.toLowerCase())) {
                     itemsEncontardos.add(g);
                 }
             }

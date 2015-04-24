@@ -33,14 +33,12 @@ public class HQ extends Item {
      * @param saga
      * @param lido
      */
-    public HQ(String titulo, String observacao, String dataDeCompra, double precoDeCompra,
-            int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo,
-            int numero, String editora, String saga, boolean lido) {
+    public HQ(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, boolean lido) {
         super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
-        setNumero(numero);
-        setEditora(editora);
-        setSaga(saga);
-        setLido(lido);
+        this.numero = numero;
+        this.editora = editora;
+        this.saga = saga;
+        this.lido = lido;
     }
 
     /**

@@ -11,7 +11,7 @@ public class GerenciadorMidia implements Gerenciador<Midia> {
     private List<Midia> listaDeMidias;
 
     public GerenciadorMidia() {
-        listaDeMidias = new LinkedList<Midia>();
+        listaDeMidias = new LinkedList<>();
     }
 
     @Override
@@ -47,10 +47,8 @@ public class GerenciadorMidia implements Gerenciador<Midia> {
      * @param titulo_item O título da Mídia a ser procurada
      * @return Lista com Mídias encontradas
      */
-    /**
-     */
     public List<Midia> pesquisar(String titulo_item) {
-        List<Midia> itemsEncontardos = new LinkedList<Midia>();
+        List<Midia> itemsEncontardos = new LinkedList<>();
         if (!listaDeMidias.isEmpty()) {
             for (Midia m : listaDeMidias) {
                 /**
@@ -58,7 +56,7 @@ public class GerenciadorMidia implements Gerenciador<Midia> {
                  * Mídia da vez Se estiver contido a Mídia é adicionada na lista
                  * de items encontrados
                  */
-                if (m.getTitulo().toLowerCase().indexOf(titulo_item.toLowerCase()) != -1) {
+                if (m.getTitulo().toLowerCase().contains(titulo_item.toLowerCase())) {
                     itemsEncontardos.add(m);
                 }
             }
