@@ -1,4 +1,4 @@
-package gerenciador;
+package dao;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import excecoes.PersonalCollectionsException;
 import tipos.Amigo;
 
-public class GerenciadorAmigo implements Gerenciador<Amigo> {
+public class AmigoDAO implements DAO<Amigo> {
 
     private List<Amigo> listaDeAmigos;
 
-    public GerenciadorAmigo() {
+    public AmigoDAO() {
         listaDeAmigos = new LinkedList<>();
     }
 

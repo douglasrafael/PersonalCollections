@@ -1,6 +1,6 @@
 package testes;
 
-import gerenciador.GerenciadorUsuario;
+import dao.UsuarioDAO;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,12 +10,12 @@ import tipos.Usuario;
 
 public class TestUsuario {
 
-    private GerenciadorUsuario gerencidorUsuario;
+    private UsuarioDAO gerencidorUsuario;
     private Usuario user;
 
     @Before
     public void init() {
-        gerencidorUsuario = new GerenciadorUsuario();
+        gerencidorUsuario = new UsuarioDAO();
         user = new Usuario("Douglas Rafael", 'M', "Admin", "123456");
     }
 

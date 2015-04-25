@@ -31,18 +31,17 @@ public class Game extends Item {
      * @param nota
      * @param estado
      * @param emprestado
-     * @param tipo
      * @param console
      * @param zerado
      * @param possuiDLC
      * @param dlcs
      */
-    public Game(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, Console console, boolean zerado, boolean possuiDLC, List<DLC> dlcs) {
-        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
+    public Game(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, Console console, boolean zerado, boolean possuiDLC, List<DLC> dlcs) {
+        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOVIDEOGAME);
         this.console = console;
         this.zerado = zerado;
         this.possuiDLC = possuiDLC;
-        this.DLCs = DLCs;
+        this.DLCs = dlcs;
     }
 
     /**
@@ -56,12 +55,11 @@ public class Game extends Item {
      * @param nota
      * @param estado
      * @param emprestado
-     * @param tipo
      * @param console
      * @param zerado
      */
-    public Game(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, Console console, boolean zerado) {
-        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
+    public Game(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, Console console, boolean zerado) {
+        super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOVIDEOGAME);
         this.console = console;
         this.zerado = zerado;
         this.possuiDLC = false;

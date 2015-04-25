@@ -1,4 +1,4 @@
-package gerenciador;
+package dao;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -7,11 +7,11 @@ import java.util.List;
 import tipos.HQ;
 import excecoes.PersonalCollectionsException;
 
-public class GerenciadorHQ implements Gerenciador<HQ> {
+public class HqDAO implements DAO<HQ> {
 
     private List<HQ> listaDeHQs;
 
-    public GerenciadorHQ() {
+    public HqDAO() {
         listaDeHQs = new ArrayList<>();
     }
 

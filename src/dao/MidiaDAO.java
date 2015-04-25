@@ -1,4 +1,4 @@
-package gerenciador;
+package dao;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import tipos.Midia;
 import excecoes.PersonalCollectionsException;
 
-public class GerenciadorMidia implements Gerenciador<Midia> {
+public class MidiaDAO implements DAO<Midia> {
 
     private List<Midia> listaDeMidias;
 
-    public GerenciadorMidia() {
+    public MidiaDAO() {
         listaDeMidias = new LinkedList<>();
     }
 

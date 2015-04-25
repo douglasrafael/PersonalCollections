@@ -1,4 +1,4 @@
-package gerenciador;
+package dao;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import tipos.Tabuleiro;
 import excecoes.PersonalCollectionsException;
 
-public class GerenciadorTabuleiro implements Gerenciador<Tabuleiro> {
+public class TabuleiroDAO implements DAO<Tabuleiro> {
 
     private List<Tabuleiro> listaDeJogosTabuleiro;
 
-    public GerenciadorTabuleiro() {
+    public TabuleiroDAO() {
         listaDeJogosTabuleiro = new LinkedList<>();
     }
 

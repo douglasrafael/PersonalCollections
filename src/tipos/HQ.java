@@ -14,6 +14,7 @@ public class HQ extends Item {
     private int numero;
     private String editora;
     private String saga;
+    private String universo;
     private boolean lido;
 
     /**
@@ -31,13 +32,15 @@ public class HQ extends Item {
      * @param numero
      * @param editora
      * @param saga
+     * @param universo
      * @param lido
      */
-    public HQ(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, boolean lido) {
+    public HQ(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, String universo, boolean lido) {
         super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
         this.numero = numero;
         this.editora = editora;
         this.saga = saga;
+        this.universo = universo;
         this.lido = lido;
     }
 
@@ -93,6 +96,24 @@ public class HQ extends Item {
      */
     public void setSaga(String saga) {
         this.saga = saga;
+    }
+
+    /**
+     * Recupera o universo da HQ.
+     *
+     * @return A saga
+     */
+    public String getUniverso() {
+        return universo;
+    }
+
+    /**
+     * Seta o universo da HQ.
+     *
+     * @param universo
+     */
+    public void setUniverso(String universo) {
+        this.universo = universo;
     }
 
     /**

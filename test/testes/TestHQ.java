@@ -3,7 +3,7 @@ package testes;
 import enums.Estado;
 import enums.TipoItem;
 import excecoes.PersonalCollectionsException;
-import gerenciador.GerenciadorHQ;
+import dao.HqDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +18,17 @@ public class TestHQ {
 
     private List<HQ> listaDeHQs;
     private HQ hq1, hq2, hq3;
-    private GerenciadorHQ gerenciadorHQ;
+    private HqDAO gerenciadorHQ;
     private final TipoItem tipo = TipoItem.HQ;
 
     @Before
     public void criaHQs() {
         listaDeHQs = new ArrayList<>();
-        gerenciadorHQ = new GerenciadorHQ();
+        gerenciadorHQ = new HqDAO();
 
-        hq1 = new HQ("THE WALKING DEAD", "", "15/04/2015", 5.90, 0, 10, Estado.NOVO, false, tipo, 36, "HQM Editora", "", false);
-        hq2 = new HQ("AVENTURAS DO SUPERMAN, AS", "", "09/01/2013", 10.0, 2, 9.5, Estado.RASURADO, true, tipo, 9, "Abril", "", true);
-        hq3 = new HQ("CAVALEIRO DA LUA : RECOMEÇO", "", "11/05/2015", 18.90, 0, 8, Estado.NOVO, true, tipo, 1, "Marvel", "", false);
+        hq1 = new HQ("THE WALKING DEAD", "", "15/04/2015", 5.90, 0, 10, Estado.NOVO, false, tipo, 36, "HQM Editora", "", "", false);
+        hq2 = new HQ("AVENTURAS DO SUPERMAN, AS", "", "09/01/2013", 10.0, 2, 9.5, Estado.RASURADO, true, tipo, 9, "Abril", "", "DC", true);
+        hq3 = new HQ("CAVALEIRO DA LUA : RECOMEÇO", "", "11/05/2015", 18.90, 0, 8, Estado.NOVO, true, tipo, 1, "Marvel", "", "Marvel", false);
     }
 
     @Test
@@ -44,7 +44,6 @@ public class TestHQ {
         } catch (PersonalCollectionsException e) {
             System.err.println(e.getMessage());
         }
-
     }
 
     @Test
@@ -69,7 +68,7 @@ public class TestHQ {
              * comparação entre os objetos Retorna apenas o objeto a ser buscado
              * caso seja encontrado
              */
-            HQ hq4 = new HQ("NOVA Lua Variante", "", "", 10.0, 0, 10, Estado.NOVO, false, tipo, 16, "NovA", "Ilimitada", false);
+            HQ hq4 = new HQ("NOVA Lua Variante", "", "", 10.0, 0, 10, Estado.NOVO, false, tipo, 16, "NovA", "Ilimitada", "Marvel", false);
             Assert.assertEquals(null, gerenciadorHQ.pesquisar(hq4)); // deverá retonar null pois o hq4 não existe na lista
             Assert.assertEquals(hq1, gerenciadorHQ.pesquisar(hq1)); // deverá retornar o objeto hq1, pois ele estar contido na lista
 
@@ -97,11 +96,11 @@ public class TestHQ {
          */
         try {
             saves();
-            HQ hq_ori = new HQ("ME ATUALIZE!", "", "", 10.0, 0, 10, Estado.NOVO, false, tipo, 16, "NovA", "Ilimitada", false);
+            HQ hq_ori = new HQ("ME ATUALIZE!", "", "", 10.0, 0, 10, Estado.NOVO, false, tipo, 16, "NovA", "Ilimitada", "", false);
             hq_ori.setId(120);
             gerenciadorHQ.save(hq_ori);
 
-            HQ hq_update = new HQ("ITEM ATUALIZA!!!", "qualquer", "01/05/2004", 10.0, 20, 10, Estado.RASURADO, false, tipo, 16, "NovA", "Ilimitada", true);
+            HQ hq_update = new HQ("ITEM ATUALIZA!!!", "qualquer", "01/05/2004", 10.0, 20, 10, Estado.RASURADO, false, tipo, 16, "NovA", "Ilimitada", "NoVA", true);
             hq_update.setId(120);
 
             // Atualiza a hq_ori com a hq_update, pois tem o mesmo id
@@ -109,7 +108,7 @@ public class TestHQ {
             Assert.assertTrue(hq_update.getTitulo() == gerenciadorHQ.pesquisar(hq_update).getTitulo());
 
             // Nao deve atualizar pois o bjeto a ser atualizado não existe na lista
-            HQ nao_salvo = new HQ("NAO EXISTO!", "", "", 0.0, 0, 0, Estado.NOVO, false, tipo, 0, "", "", false);
+            HQ nao_salvo = new HQ("NAO EXISTO!", "", "", 0.0, 0, 0, Estado.NOVO, false, tipo, 0, "", "", "", false);
             gerenciadorHQ.atualizar(nao_salvo);
             Assert.assertFalse(nao_salvo.equals(gerenciadorHQ.pesquisar(nao_salvo)));
         } catch (PersonalCollectionsException e) {
@@ -165,7 +164,7 @@ public class TestHQ {
         Assert.assertTrue(hq2.equals(hq2)); // O objeto hq2 é igual a hq2
 
         // O objeto criado é diferente de hq1, pois apesar de nomes iguais eles tem ids diferentes
-        Assert.assertTrue(!(new HQ("THE WALKING DEAD", "", "", 0.0, 0, 0, Estado.NOVO, false, tipo, 0, "", "", false).equals(hq1)));
+        Assert.assertTrue(!(new HQ("THE WALKING DEAD", "", "", 0.0, 0, 0, Estado.NOVO, false, tipo, 0, "", "", "", false).equals(hq1)));
     }
 
     private void saves() {

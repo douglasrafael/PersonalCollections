@@ -1,4 +1,4 @@
-package gerenciador;
+package dao;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import tipos.Game;
 import excecoes.PersonalCollectionsException;
 
-public class GerenciadorGame implements Gerenciador<Game> {
+public class GameDAO implements DAO<Game> {
 
     private List<Game> listaDeGames;
 
-    public GerenciadorGame() {
+    public GameDAO() {
         listaDeGames = new LinkedList<>();
     }
 

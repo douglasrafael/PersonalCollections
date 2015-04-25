@@ -1,8 +1,8 @@
-package gerenciador;
+package dao;
 
 import tipos.Usuario;
 
-public class GerenciadorUsuario {
+public class UsuarioDAO {
 
     private final String LOGIN = "Admin";
     private final String PASSWORD = "123456";

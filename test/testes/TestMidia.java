@@ -3,7 +3,7 @@ package testes;
 import enums.Estado;
 import enums.TipoItem;
 import excecoes.PersonalCollectionsException;
-import gerenciador.GerenciadorMidia;
+import dao.MidiaDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +18,16 @@ public class TestMidia {
 
     private List<Midia> listaDeMidias;
     private Midia m1, m2, m3;
-    private GerenciadorMidia gerenciadorMidia;
-    private final TipoItem tipo = TipoItem.MIDIA;
+    private MidiaDAO gerenciadorMidia;
 
     @Before
     public void criaMidia() {
         listaDeMidias = new ArrayList<>();
-        gerenciadorMidia = new GerenciadorMidia();
+        gerenciadorMidia = new MidiaDAO();
 
-        m1 = new Midia("Game Of Thrones: A Quarta Temporada Completa", "", "10/01/2015", 149.90, 0, 10, Estado.NOVO, false, tipo, "HBO", "quarta temporada baseada nos livros best-sellers de George R.R. Martin", true);
-        m2 = new Midia("Blu-Ray - Busca Implacável 3", "Versão Estendida", "10/04/2015", 69.00, 1, 7.5, Estado.NOVO, true, tipo, "", "", true);
-        m3 = new Midia("Blu-Ray - Maze Runner: Correr ou Morrer", "", "07/01/2015", 79.90, 2, 10, Estado.DESGATADO, false, tipo, "", "Em um mundo pós-apocalíptico, o jovem Thomas (Dylan O'Brien) é abandonado em uma "
+        m1 = new Midia("Game Of Thrones: A Quarta Temporada Completa", "", "10/01/2015", 149.90, 0, 10, Estado.NOVO, false, "HBO", "quarta temporada baseada nos livros best-sellers de George R.R. Martin", true);
+        m2 = new Midia("Blu-Ray - Busca Implacável 3", "Versão Estendida", "10/04/2015", 69.00, 1, 7.5, Estado.NOVO, true, "", "", true);
+        m3 = new Midia("Blu-Ray - Maze Runner: Correr ou Morrer", "", "07/01/2015", 79.90, 2, 10, Estado.DESGATADO, false, "", "Em um mundo pós-apocalíptico, o jovem Thomas (Dylan O'Brien) é abandonado em uma "
                 + "comunidade isolada formada por garotos após toda sua memória ter sido apagada. Logo ele se vê preso em um labirinto, onde será preciso unir forças com outros jovens para que consiga escapar.", true);
     }
 
@@ -69,7 +68,7 @@ public class TestMidia {
              * comparação entre os objetos Retorna apenas o objeto a ser buscado
              * caso seja encontrado
              */
-            Midia m4 = new Midia("Busca Implacável 4", "", "", 89.90, 0, 8, Estado.NOVO, false, tipo, "", "", false);
+            Midia m4 = new Midia("Busca Implacável 4", "", "", 89.90, 0, 8, Estado.NOVO, false, "", "", false);
             Assert.assertEquals(null, gerenciadorMidia.pesquisar(m4)); // deverá retonar null pois o m4 não existe na lista
             Assert.assertEquals(m1, gerenciadorMidia.pesquisar(m1)); // deverá retornar o objeto m1, pois ele estar contido na lista
 
@@ -97,11 +96,11 @@ public class TestMidia {
          */
         try {
             saves();
-            Midia m_ori = new Midia("ME ATUALIZE!!!", "", "", 0, 0, 0, Estado.NOVO, false, tipo, "", "", false);
+            Midia m_ori = new Midia("ME ATUALIZE!!!", "", "", 0, 0, 0, Estado.NOVO, false, "", "", false);
             m_ori.setId(290);
             gerenciadorMidia.save(m_ori);
 
-            Midia m_update = new Midia("Mídia atualizada...", "19/04/2014", "alguma coisa", 15.90, 15, 10, Estado.NOVO, true, tipo, "", "", true);
+            Midia m_update = new Midia("Mídia atualizada...", "19/04/2014", "alguma coisa", 15.90, 15, 10, Estado.NOVO, true, "", "", true);
             m_update.setId(290);
 
             // Atualiza a m_ori com a m_update, pois tem o mesmo id
@@ -109,7 +108,7 @@ public class TestMidia {
             Assert.assertTrue(m_update.getTitulo() == gerenciadorMidia.pesquisar(m_update).getTitulo());
 
             // Nao deve atualizar pois o objeto a ser atualizado não existe na lista
-            Midia nao_salvo = new Midia("NAO Existo!!!", "", "", 0, 0, 0, Estado.NOVO, false, tipo, "", "", false);
+            Midia nao_salvo = new Midia("NAO Existo!!!", "", "", 0, 0, 0, Estado.NOVO, false, "", "", false);
             gerenciadorMidia.atualizar(nao_salvo);
             Assert.assertFalse(nao_salvo.equals(gerenciadorMidia.pesquisar(nao_salvo)));
         } catch (PersonalCollectionsException e) {
@@ -164,7 +163,7 @@ public class TestMidia {
         Assert.assertTrue(m2.equals(m2)); // O objeto hq2 é igual a hq2
 
         // O objeto criado é diferente de m1, pois apesar de nomes iguais eles tem ids diferentes
-        Assert.assertTrue(!(new Midia("Game Of Thrones: A Quarta Temporada Completa", "", "", 0, 0, 0, Estado.NOVO, false, tipo, "", "", false).equals(m1)));
+        Assert.assertTrue(!(new Midia("Game Of Thrones: A Quarta Temporada Completa", "", "", 0, 0, 0, Estado.NOVO, false, "", "", false).equals(m1)));
     }
 
     private void saves() {

@@ -2,7 +2,7 @@ package testes;
 
 import enums.Parentesco;
 import excecoes.PersonalCollectionsException;
-import gerenciador.GerenciadorAmigo;
+import dao.AmigoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,12 @@ public class TestAmigo {
 
     private List<Amigo> listaDeAmigos;
     private Amigo amigo1, amigo2, amigo3;
-    private GerenciadorAmigo gerenciadorAmigo;
+    private AmigoDAO gerenciadorAmigo;
 
     @Before
     public void criaAmigos() {
         listaDeAmigos = new ArrayList<>();
-        gerenciadorAmigo = new GerenciadorAmigo();
+        gerenciadorAmigo = new AmigoDAO();
 
         amigo1 = new Amigo("José Marcos da Silva", 'F', "Rua João Cariri", "3335-0056", "joaomarcos@mail.com", Parentesco.CONHECIDO);
         amigo2 = new Amigo("Maria Aparecida Alcides", 'F', "Rua Chargas", "3321-5968", "aparecida_maria@mail.com", Parentesco.PRIMA);
