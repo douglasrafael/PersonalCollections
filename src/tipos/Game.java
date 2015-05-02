@@ -43,6 +43,32 @@ public class Game extends Item {
         this.possuiDLC = possuiDLC;
         this.DLCs = dlcs;
     }
+    
+    /**
+     * Método construtor com id e que possue DLC's. 
+     * Não utiliza o auto_increment para o id.
+     * 
+     * @param id
+     * @param titulo
+     * @param observacao
+     * @param dataDeCompra
+     * @param precoDeCompra
+     * @param totalEmprestado
+     * @param nota
+     * @param estado
+     * @param emprestado
+     * @param console
+     * @param zerado
+     * @param possuiDLC
+     * @param dlcs 
+     */
+    public Game(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, Console console, boolean zerado, boolean possuiDLC, List<DLC> dlcs) {
+        super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOVIDEOGAME);
+        this.console = console;
+        this.zerado = zerado;
+        this.possuiDLC = possuiDLC;
+        this.DLCs = dlcs;
+    }
 
     /**
      * Construtor usado para Game que não possui DLC
@@ -60,6 +86,31 @@ public class Game extends Item {
      */
     public Game(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, Console console, boolean zerado) {
         super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOVIDEOGAME);
+        this.console = console;
+        this.zerado = zerado;
+        this.possuiDLC = false;
+        List<DLC> semDLCs = new ArrayList<>();
+        this.DLCs = semDLCs;
+    }
+    
+    /**
+     * Método construtor com id e que não possui DLC's. 
+     * Não utiliza o auto_increment para o id.
+     * 
+     * @param id
+     * @param titulo
+     * @param observacao
+     * @param dataDeCompra
+     * @param precoDeCompra
+     * @param totalEmprestado
+     * @param nota
+     * @param estado
+     * @param emprestado
+     * @param console
+     * @param zerado 
+     */
+    public Game(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, Console console, boolean zerado) {
+        super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOVIDEOGAME);
         this.console = console;
         this.zerado = zerado;
         this.possuiDLC = false;

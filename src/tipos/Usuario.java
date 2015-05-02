@@ -20,6 +20,22 @@ public class Usuario extends Pessoa {
     }
 
     /**
+     * Construtor com id.
+     * Não é utilizado o auto_increment para o id.
+     * 
+     * @param id
+     * @param nome
+     * @param sexo
+     * @param login
+     * @param password 
+     */
+    public Usuario(int id, String nome, char sexo, String login, String password) {
+        super(id, nome, sexo);
+        this.login = login;
+        this.password = password;
+    }
+
+    /**
      * Recupera o login do usuário.
      *
      * @return O login
@@ -61,7 +77,7 @@ public class Usuario extends Pessoa {
             return false;
         }
         Usuario outroUsuario = (Usuario) o;
-        return outroUsuario.getId() == getId();
+        return outroUsuario.getLogin() == getLogin() && outroUsuario.getPassword() == getPassword();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package tipos;
 
 import enums.Parentesco;
-import java.util.Objects;
 
 /**
  * Representa um amigo do usuário.
@@ -28,6 +27,25 @@ public class Amigo extends Pessoa {
      */
     public Amigo(String nome, char sexo, String endereco, String telefone, String email, Parentesco parentesco) {
         super(nome, sexo);
+        this.endereco = endereco;
+        this.telefone = telefone;
+        this.email = email;
+        this.parentesco = parentesco;
+    }
+    
+    /**
+     * Contrutor que recebe o id. Não é utilizado o auto_increment par ao id.
+     * 
+     * @param id
+     * @param nome
+     * @param sexo
+     * @param endereco
+     * @param telefone
+     * @param email
+     * @param parentesco 
+     */
+    public Amigo(int id, String nome, char sexo, String endereco, String telefone, String email, Parentesco parentesco) {
+        super(id, nome, sexo);
         this.endereco = endereco;
         this.telefone = telefone;
         this.email = email;

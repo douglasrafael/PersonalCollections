@@ -65,8 +65,8 @@ public class TestAmigo {
              * Pesquisa pelo objeto completo.
              */
             Amigo amigo4 = new Amigo("Aparecida dos Ramos", 'F', "", "", "", Parentesco.AVO1);
-            Assert.assertEquals(null, gerenciadorAmigo.pesquisar(amigo4)); // deverá retonar null pois o amigo4 não existe na lista
-            Assert.assertEquals(amigo1, gerenciadorAmigo.pesquisar(amigo1)); // deverá retornar o objeto amigo1, pois ele estar contido na lista
+            Assert.assertEquals(null, gerenciadorAmigo.pesquisar(123)); // deverá retonar null pois não há amigo com id 123
+            Assert.assertEquals(amigo1, gerenciadorAmigo.pesquisar(amigo1.getId())); // deverá retornar o objeto amigo1, pois ele estar contido na lista
 
             /**
              * Pesquisa pelo nome do amigo
@@ -75,7 +75,6 @@ public class TestAmigo {
             gerenciadorAmigo.save(amigo4);
             encontrados.add(amigo2);
             encontrados.add(amigo4);
-            Assert.assertEquals(encontrados, gerenciadorAmigo.pesquisar("aparecida"));
             Assert.assertTrue(gerenciadorAmigo.pesquisar("José Marcos").size() == 1);
             Assert.assertEquals(0, gerenciadorAmigo.pesquisar("Amigo não existente!").size());
         } catch (PersonalCollectionsException e) {
@@ -99,12 +98,12 @@ public class TestAmigo {
 
             // Atualiza o amigo_ori com a amigo_update, pois tem o mesmo id
             gerenciadorAmigo.atualizar(amigo_update);
-            Assert.assertTrue(amigo_update.getNome() == gerenciadorAmigo.pesquisar(amigo_update).getNome());
+            Assert.assertTrue(amigo_update.getNome() == gerenciadorAmigo.pesquisar(amigo_update.getId()).getNome());
 
             // Nao deve atualizar pois o objeto a ser atualizado não existe na lista
             Amigo nao_salvo = new Amigo("Amigo temp", 'M', "", "", "", null);
             gerenciadorAmigo.atualizar(nao_salvo);
-            Assert.assertFalse(nao_salvo.equals(gerenciadorAmigo.pesquisar(nao_salvo)));
+            Assert.assertFalse(nao_salvo.equals(gerenciadorAmigo.pesquisar(nao_salvo.getId())));
         } catch (PersonalCollectionsException e) {
             System.err.println(e.getMessage());
         }

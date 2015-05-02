@@ -10,7 +10,7 @@ public enum Estado {
 
     NOVO("Novo"), RASURADO("Rasurado"), DESGATADO("Desgatado"), DEFEITUOSO("Com Defeito"), QUEBRADO("Quebrado");
 
-    private String titulo;
+    private final String titulo;
 
     /**
      * Método construtor.
@@ -28,5 +28,10 @@ public enum Estado {
      */
     public String getTitulo() {
         return titulo;
+    }
+
+    @Override
+    public String toString() {
+        return getTitulo();
     }
 }

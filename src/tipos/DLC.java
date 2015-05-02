@@ -1,6 +1,7 @@
 package tipos;
 
 import enums.LocalizacaoDLC;
+import java.util.Objects;
 
 /**
  * Representa um DLC de game
@@ -58,6 +59,24 @@ public class DLC {
      */
     public void setLocalizacao(LocalizacaoDLC localizacao) {
         this.localizacao = localizacao;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DLC)) {
+            return false;
+        } else {
+            DLC outroDLC = (DLC) o;
+            return outroDLC.getTitulo() == getTitulo() && getLocalizacao() == outroDLC.getLocalizacao();
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.titulo);
+        hash = 47 * hash + Objects.hashCode(this.localizacao);
+        return hash;
     }
 
     @Override

@@ -9,8 +9,9 @@ import enums.TipoItem;
  * @author Douglas Rafael
  *
  */
-public class Item {
+public class Item implements Comparable<Item> {
 
+    private static final long serialVersionUID = 1L;
     private static int auto_increment = 0;
 
     private int id;
@@ -39,6 +40,33 @@ public class Item {
      */
     public Item(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo) {
         this.id = ++auto_increment;
+        this.titulo = titulo;
+        this.observacao = observacao;
+        this.dataDeCompra = dataDeCompra;
+        this.precoDeCompra = precoDeCompra;
+        this.nota = nota;
+        this.totalEmprestado = totalEmprestado;
+        this.estado = estado;
+        this.emprestado = emprestado;
+        this.tipo = tipo;
+    }
+
+    /**
+     * Método construtor que recebe o id como parametro, não uso o auto_increment.
+     * 
+     * @param id
+     * @param titulo
+     * @param observacao
+     * @param dataDeCompra
+     * @param precoDeCompra
+     * @param totalEmprestado
+     * @param nota
+     * @param estado
+     * @param emprestado
+     * @param tipo 
+     */
+    public Item(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo) {
+        this.id = id;
         this.titulo = titulo;
         this.observacao = observacao;
         this.dataDeCompra = dataDeCompra;
@@ -132,12 +160,11 @@ public class Item {
     }
 
     /**
-     * Seta o total de vezes que o item foi emprestado.
+     * Incrementa o total de vezes que o item foi emprestado.
      *
-     * @param totalEmprestado
      */
-    public void setTotalEmprestado(int totalEmprestado) {
-        this.totalEmprestado = +totalEmprestado;
+    public void setTotalEmprestado() {
+        this.totalEmprestado++;
     }
 
     /**
@@ -186,6 +213,15 @@ public class Item {
     }
 
     /**
+     * Retorna em string se o item estar emprestado ou não.
+     *
+     * @return Sim ou Não
+     */
+    public String getStringEmprestado() {
+        return isEmprestado() ? "Sim" : "Não";
+    }
+
+    /**
      * Seta o status do item: true se estiver emprestado e false se não;
      *
      * @param emprestado
@@ -228,6 +264,17 @@ public class Item {
      */
     public void setTipo(TipoItem tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public int compareTo(Item outro) {
+        if (this.getId() < outro.getId()) {
+            return 1;
+        } else if (this.getId() > outro.getId()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 
     @Override

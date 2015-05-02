@@ -11,6 +11,7 @@ import enums.TipoItem;
  */
 public class HQ extends Item {
 
+    private static final long serialVersionUID = 1L;
     private int numero;
     private String editora;
     private String saga;
@@ -37,6 +38,35 @@ public class HQ extends Item {
      */
     public HQ(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, String universo, boolean lido) {
         super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
+        this.numero = numero;
+        this.editora = editora;
+        this.saga = saga;
+        this.universo = universo;
+        this.lido = lido;
+    }
+    
+    /**
+     * Costrutor que recebe também o id como parametro.
+     * Não usa o auto_icrement para o id
+     * 
+     * @param id
+     * @param titulo
+     * @param observacao
+     * @param dataDeCompra
+     * @param precoDeCompra
+     * @param totalEmprestado
+     * @param nota
+     * @param estado
+     * @param emprestado
+     * @param tipo
+     * @param numero
+     * @param editora
+     * @param saga
+     * @param universo
+     * @param lido 
+     */
+    public HQ(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, String universo, boolean lido) {
+        super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
         this.numero = numero;
         this.editora = editora;
         this.saga = saga;

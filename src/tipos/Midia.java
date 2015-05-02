@@ -36,6 +36,30 @@ public class Midia extends Item {
         this.conteudo = conteudo;
         this.assistido = assistido;
     }
+    
+    /**
+     * Construtor que recebe o id.
+     * Não é utilizado o auto_increment para o id
+     * 
+     * @param id
+     * @param titulo
+     * @param observacao
+     * @param dataDeCompra
+     * @param precoDeCompra
+     * @param totalEmprestado
+     * @param nota
+     * @param estado
+     * @param emprestado
+     * @param marca
+     * @param conteudo
+     * @param assistido 
+     */
+    public Midia(int id , String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, String marca, String conteudo, boolean assistido) {
+        super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.MIDIA);
+        this.marca = marca;
+        this.conteudo = conteudo;
+        this.assistido = assistido;
+    }
 
     /**
      * Recupera a marca da mídia

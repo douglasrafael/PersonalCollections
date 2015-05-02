@@ -29,6 +29,7 @@ public class TestHQ {
         hq1 = new HQ("THE WALKING DEAD", "", "15/04/2015", 5.90, 0, 10, Estado.NOVO, false, tipo, 36, "HQM Editora", "", "", false);
         hq2 = new HQ("AVENTURAS DO SUPERMAN, AS", "", "09/01/2013", 10.0, 2, 9.5, Estado.RASURADO, true, tipo, 9, "Abril", "", "DC", true);
         hq3 = new HQ("CAVALEIRO DA LUA : RECOMEÇO", "", "11/05/2015", 18.90, 0, 8, Estado.NOVO, true, tipo, 1, "Marvel", "", "Marvel", false);
+        new HQ("CAVALEIRO DA LUA : RECOMEÇO", "", null, 0, 0, 8, Estado.NOVO, true, tipo, 1, null, null, null, false);
     }
 
     @Test

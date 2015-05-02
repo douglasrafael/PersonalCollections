@@ -32,4 +32,9 @@ public enum Parentesco {
     public String getNome() {
         return nome;
     }
+    
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }

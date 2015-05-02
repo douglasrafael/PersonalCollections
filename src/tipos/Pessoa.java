@@ -6,7 +6,7 @@ package tipos;
  * @author Douglas Rafael
  *
  */
-public class Pessoa {
+public class Pessoa implements Comparable<Pessoa> {
 
     private static int auto_increment = 0;
 
@@ -22,6 +22,19 @@ public class Pessoa {
      */
     public Pessoa(String nome, char sexo) {
         this.id = ++auto_increment;
+        this.nome = nome;
+        this.sexo = sexo;
+    }
+
+    /**
+     * Construtor que não utiliza o auto_increment para id.
+     *
+     * @param id
+     * @param nome
+     * @param sexo
+     */
+    public Pessoa(int id, String nome, char sexo) {
+        this.id = id;
         this.nome = nome;
         this.sexo = sexo;
     }
@@ -91,5 +104,16 @@ public class Pessoa {
     @Override
     public String toString() {
         return "Id: " + getId() + "\nNome: " + getNome() + "\nSexo: " + getSexo();
+    }
+
+    @Override
+    public int compareTo(Pessoa outra) {
+        if (this.getId() < outra.getId()) {
+            return 1;
+        } else if (this.getId() > outra.getId()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

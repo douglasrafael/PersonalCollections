@@ -8,7 +8,7 @@ package enums;
  */
 public enum TipoItem {
 
-    HQ("HQ"), MIDIA("DVD/CD/Blu Ray..."), JOGOVIDEOGAME("Jogo de Videogame"), JOGOTABULEIRO("Jogo de Tabuleiro");
+    HQ("HQ"), MIDIA("DVD/CD/Blu-Ray..."), JOGOVIDEOGAME("Jogo de Videogame"), JOGOTABULEIRO("Jogo de Tabuleiro");
 
     private String titulo;
 
@@ -28,5 +28,10 @@ public enum TipoItem {
      */
     public String getTitulo() {
         return titulo;
+    }
+    
+    @Override
+    public String toString() {
+        return getTitulo();
     }
 }

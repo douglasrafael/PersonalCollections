@@ -8,11 +8,7 @@ import tipos.Amigo;
 
 public class AmigoDAO implements DAO<Amigo> {
 
-    private List<Amigo> listaDeAmigos;
-
-    public AmigoDAO() {
-        listaDeAmigos = new LinkedList<>();
-    }
+    private static List<Amigo> listaDeAmigos = new LinkedList<>();
 
     @Override
     public List<Amigo> listar() throws PersonalCollectionsException {
@@ -27,7 +23,7 @@ public class AmigoDAO implements DAO<Amigo> {
     @Override
     public void atualizar(Amigo o) throws PersonalCollectionsException {
         if (!listaDeAmigos.isEmpty()) {
-            Amigo a = pesquisar(o);
+            Amigo a = pesquisar(o.getId());
             if (a != null) {
                 listaDeAmigos.set(listaDeAmigos.indexOf(a), o);
             }
@@ -64,16 +60,17 @@ public class AmigoDAO implements DAO<Amigo> {
     }
 
     /**
-     * Procura por Amigo utilizando o equals. Caso não seja encontrado o amigo,
+     * Procura por Amigo utilizando o id. Caso não seja encontrado o amigo,
      * é retornado null.
      *
-     * @param o O objeto Amigo a ser procurado
+     * @param id O id do Amigo a ser procurado
      * @return O objeto Amigo encontrado ou null caso não seja
      */
-    public Amigo pesquisar(Amigo o) {
+    @Override
+    public Amigo pesquisar(int id) {
         if (!listaDeAmigos.isEmpty()) {
             for (Amigo a : listaDeAmigos) {
-                if (a.equals(o)) {
+                if (a.getId() == id) {
                     return a;
                 }
             }

@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,11 +8,7 @@ import excecoes.PersonalCollectionsException;
 
 public class HqDAO implements DAO<HQ> {
 
-    private List<HQ> listaDeHQs;
-
-    public HqDAO() {
-        listaDeHQs = new ArrayList<>();
-    }
+    private static List<HQ> listaDeHQs = new LinkedList<>();
 
     @Override
     public List<HQ> listar() throws PersonalCollectionsException {
@@ -44,7 +39,7 @@ public class HqDAO implements DAO<HQ> {
      * Procura HQs pelo título. Caso não seja encontrado nenhum item, a lista é
      * retornada vazia. Método útil quando se quer listar todos os HQs que tem
      * título igual ou parecido, mais que são diferentes
-     * 
+     *
      * @param titulo_item O título do HQ a ser procurado
      * @return Lista com HQs encontrados
      */
@@ -66,17 +61,36 @@ public class HqDAO implements DAO<HQ> {
     }
 
     /**
-     * Procura HQ utilizando o equals. Caso não seja encontrado o item é
-     * retornado null.
+     * Procura HQ utilizando o id. Caso não seja encontrado o item é retornado
+     * null.
      *
-     * @param o O objeto HQ a ser procurado
+     * @param id O id da HQ a ser procurada
      * @return O objeto HQ encontrado ou null caso não seja
      */
-    public HQ pesquisar(HQ o) {
+    @Override
+    public HQ pesquisar(int id) {
         if (!listaDeHQs.isEmpty()) {
             for (HQ hq : listaDeHQs) {
-                if (hq.equals(o)) {
+                if (hq.getId() == id) {
                     return hq;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Procura HQ utilizando o objeto. Caso não seja encontrado o item é retornado
+     * null.
+     *
+     * @param hq O Objeto HQ a ser procurada
+     * @return O objeto HQ encontrado ou null caso não seja
+     */
+    public HQ pesquisar(HQ hq) {
+        if (!listaDeHQs.isEmpty()) {
+            for (HQ h : listaDeHQs) {
+                if (h.equals(hq)) {
+                    return h;
                 }
             }
         }

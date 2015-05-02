@@ -8,11 +8,7 @@ import excecoes.PersonalCollectionsException;
 
 public class TabuleiroDAO implements DAO<Tabuleiro> {
 
-    private List<Tabuleiro> listaDeJogosTabuleiro;
-
-    public TabuleiroDAO() {
-        listaDeJogosTabuleiro = new LinkedList<>();
-    }
+    private static List<Tabuleiro> listaDeJogosTabuleiro = new LinkedList<>();
 
     @Override
     public List<Tabuleiro> listar() throws PersonalCollectionsException {
@@ -65,16 +61,37 @@ public class TabuleiroDAO implements DAO<Tabuleiro> {
     }
 
     /**
-     * Procura Tabuleiro utilizando o equals. Caso não seja encontrado o
-     * Tabuleiro é retornado null.
+     * Procura Tabuleiro pelo id passado como parâmetro. Caso não seja
+     * encontrado o Tabuleiro é retornado null.
      *
-     * @param o O objeto Tabuleiro a ser procurado
+     * @param id
      * @return O objeto Tabuleiro encontrado ou null caso não seja
+     * @throws PersonalCollectionsException
      */
-    public Tabuleiro pesquisar(Tabuleiro o) {
+    @Override
+    public Tabuleiro pesquisar(int id) throws PersonalCollectionsException {
         if (!listaDeJogosTabuleiro.isEmpty()) {
             for (Tabuleiro t : listaDeJogosTabuleiro) {
-                if (t.equals(o)) {
+                if (t.getId() == id) {
+                    return t;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Procura Tabuleiro pelo objeto passado como parâmetro. Caso não seja
+     * encontrado o Tabuleiro é retornado null.
+     *
+     * @param tab
+     * @return O objeto Tabuleiro encontrado ou null caso não seja
+     * @throws PersonalCollectionsException
+     */
+    public Tabuleiro pesquisar(Tabuleiro tab) throws PersonalCollectionsException {
+        if (!listaDeJogosTabuleiro.isEmpty()) {
+            for (Tabuleiro t : listaDeJogosTabuleiro) {
+                if (t.equals(tab)) {
                     return t;
                 }
             }

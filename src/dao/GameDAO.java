@@ -8,11 +8,7 @@ import excecoes.PersonalCollectionsException;
 
 public class GameDAO implements DAO<Game> {
 
-    private List<Game> listaDeGames;
-
-    public GameDAO() {
-        listaDeGames = new LinkedList<>();
-    }
+    private static List<Game> listaDeGames = new LinkedList<>();
 
     @Override
     public List<Game> listar() throws PersonalCollectionsException {
@@ -65,16 +61,35 @@ public class GameDAO implements DAO<Game> {
     }
 
     /**
-     * Procura Game utilizando o equals. Caso não seja encontrado o item é
+     * Procura Game utilizando o id. Caso não seja encontrado o item é
      * retornado null.
      *
-     * @param o O objeto Game a ser procurado
+     * @param id O id do Game a ser procurado
      * @return O objeto Game encontrado ou null caso não seja
      */
-    public Game pesquisar(Game o) {
+    @Override
+    public Game pesquisar(int id) {
         if (!listaDeGames.isEmpty()) {
             for (Game g : listaDeGames) {
-                if (g.equals(o)) {
+                if (g.getId() == id) {
+                    return g;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Procura Game utilizando o objeto. Caso não seja encontrado o item é
+     * retornado null.
+     *
+     * @param game O Objeto do Game a ser procurado
+     * @return O objeto Game encontrado ou null caso não seja
+     */
+    public Game pesquisar(Game game) {
+        if (!listaDeGames.isEmpty()) {
+            for (Game g : listaDeGames) {
+                if (g.equals(game)) {
                     return g;
                 }
             }

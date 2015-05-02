@@ -8,11 +8,7 @@ import excecoes.PersonalCollectionsException;
 
 public class MidiaDAO implements DAO<Midia> {
 
-    private List<Midia> listaDeMidias;
-
-    public MidiaDAO() {
-        listaDeMidias = new LinkedList<>();
-    }
+    private static List<Midia> listaDeMidias = new LinkedList<>();;
 
     @Override
     public List<Midia> listar() throws PersonalCollectionsException {
@@ -65,16 +61,34 @@ public class MidiaDAO implements DAO<Midia> {
     }
 
     /**
-     * Procura Mídia utilizando o equals. Caso não seja encontrado o item é
+     * Procura Mídia utilizando o id. Caso não seja encontrado o item é
      * retornado null.
      *
-     * @param o O objeto Mídia a ser procurado
+     * @param id O id da Mídia a ser procurada
      * @return O objeto Mídia encontrado ou null caso não seja
      */
-    public Midia pesquisar(Midia o) {
+    @Override
+    public Midia pesquisar(int id) {
         if (!listaDeMidias.isEmpty()) {
             for (Midia m : listaDeMidias) {
-                if (m.equals(o)) {
+                if (m.getId() == id) {
+                    return m;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Pesquisa utilizando o objeto 
+     * 
+     * @param midia
+     * @return 
+     */
+    public Midia pesquisar(Midia midia) {
+        if (!listaDeMidias.isEmpty()) {
+            for (Midia m : listaDeMidias) {
+                if (m.equals(midia)) {
                     return m;
                 }
             }

@@ -46,4 +46,13 @@ public interface DAO<T> {
      * @throws PersonalCollectionsException
      */
     public boolean remove(T o) throws PersonalCollectionsException;
+    
+    /**
+     * Pesquisar item pelo id. Uma vez que o ID é único para cada item.
+     * 
+     * @param id 
+     * @return O Objeto ou null caso não encontre
+     * @throws PersonalCollectionsException 
+     */
+    public T pesquisar(int id) throws PersonalCollectionsException;
 }
