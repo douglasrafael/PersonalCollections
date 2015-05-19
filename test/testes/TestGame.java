@@ -1,11 +1,10 @@
 package testes;
 
-import enums.Console;
-import enums.Estado;
-import enums.LocalizacaoDLC;
-import enums.TipoItem;
-import excecoes.PersonalCollectionsException;
-import dao.GameDAO;
+import br.edu.uepb.personalcollections.enums.Console;
+import br.edu.uepb.personalcollections.enums.Estado;
+import br.edu.uepb.personalcollections.enums.LocalizacaoDLC;
+import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
+import br.edu.uepb.personalcollections.dao.GameDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +13,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import tipos.DLC;
-import tipos.Game;
+import br.edu.uepb.personalcollections.DLC;
+import br.edu.uepb.personalcollections.Game;
 
 public class TestGame {
 

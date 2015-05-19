@@ -1,9 +1,9 @@
 package testes;
 
-import enums.Estado;
-import enums.TipoItem;
-import excecoes.PersonalCollectionsException;
-import dao.MidiaDAO;
+import br.edu.uepb.personalcollections.enums.Estado;
+import br.edu.uepb.personalcollections.enums.TipoItem;
+import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
+import br.edu.uepb.personalcollections.dao.MidiaDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import tipos.Midia;
+import br.edu.uepb.personalcollections.Midia;
 
 public class TestMidia {
 

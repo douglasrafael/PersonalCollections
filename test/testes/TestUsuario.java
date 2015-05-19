@@ -1,13 +1,13 @@
 package testes;
 
-import excecoes.PersonalCollectionsException;
-import gerenciador.Gerenciador;
+import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
+import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import tipos.Usuario;
+import br.edu.uepb.personalcollections.Usuario;
 
 public class TestUsuario {
 

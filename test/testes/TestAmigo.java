@@ -1,8 +1,8 @@
 package testes;
 
-import enums.Parentesco;
-import excecoes.PersonalCollectionsException;
-import dao.AmigoDAO;
+import br.edu.uepb.personalcollections.enums.Parentesco;
+import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
+import br.edu.uepb.personalcollections.dao.AmigoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import tipos.Amigo;
+import br.edu.uepb.personalcollections.Amigo;
 
 public class TestAmigo {
 

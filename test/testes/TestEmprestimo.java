@@ -5,12 +5,12 @@
  */
 package testes;
 
-import dao.EmprestimoDAO;
-import enums.Estado;
-import enums.Parentesco;
-import enums.TipoItem;
-import excecoes.PersonalCollectionsException;
-import gerenciador.Gerenciador;
+import br.edu.uepb.personalcollections.dao.EmprestimoDAO;
+import br.edu.uepb.personalcollections.enums.Estado;
+import br.edu.uepb.personalcollections.enums.Parentesco;
+import br.edu.uepb.personalcollections.enums.TipoItem;
+import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
+import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import junit.framework.Assert;
@@ -20,10 +20,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import tipos.Amigo;
-import tipos.Emprestimo;
-import tipos.HQ;
-import tipos.Item;
+import br.edu.uepb.personalcollections.Amigo;
+import br.edu.uepb.personalcollections.Emprestimo;
+import br.edu.uepb.personalcollections.HQ;
+import br.edu.uepb.personalcollections.Item;
 
 /**
  *
@@ -34,16 +34,16 @@ public class TestEmprestimo {
     private EmprestimoDAO empDAO;
 
     public TestEmprestimo() {
-        empDAO = new EmprestimoDAO();
+        
     }
 
     @Before
     public void setUp() {
-
+        empDAO = new EmprestimoDAO();
     }
 
     @Test
-    public void testaInsert() {
+    public void testInsert() {
         try {
             Object o = new HQ(1, "test", null, null, 0, 1, 1, Estado.NOVO, true, TipoItem.HQ, 1, "", "", "", true);
             Item i = (Item) o;
