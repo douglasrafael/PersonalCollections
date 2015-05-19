@@ -24,7 +24,7 @@ public class GameDAO implements DAO<Game> {
 
     @Override
     public List<Game> listar() throws PersonalCollectionsException {
-        if(listaDeGames.isEmpty()) {
+        if (listaDeGames.isEmpty()) {
             deserializar();
         }
         return listaDeGames;
@@ -50,7 +50,9 @@ public class GameDAO implements DAO<Game> {
     @Override
     public boolean remove(Game o) throws PersonalCollectionsException {
         boolean result = listaDeGames.remove(o);
-        serializar();
+        if (result) {
+            serializar();
+        }
         return result;
     }
 

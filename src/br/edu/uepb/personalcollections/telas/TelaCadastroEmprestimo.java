@@ -599,8 +599,10 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
 
             if (!listaDeEmprestimos.isEmpty()) {
                 for (Emprestimo e : listaDeEmprestimos) {
-                    Object[] o = {String.format("%04d", e.getId()), String.format("[%04d]", e.getItem().getId()) + " - " + e.getItem().getTitulo(), e.getAmigo().getNome(), e.getDataEmprestimo(), e.getDataRetono(), e.getStatus()};
-                    modelTable.addRow(o);
+                    if (e.getItem() != null) {
+                        Object[] o = {String.format("%04d", e.getId()), String.format("[%04d]", e.getItem().getId()) + " - " + e.getItem().getTitulo(), e.getAmigo().getNome(), e.getDataEmprestimo(), e.getDataRetono(), e.getStatus()};
+                        modelTable.addRow(o);
+                    }
                 }
             }
         } catch (PersonalCollectionsException ex) {

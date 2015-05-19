@@ -24,7 +24,7 @@ public class MidiaDAO implements DAO<Midia> {
 
     @Override
     public List<Midia> listar() throws PersonalCollectionsException {
-        if(listaDeMidias.isEmpty()) {
+        if (listaDeMidias.isEmpty()) {
             deserializar();
         }
         return listaDeMidias;
@@ -50,7 +50,9 @@ public class MidiaDAO implements DAO<Midia> {
     @Override
     public boolean remove(Midia o) throws PersonalCollectionsException {
         boolean result = listaDeMidias.remove(o);
-        serializar();
+        if (result) {
+            serializar();
+        }
         return result;
     }
 

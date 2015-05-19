@@ -170,12 +170,12 @@ public class Gerenciador {
         }
 
         // Atualiza também o item que está associado ao emprestimo
-        if (listaDeEmprestimos.isEmpty()) {
-            listarEmprestimos();
-            if (!listaDeEmprestimos.isEmpty()) {
-                emprestimo.serializar();
-            }
-        }
+//        if (listaDeEmprestimos.isEmpty()) {
+//            listarEmprestimos();
+//            if (!listaDeEmprestimos.isEmpty()) {
+//                emprestimo.serializar();
+//            }
+//        }
     }
 
     /**
@@ -344,7 +344,7 @@ public class Gerenciador {
         if (t != null) {
             if (tabuleiro.remove(t)) {
                 // remove todos os emprestimos relacionados ao item
-                removeAllEmprestimoItem(id);
+//                removeAllEmprestimoItem(id);
                 return true;
             }
         }
@@ -413,10 +413,13 @@ public class Gerenciador {
     public boolean removerAmigo(int id) throws PersonalCollectionsException {
         Amigo a = amigo.pesquisar(id);
         if (a != null) {
-            return amigo.remove(a);
-        } else {
-            return false;
+            if (amigo.remove(a)) {
+                // remove todos os emprestimos relacionados ao amigo
+                removeAllEmprestimoAmigo(id);
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -503,11 +506,28 @@ public class Gerenciador {
      * @throws PersonalCollectionsException
      */
     private void removeAllEmprestimoItem(int idItem) throws PersonalCollectionsException {
-        listarEmprestimos();
-        if (!this.listaDeEmprestimos.isEmpty()) {
-            for (Emprestimo e : this.listaDeEmprestimos) {
-                if (idItem == e.getItem().getId()) {
-                    emprestimo.remove(e);
+        List<Emprestimo> lista = new ArrayList<>(emprestimo.listar());
+        if (!lista.isEmpty()) {
+            for (Emprestimo e : lista) {
+                if(e.getItem() != null && idItem == e.getItem().getId()) {
+                    removerEmprestimo(e);
+                }
+            }
+        }
+    }
+
+    /**
+     * Remove todos os empréstimos relacionados ao amigo.
+     *
+     * @param idAmigo Id do item removido
+     * @throws PersonalCollectionsException
+     */
+    private void removeAllEmprestimoAmigo(int idAmigo) throws PersonalCollectionsException {
+        List<Emprestimo> lista = new ArrayList<>(emprestimo.listar());
+        if (!lista.isEmpty()) {
+            for (Emprestimo e : lista) {
+                if (e.getAmigo() != null && idAmigo == e.getAmigo().getId()) {
+                    removerEmprestimo(e);
                 }
             }
         }

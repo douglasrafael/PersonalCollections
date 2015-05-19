@@ -50,7 +50,9 @@ public class AmigoDAO implements DAO<Amigo> {
     @Override
     public boolean remove(Amigo o) throws PersonalCollectionsException {
         boolean result = listaDeAmigos.remove(o);
-        serializar();
+        if (result) {
+            serializar();
+        }
         return result;
     }
 

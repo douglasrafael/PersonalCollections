@@ -23,7 +23,7 @@ import br.edu.uepb.personalcollections.util.Validacao;
  * @author Douglas Rafael
  */
 public class TelaAmigos extends javax.swing.JDialog {
-
+    private final String STRINFORDEL = "Todo histórico relacionado ao amigo, como por exemplo os empréstimos serão perdidos!";
     private final String STRCADASTRAR = "Cadastrar";
     private final String STRATUALIZAR = "Atualizar";
     private static int id;
@@ -390,7 +390,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     private void removeAmigo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAmigo
         try {
             if (getId() > 0) {
-                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o amigo(a): " + tf_nome.getText() + "?", "Deletar amigo", JOptionPane.YES_NO_OPTION);
+                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o amigo(a): " + tf_nome.getText() + "?\n" + STRINFORDEL, "Deletar amigo", JOptionPane.YES_NO_OPTION);
                 if (opcao == JOptionPane.YES_OPTION) {
                     if (!manager.removerAmigo(getId())) {
                         throw new PersonalCollectionsException("Não foi possível remover o amigo(a): " + tf_nome.getText());

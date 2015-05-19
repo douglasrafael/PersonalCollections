@@ -51,7 +51,9 @@ public class HqDAO implements DAO<HQ> {
     @Override
     public boolean remove(HQ o) throws PersonalCollectionsException {
         boolean result = listaDeHQs.remove(o);
-        serializar();
+        if (result) {
+            serializar();
+        }
         return result;
     }
 

@@ -1,10 +1,14 @@
 package br.edu.uepb.personalcollections.dao;
 
+import br.edu.uepb.personalcollections.Amigo;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
 import br.edu.uepb.personalcollections.Emprestimo;
+import br.edu.uepb.personalcollections.Item;
+import br.edu.uepb.personalcollections.enums.TipoItem;
+import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +28,9 @@ public class EmprestimoDAO implements DAO<Emprestimo> {
 
     @Override
     public List<Emprestimo> listar() throws PersonalCollectionsException {
-        if (listaDeEmprestimos.isEmpty()) {
-            deserializar();
-        }
+//        if (listaDeEmprestimos.isEmpty()) {
+        deserializar();
+//        }
         return listaDeEmprestimos;
     }
 
@@ -50,7 +54,9 @@ public class EmprestimoDAO implements DAO<Emprestimo> {
     @Override
     public boolean remove(Emprestimo o) throws PersonalCollectionsException {
         boolean result = listaDeEmprestimos.remove(o);
-        serializar();
+        if (result) {
+            serializar();
+        }
         return result;
     }
 
@@ -79,13 +85,42 @@ public class EmprestimoDAO implements DAO<Emprestimo> {
     public void deserializar() {
         try {
             Object o = ser.deserializar(PATH);
+            boolean up = false;
             if (o != null) {
                 listaDeEmprestimos = (LinkedList<Emprestimo>) o;
+                Gerenciador manager = new Gerenciador();
+                for (Emprestimo e : listaDeEmprestimos) {
+                    // Item
+                    if (e.getItem() != null) {
+                        Item item = manager.pesquisarItem(e.getItem().getId(), e.getItem().getTipo());
+                        if (item != null) {
+                            e.setItem(item);
+                            atualizar(e);
+                            up = true;
+                        }
+                    }
+
+                    // Amigo
+                    if (e.getAmigo() != null) {
+                        Amigo amigo = manager.pesquisarAmigo(e.getAmigo().getId());
+                        if (amigo != null) {
+                            e.setAmigo(amigo);
+                            atualizar(e);
+                            up = true;
+                        }
+                    }
+                }
+                // Atualiza o arquivo
+                if (up) {
+                    serializar();
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PersonalCollectionsException ex) {
+            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

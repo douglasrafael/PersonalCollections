@@ -50,7 +50,9 @@ public class TabuleiroDAO implements DAO<Tabuleiro> {
     @Override
     public boolean remove(Tabuleiro o) throws PersonalCollectionsException {
         boolean result = listaDeJogosTabuleiro.remove(o);
-        serializar();
+        if (result) {
+            serializar();
+        }
         return result;
     }
 
