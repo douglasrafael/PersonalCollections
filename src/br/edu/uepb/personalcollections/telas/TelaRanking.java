@@ -31,7 +31,7 @@ public class TelaRanking extends javax.swing.JDialog {
         initComponents();
 
         modelTableRanking = (DefaultTableModel) table_ranking.getModel();
-        modelTableNotas = (DefaultTableModel) table_notas.getModel();
+        modelTableNotas = (DefaultTableModel) table_ranking_notas.getModel();
         montaTabelas();
     }
 
@@ -49,8 +49,8 @@ public class TelaRanking extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         table_ranking = new javax.swing.JTable();
         panel_nota = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        table_notas = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        table_ranking_notas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Empréstimos");
@@ -63,14 +63,14 @@ public class TelaRanking extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Id", "Título", "Tipo do Item", "Total de Empréstimos"
+                "Id", "Título", "Tipo do Item", "Estado", "Emprestado?", "Total de Empréstimos"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -92,10 +92,13 @@ public class TelaRanking extends javax.swing.JDialog {
         if (table_ranking.getColumnModel().getColumnCount() > 0) {
             table_ranking.getColumnModel().getColumn(0).setPreferredWidth(50);
             table_ranking.getColumnModel().getColumn(0).setMaxWidth(50);
-            table_ranking.getColumnModel().getColumn(2).setPreferredWidth(170);
+            table_ranking.getColumnModel().getColumn(1).setPreferredWidth(220);
+            table_ranking.getColumnModel().getColumn(2).setPreferredWidth(140);
             table_ranking.getColumnModel().getColumn(2).setMaxWidth(170);
-            table_ranking.getColumnModel().getColumn(3).setPreferredWidth(130);
-            table_ranking.getColumnModel().getColumn(3).setMaxWidth(130);
+            table_ranking.getColumnModel().getColumn(3).setPreferredWidth(80);
+            table_ranking.getColumnModel().getColumn(4).setPreferredWidth(50);
+            table_ranking.getColumnModel().getColumn(5).setPreferredWidth(130);
+            table_ranking.getColumnModel().getColumn(5).setMaxWidth(130);
         }
 
         javax.swing.GroupLayout panel_tabelaLayout = new javax.swing.GroupLayout(panel_tabela);
@@ -111,26 +114,26 @@ public class TelaRanking extends javax.swing.JDialog {
             panel_tabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_tabelaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panel_nota.setBorder(javax.swing.BorderFactory.createTitledBorder("Ranking dos itens com melhores notas"));
 
-        table_notas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table_notas.setModel(new javax.swing.table.DefaultTableModel(
+        table_ranking_notas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table_ranking_notas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Título", "Tipo do Item", "Nota"
+                "Id", "Título", "Tipo do Item", "Estado", "Emprestado?", "Total de Empréstimos"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -141,21 +144,24 @@ public class TelaRanking extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        table_notas.setToolTipText("Selecione o Iitem e clique em editar para atualizar os dados");
-        table_notas.getTableHeader().setReorderingAllowed(false);
-        table_notas.addMouseListener(new java.awt.event.MouseAdapter() {
+        table_ranking_notas.setToolTipText("Selecione o Iitem e clique em editar para atualizar os dados");
+        table_ranking_notas.getTableHeader().setReorderingAllowed(false);
+        table_ranking_notas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_notaslinhaSelecionada(evt);
+                table_ranking_notaslinhaSelecionada(evt);
             }
         });
-        jScrollPane5.setViewportView(table_notas);
-        if (table_notas.getColumnModel().getColumnCount() > 0) {
-            table_notas.getColumnModel().getColumn(0).setPreferredWidth(50);
-            table_notas.getColumnModel().getColumn(0).setMaxWidth(50);
-            table_notas.getColumnModel().getColumn(2).setPreferredWidth(170);
-            table_notas.getColumnModel().getColumn(2).setMaxWidth(170);
-            table_notas.getColumnModel().getColumn(3).setPreferredWidth(100);
-            table_notas.getColumnModel().getColumn(3).setMaxWidth(100);
+        jScrollPane6.setViewportView(table_ranking_notas);
+        if (table_ranking_notas.getColumnModel().getColumnCount() > 0) {
+            table_ranking_notas.getColumnModel().getColumn(0).setPreferredWidth(50);
+            table_ranking_notas.getColumnModel().getColumn(0).setMaxWidth(50);
+            table_ranking_notas.getColumnModel().getColumn(1).setPreferredWidth(220);
+            table_ranking_notas.getColumnModel().getColumn(2).setPreferredWidth(140);
+            table_ranking_notas.getColumnModel().getColumn(2).setMaxWidth(170);
+            table_ranking_notas.getColumnModel().getColumn(3).setPreferredWidth(80);
+            table_ranking_notas.getColumnModel().getColumn(4).setPreferredWidth(50);
+            table_ranking_notas.getColumnModel().getColumn(5).setPreferredWidth(130);
+            table_ranking_notas.getColumnModel().getColumn(5).setMaxWidth(130);
         }
 
         javax.swing.GroupLayout panel_notaLayout = new javax.swing.GroupLayout(panel_nota);
@@ -164,14 +170,14 @@ public class TelaRanking extends javax.swing.JDialog {
             panel_notaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_notaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panel_notaLayout.setVerticalGroup(
             panel_notaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_notaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -182,18 +188,17 @@ public class TelaRanking extends javax.swing.JDialog {
             .addGroup(panel_rankingLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_rankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_tabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_nota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panel_nota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_tabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panel_rankingLayout.setVerticalGroup(
             panel_rankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_rankingLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(panel_tabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
                 .addComponent(panel_nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -205,7 +210,7 @@ public class TelaRanking extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(panel_ranking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -218,9 +223,9 @@ public class TelaRanking extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_table_rankinglinhaSelecionada
 
-    private void table_notaslinhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_notaslinhaSelecionada
+    private void table_ranking_notaslinhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_ranking_notaslinhaSelecionada
         // TODO add your handling code here:
-    }//GEN-LAST:event_table_notaslinhaSelecionada
+    }//GEN-LAST:event_table_ranking_notaslinhaSelecionada
 
     /**
      * @param args the command line arguments
@@ -269,12 +274,12 @@ public class TelaRanking extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JPanel panel_nota;
     private javax.swing.JPanel panel_ranking;
     private javax.swing.JPanel panel_tabela;
-    private javax.swing.JTable table_notas;
     private javax.swing.JTable table_ranking;
+    private javax.swing.JTable table_ranking_notas;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -292,15 +297,19 @@ public class TelaRanking extends javax.swing.JDialog {
 
                 if (!listaRankingEmprestimo.isEmpty()) {
                     for (Item item : listaRankingEmprestimo) {
-                        Object[] o = {String.format("%04d", item.getId()), item.getTitulo(), item.getTipo(), item.getTotalEmprestado()};
-                        modelTableRanking.addRow(o);
+                        if (item.getTotalEmprestado() > 0) {
+                            Object[] o = {String.format("%04d", item.getId()), item.getTitulo(), item.getTipo(), item.getEstado(), item.getStringEmprestado(), String.format("%04d", item.getTotalEmprestado())};
+                            modelTableRanking.addRow(o);
+                        }
                     }
                 }
 
                 if (!listaRankingNota.isEmpty()) {
                     for (Item item : listaRankingNota) {
-                        Object[] o = {String.format("%04d", item.getId()), item.getTitulo(), item.getTipo(), item.getNota()};
-                        modelTableNotas.addRow(o);
+                        if (item.getNota() > 0) {
+                            Object[] o = {String.format("%04d", item.getId()), item.getTitulo(), item.getTipo(), item.getEstado(), item.getStringEmprestado(), item.getNota()};
+                            modelTableNotas.addRow(o);
+                        }
                     }
                 }
             }

@@ -38,7 +38,7 @@ public class Gerenciador {
     private EmprestimoDAO emprestimo;
 
     private static List<Item> listaDeItens = new LinkedList<>();
-    private List<Amigo> listaDeAmigos;
+    private List<Amigo> listaDeAmigos = new LinkedList<>();
     private List<Emprestimo> listaDeEmprestimos = new LinkedList<>();
 
     /**
@@ -206,6 +206,26 @@ public class Gerenciador {
         }
     }
 
+    public List<Item> pesquisarItem(String term) {
+        List<Item> lista_search = new LinkedList<>();
+        // transforma o term em minusculo
+        term = term.toLowerCase();
+        for (Item item : listaDeItens) {
+            if (item instanceof HQ) {
+                HQ hq = (HQ) item;
+                if (hq.getTitulo().toLowerCase().equals(term)
+                        || hq.getEstado().getTitulo().toLowerCase().equals(term)
+                        || hq.getUniverso().toLowerCase().equals(term)
+                        || hq.getEditora().toLowerCase().equals(term)) {
+                    lista_search.add(item);
+                }
+            } else if (item.getTitulo().toLowerCase().equals(term) || item.getEstado().getTitulo().toLowerCase().equals(term)) {
+                lista_search.add(item);
+            }
+        }
+        return lista_search;
+    }
+
     /**
      * Pequisa por HQ.
      *
@@ -344,7 +364,7 @@ public class Gerenciador {
         if (t != null) {
             if (tabuleiro.remove(t)) {
                 // remove todos os emprestimos relacionados ao item
-//                removeAllEmprestimoItem(id);
+                removeAllEmprestimoItem(id);
                 return true;
             }
         }
@@ -371,7 +391,7 @@ public class Gerenciador {
      * @throws PersonalCollectionsException
      */
     public List<Amigo> listarAmigos() throws PersonalCollectionsException {
-        listaDeAmigos = new LinkedList<>(amigo.listar());
+        listaDeAmigos = amigo.listar();
 
         // Seta o auto_increment caso ele não esteja setado
         if (Pessoa.getAuto_increment() == 0) {
@@ -509,7 +529,7 @@ public class Gerenciador {
         List<Emprestimo> lista = new ArrayList<>(emprestimo.listar());
         if (!lista.isEmpty()) {
             for (Emprestimo e : lista) {
-                if(e.getItem() != null && idItem == e.getItem().getId()) {
+                if (e.getItem() != null && idItem == e.getItem().getId()) {
                     removerEmprestimo(e);
                 }
             }
@@ -589,7 +609,6 @@ public class Gerenciador {
     public List<Item> rankingNota() throws PersonalCollectionsException {
         int i = 0;
         List<Item> lista = new ArrayList<>(listarItens());
-
         for (int j = 1; j < lista.size(); j++) {
             Item eleito = lista.get(j);
             i = j - 1;

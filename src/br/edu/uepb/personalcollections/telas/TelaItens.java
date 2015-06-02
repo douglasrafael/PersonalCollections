@@ -14,6 +14,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import br.edu.uepb.personalcollections.Item;
+import br.edu.uepb.personalcollections.enums.FiltroItem;
+import java.awt.event.KeyEvent;
+import java.util.LinkedList;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  * Tela de itens
@@ -21,6 +25,7 @@ import br.edu.uepb.personalcollections.Item;
  * @author Douglas Rafael
  */
 public class TelaItens extends javax.swing.JDialog {
+
     private final String STREDITAR = "Editar Item";
     private final String STRDELETAR = "Deletar Item";
     private final String STRINFORDEL = "Todo histórico relacionado ao item, como por exemplo os empréstimos serão perdidos!";
@@ -36,9 +41,10 @@ public class TelaItens extends javax.swing.JDialog {
      */
     public TelaItens(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        listaDeItens = new LinkedList<>();
         manager = new Gerenciador();
         initComponents();
-        refresh();
+        populaComponents();
     }
 
     /**
@@ -208,13 +214,28 @@ public class TelaItens extends javax.swing.JDialog {
 
         tf_pesquisa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tf_pesquisa.setMargin(new java.awt.Insets(2, 5, 2, 2));
+        tf_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                chamaPesquisar(evt);
+            }
+        });
 
         bt_pesquisa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bt_pesquisa.setIcon(new ImageIcon("images/search.png"));
         bt_pesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        bt_pesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisar(evt);
+            }
+        });
 
         cb_filtro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_filtro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_filtro.setModel(new DefaultComboBoxModel(FiltroItem.values()));
+        cb_filtro.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                itemSelecionado(evt);
+            }
+        });
 
         jLabel2.setText("Filtro:");
 
@@ -239,11 +260,11 @@ public class TelaItens extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cb_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cb_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tf_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bt_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -374,6 +395,30 @@ public class TelaItens extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_acao
 
+    private void pesquisar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisar
+        if (!tf_pesquisa.getText().isEmpty()) {
+            listaDeItens = manager.pesquisarItem(tf_pesquisa.getText());
+            if (listaDeItens.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nenhum item foi encontrado para essa pesquisa: \"" + tf_pesquisa.getText() + "\"\nTente outra pesquisa...", "Pesquisar Item", JOptionPane.INFORMATION_MESSAGE);
+            }
+            refresh();
+        } else {
+            tf_pesquisa.grabFocus();
+//            JOptionPane.showMessageDialog(null, "Escolha o filtro e digite o termo a ser pesquisado!", "Pesquisar Item", JOptionPane.INFORMATION_MESSAGE);
+            populaComponents();
+        }
+    }//GEN-LAST:event_pesquisar
+
+    private void chamaPesquisar(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chamaPesquisar
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            pesquisar(null);
+        }
+    }//GEN-LAST:event_chamaPesquisar
+
+    private void itemSelecionado(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemSelecionado
+        tf_pesquisa.grabFocus();
+    }//GEN-LAST:event_itemSelecionado
+
     /**
      * Remove o jogo de tabuleiro listado na tabela de itens
      *
@@ -382,7 +427,7 @@ public class TelaItens extends javax.swing.JDialog {
     private void removeTabuleiro(int id, String titulo) {
         try {
             if (id > 0) {
-                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o Jogo de Tabuleiro: \"" + titulo + "\"?\n"+STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
+                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o Jogo de Tabuleiro: \"" + titulo + "\"?\n" + STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
                 if (opcao == JOptionPane.YES_OPTION) {
                     if (!manager.removerTabuleiro(id)) {
                         throw new PersonalCollectionsException("Não foi possível remover Jogo de Tabuleiro: " + titulo);
@@ -406,7 +451,7 @@ public class TelaItens extends javax.swing.JDialog {
     private void removeHQ(int id, String titulo) {
         try {
             if (id > 0) {
-                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a HQ: \"" + titulo + "\"?\n"+STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
+                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a HQ: \"" + titulo + "\"?\n" + STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
                 if (opcao == JOptionPane.YES_OPTION) {
                     if (!manager.removerHQ(id)) {
                         throw new PersonalCollectionsException("Não foi possível remover a HQ: " + titulo);
@@ -430,7 +475,7 @@ public class TelaItens extends javax.swing.JDialog {
     private void removeMidia(int id, String titulo) {
         try {
             if (id > 0) {
-                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a Mídia: \"" + titulo + "\"?\n"+STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
+                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a Mídia: \"" + titulo + "\"?\n" + STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
                 if (opcao == JOptionPane.YES_OPTION) {
                     if (!manager.removerMidia(id)) {
                         throw new PersonalCollectionsException("Não foi possível remover a Mídia: " + titulo);
@@ -454,7 +499,7 @@ public class TelaItens extends javax.swing.JDialog {
     private void removeGame(int id, String titulo) {
         try {
             if (id > 0) {
-                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a Mídia: \"" + titulo + "\"?\n"+STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
+                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover a Mídia: \"" + titulo + "\"?\n" + STRINFORDEL, "Deletar item", JOptionPane.YES_NO_OPTION);
                 if (opcao == JOptionPane.YES_OPTION) {
                     if (!manager.removerGame(id)) {
                         throw new PersonalCollectionsException("Não foi possível remover a Mídia: " + titulo);
@@ -558,13 +603,16 @@ public class TelaItens extends javax.swing.JDialog {
      *
      * @param itens
      */
-    private void montaTabela(List<Item> itens) {
-        int total_itens = itens.size();
+    private void montaTabela() {
         DefaultTableModel modelTable = (DefaultTableModel) table_itens.getModel();
         modelTable.setNumRows(0); // Zera a tabela
+        if (!listaDeItens.isEmpty()) {
+            int total_itens = listaDeItens.size();
 
-        if (!itens.isEmpty()) {
-            for (Item itemVez : itens) {
+            // Ordena em ordem decrescente pelo id
+            Collections.sort(listaDeItens);
+
+            for (Item itemVez : listaDeItens) {
                 Object[] o = {String.format("%04d", itemVez.getId()), itemVez.getTitulo(), itemVez.getTipo().getTitulo(), itemVez.getEstado(), itemVez.getStringEmprestado()};
                 modelTable.addRow(o);
             }
@@ -576,17 +624,34 @@ public class TelaItens extends javax.swing.JDialog {
     }
 
     /**
+     * Popula os components da tela
+     */
+    private void populaComponents() {
+        try {
+            listaDeItens = manager.listarItens();
+            // Ordena em ordem decrescente pelo id
+            Collections.sort(listaDeItens);
+
+            refresh();
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ocorreu um erro ao tentar obter os dados!", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    /**
      * Atualiza a tela
      */
     private void refresh() {
-        try {
-            listaDeItens = manager.listarItens();
-            Collections.sort(listaDeItens);
+        montaTabela();
+    }
 
-            montaTabela(listaDeItens);
-        } catch (PersonalCollectionsException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível montar a tabela com os itens", "ERRO", JOptionPane.WARNING_MESSAGE);
-        }
+    /**
+     * Retorna o filtro selecionado.
+     *
+     * @return O filtro selecionado
+     */
+    private String getFiltro() {
+        return (String) cb_filtro.getSelectedItem();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

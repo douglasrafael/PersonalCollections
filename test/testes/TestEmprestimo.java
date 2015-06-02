@@ -48,7 +48,7 @@ public class TestEmprestimo {
             Object o = new HQ(1, "test", null, null, 0, 1, 1, Estado.NOVO, true, TipoItem.HQ, 1, "", "", "", true);
             Item i = (Item) o;
             Gerenciador g = new Gerenciador();
-            g.inserirEmprestimo(new Emprestimo("12/11/2014", "12/12/2014", new Amigo(1, "Do", 'M', null, null, null, Parentesco.PAI), i));
+            g.inserirEmprestimo(new Emprestimo("12/11/2014", "12/12/2014", false, new Amigo(1, "Do", 'M', null, null, null, Parentesco.PAI), i));
             Assert.assertTrue(empDAO.listar().size() == 1);
             System.out.println(empDAO.listar());
         } catch (PersonalCollectionsException ex) {

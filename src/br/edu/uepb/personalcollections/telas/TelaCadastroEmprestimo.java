@@ -90,14 +90,12 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
         jLabel1.setText("Amigo");
 
         cb_amigos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_amigos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cb_amigos.setSelectedIndex(-1);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Item");
 
         cb_itens.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_itens.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cb_itens.setSelectedIndex(-1);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
