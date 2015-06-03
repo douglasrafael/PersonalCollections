@@ -12,6 +12,7 @@ import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
 import java.util.ArrayList;
 import java.util.List;
 import br.edu.uepb.personalcollections.Amigo;
+import br.edu.uepb.personalcollections.DLC;
 import br.edu.uepb.personalcollections.Emprestimo;
 import br.edu.uepb.personalcollections.Game;
 import br.edu.uepb.personalcollections.HQ;
@@ -20,7 +21,10 @@ import br.edu.uepb.personalcollections.Midia;
 import br.edu.uepb.personalcollections.Pessoa;
 import br.edu.uepb.personalcollections.Tabuleiro;
 import br.edu.uepb.personalcollections.Usuario;
+import br.edu.uepb.personalcollections.enums.FiltroItem;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Classe gerenciador
@@ -179,7 +183,7 @@ public class Gerenciador {
     }
 
     /**
-     * Pesquisa por item
+     * Pesquisa por item de acordo com o id e o tipo
      *
      * @param id
      * @param tipo
@@ -206,21 +210,106 @@ public class Gerenciador {
         }
     }
 
-    public List<Item> pesquisarItem(String term) {
+    /**
+     * Busca por items utilizando o filtro. Simula um like %termo% do SQL.
+     * Maiuscula e minuscula são ignorados.
+     *
+     * @param filtro
+     * @param termo
+     * @return
+     */
+    public List<Item> pesquisarItem(FiltroItem filtro, String termo) {
         List<Item> lista_search = new LinkedList<>();
-        // transforma o term em minusculo
-        term = term.toLowerCase();
+
+        /**
+         * String para simular o like
+         */
+        String regex = "(?i).*" + termo + ".*";
+
         for (Item item : listaDeItens) {
-            if (item instanceof HQ) {
-                HQ hq = (HQ) item;
-                if (hq.getTitulo().toLowerCase().equals(term)
-                        || hq.getEstado().getTitulo().toLowerCase().equals(term)
-                        || hq.getUniverso().toLowerCase().equals(term)
-                        || hq.getEditora().toLowerCase().equals(term)) {
+
+            if (filtro.equals(FiltroItem.TITULO)) { // Busca pelo título do item (Todos items são considerados)
+                if (item.getTitulo().matches(regex)) {
                     lista_search.add(item);
                 }
-            } else if (item.getTitulo().toLowerCase().equals(term) || item.getEstado().getTitulo().toLowerCase().equals(term)) {
-                lista_search.add(item);
+            } else if (filtro.equals(FiltroItem.ESTADO)) { // Busca pelo estado do item (Todos items são considerados)
+                if (item.getEstado().getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.HQTITULO) && item.getTipo().equals(TipoItem.HQ)) { // Busca por título de HQ
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.HQESTADO) && item.getTipo().equals(TipoItem.HQ)) {  // Busca pelo estado da HQ
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getEstado().getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.HQEDITORA) && item.getTipo().equals(TipoItem.HQ)) {  // Busca pela editora da HQ
+                HQ h = (HQ) item;
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (h.getEditora().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.HQUNIVERSO) && item.getTipo().equals(TipoItem.HQ)) {  // Busca pelo universo da HQ
+                HQ h = (HQ) item;
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (h.getUniverso().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.MIDIATITULO) && item.getTipo().equals(TipoItem.MIDIA)) { // Busca pelo titulo da midia
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.MIDIAESTADO) && item.getTipo().equals(TipoItem.MIDIA)) { // Busca pelo estado da mídia
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getEstado().getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.GAMETITULO) && item.getTipo().equals(TipoItem.JOGOVIDEOGAME)) { // Busca pelo titulo do jogo de videogame
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.GAMEESTADO) && item.getTipo().equals(TipoItem.JOGOVIDEOGAME)) { // Busca pelo estado do jogo de videogame
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getEstado().getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.GAMEDLC) && item.getTipo().equals(TipoItem.JOGOVIDEOGAME)) { // Busca pelo DLC do jogo de videogame
+                Game g = (Game) item;
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else {
+                    for (DLC dlc : g.getDLCs()) {
+                        if (dlc.getTitulo().matches(regex)) {
+                            lista_search.add(item);
+                            break; // Achou um dlc com o termo da busca, sai do loop
+                        }
+                    }
+                }
+            } else if (filtro.equals(FiltroItem.TABULEIROTITULO) && item.getTipo().equals(TipoItem.JOGOTABULEIRO)) { // Busca pelo titulo do jogo de tabuleiro
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
+            } else if (filtro.equals(FiltroItem.TABULEIROESTADO) && item.getTipo().equals(TipoItem.JOGOTABULEIRO)) { // Busca pelo estado do jogo de tabuleiro
+                if (termo.isEmpty()) {
+                    lista_search.add(item);
+                } else if (item.getEstado().getTitulo().matches(regex)) {
+                    lista_search.add(item);
+                }
             }
         }
         return lista_search;
@@ -672,5 +761,21 @@ public class Gerenciador {
             }
         }
         Emprestimo.setAuto_increment(max);
+    }
+    
+    /**
+     * Checa se tem item cadastrado
+     * 
+     * @return 
+     */
+    public boolean temItem() {
+        return listaDeItens.isEmpty();
+    }
+    
+    /**
+     * Limpa lista de items
+     */
+    public void cleanItems() throws PersonalCollectionsException {
+        listarItens().clear();
     }
 }

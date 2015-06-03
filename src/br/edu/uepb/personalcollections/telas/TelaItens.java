@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.uepb.personalcollections.telas;
 
 import br.edu.uepb.personalcollections.enums.TipoItem;
@@ -397,15 +392,14 @@ public class TelaItens extends javax.swing.JDialog {
 
     private void pesquisar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisar
         if (!tf_pesquisa.getText().isEmpty()) {
-            listaDeItens = manager.pesquisarItem(tf_pesquisa.getText());
+            listaDeItens = manager.pesquisarItem((FiltroItem) cb_filtro.getSelectedItem(), tf_pesquisa.getText());
             if (listaDeItens.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Nenhum item foi encontrado para essa pesquisa: \"" + tf_pesquisa.getText() + "\"\nTente outra pesquisa...", "Pesquisar Item", JOptionPane.INFORMATION_MESSAGE);
             }
             refresh();
         } else {
             tf_pesquisa.grabFocus();
-//            JOptionPane.showMessageDialog(null, "Escolha o filtro e digite o termo a ser pesquisado!", "Pesquisar Item", JOptionPane.INFORMATION_MESSAGE);
-            populaComponents();
+            pesquisaVazia();
         }
     }//GEN-LAST:event_pesquisar
 
@@ -416,8 +410,20 @@ public class TelaItens extends javax.swing.JDialog {
     }//GEN-LAST:event_chamaPesquisar
 
     private void itemSelecionado(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemSelecionado
+        tf_pesquisa.setText("");
         tf_pesquisa.grabFocus();
+        pesquisaVazia();
     }//GEN-LAST:event_itemSelecionado
+
+    /**
+     * Realiza busca por item com base apenas no filtro, ou lista tudo se o
+     * campo de busca estiver vazio
+     */
+    private void pesquisaVazia() {
+        FiltroItem filtro = (FiltroItem) cb_filtro.getSelectedItem();
+        listaDeItens = manager.pesquisarItem(filtro, "");
+        refresh();
+    }
 
     /**
      * Remove o jogo de tabuleiro listado na tabela de itens
