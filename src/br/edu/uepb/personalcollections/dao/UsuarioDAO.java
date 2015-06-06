@@ -5,6 +5,7 @@ import br.edu.uepb.personalcollections.Usuario;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Arrays;
 
 public class UsuarioDAO {
 
@@ -28,10 +29,10 @@ public class UsuarioDAO {
      * @return O usuário ou null
      * @throws PersonalCollectionsException
      */
-    public Usuario autenticar(String login, String password) throws PersonalCollectionsException {
+    public Usuario autenticar(String login, char[] password) throws PersonalCollectionsException {
         deserializar();
         if (usuario != null) {
-            if (usuario.getLogin().equals(login) && usuario.getPassword().equals(password)) {
+            if ( usuario.getLogin().equals(login) && Arrays.equals(usuario.getPassword(),password)) {
                 return usuario;
             }
         }

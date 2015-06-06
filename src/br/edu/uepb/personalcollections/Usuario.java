@@ -1,13 +1,15 @@
 package br.edu.uepb.personalcollections;
 
 import java.util.Objects;
+import java.util.Arrays;
+
 
 public class Usuario extends Pessoa {
     
     private static final long serialVersionUID = -7344963702457089731L;
     
     private String login;
-    private String password;
+    private char[] password;
 
     /**
      * Método construtor.
@@ -17,7 +19,7 @@ public class Usuario extends Pessoa {
      * @param login
      * @param password
      */
-    public Usuario(String nome, char sexo, String login, String password) {
+    public Usuario(String nome, char sexo, String login, char[] password) {
         super(0, nome, sexo);
         this.login = login;
         this.password = password;
@@ -46,7 +48,7 @@ public class Usuario extends Pessoa {
      *
      * @return O password
      */
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
@@ -55,7 +57,7 @@ public class Usuario extends Pessoa {
      *
      * @param password
      */
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 
@@ -65,7 +67,7 @@ public class Usuario extends Pessoa {
             return false;
         }
         Usuario outroUsuario = (Usuario) o;
-        return outroUsuario.getLogin().equals(getLogin()) && outroUsuario.getPassword().equals(getPassword());
+        return outroUsuario.getLogin().equals(getLogin()) && Arrays.equals(outroUsuario.getPassword(),getPassword());
     }
 
     @Override

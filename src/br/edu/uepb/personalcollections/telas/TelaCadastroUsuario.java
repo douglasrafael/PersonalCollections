@@ -6,6 +6,7 @@ import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
 import br.edu.uepb.personalcollections.util.Validacao;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
     private final int MINPASS = 5;
     private Gerenciador manager;
+    private Usuario usuario;
 
     /**
      * Construtor Tela de cadastro de usuário
@@ -30,8 +32,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     public TelaCadastroUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         manager = new Gerenciador();
-        preencheInterface();
         initComponents();
+        preencheInterface();
     }
 
     @SuppressWarnings("unchecked")
@@ -41,6 +43,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         group_sexo = new javax.swing.ButtonGroup();
         panel_dados = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        tf_nome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tf_login = new javax.swing.JTextField();
@@ -48,7 +51,6 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         rb_masculino = new javax.swing.JRadioButton();
         rb_feminino = new javax.swing.JRadioButton();
         tf_password_atual = new javax.swing.JPasswordField();
-        tf_no = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         tf_re_novo_password = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
@@ -69,6 +71,9 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
         jLabel1.setText("Nome");
 
+        tf_nome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tf_nome.setMargin(new java.awt.Insets(2, 5, 2, 2));
+
         jLabel3.setText("Sexo");
 
         jLabel4.setText("Password");
@@ -85,10 +90,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         group_sexo.add(rb_feminino);
         rb_feminino.setText("Feminino");
 
-        tf_password_atual.setText("jPasswordField3");
         tf_password_atual.setMargin(new java.awt.Insets(2, 5, 2, 2));
-
-        tf_no.setText("jTextField1");
 
         javax.swing.GroupLayout panel_dadosLayout = new javax.swing.GroupLayout(panel_dados);
         panel_dados.setLayout(panel_dadosLayout);
@@ -100,8 +102,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                     .addGroup(panel_dadosLayout.createSequentialGroup()
                         .addGroup(panel_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(tf_no, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tf_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 26, Short.MAX_VALUE)
                         .addGroup(panel_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_dadosLayout.createSequentialGroup()
                                 .addComponent(rb_masculino)
@@ -131,9 +133,9 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tf_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rb_masculino)
-                    .addComponent(rb_feminino)
-                    .addComponent(tf_no, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rb_feminino))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -164,7 +166,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tf_novo_password, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tf_re_novo_password, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
@@ -253,9 +255,14 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             } else {
                 Usuario u = getUsuarioInterface();
                 if (u != null) {
-                    if (validaPassword()) {
-                        throw new ValidacaoException("Os campos de alteração de senha não coincidem!"
-                                + "\nOu a nova senha não possui no mínimo 5 caracteres...");
+                    if (!validaPasswordAtual()) {
+                        tf_password_atual.grabFocus();
+                        throw new ValidacaoException("O password atual não confere com o cadastrado!"
+                                + "\nPara alterar qualquer dado o password atual deverá ser igual ao que já está cadastrado no sistema.");
+                    } else if (tf_novo_password.getPassword().length > 0 && !validaPassword()) {
+                        tf_novo_password.grabFocus();
+                        throw new ValidacaoException("Os campos de alteração de password não coincidem!"
+                                + "\nOu o novo password não possui no mínimo 5 caracteres...");
                     } else {
                         manager.atualizarUsuario(u);
                         JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
@@ -316,7 +323,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
      */
     public List<Component> getCamposValidar() {
         List<Component> components = new ArrayList<>();
-        components.add(tf_no);
+        components.add(tf_nome);
         components.add(tf_login);
         components.add(tf_password_atual);
         return components;
@@ -328,46 +335,65 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     private void preencheInterface() {
         Usuario u = manager.listarUsuario();
         if (u != null) {
-//            tf_login.setText(u.getLogin().toString());
-//            tf_password_atual.setText(u.getPassword());
-           tf_no.setToolTipText("asf");
+            usuario = u;
+            tf_nome.setText(u.getNome());
+            tf_login.setText(u.getLogin());
+            tf_password_atual.setText(Arrays.toString(u.getPassword()));
+
+            if (u.getSexo() == 'M') {
+                rb_masculino.setSelected(true);
+            } else {
+                rb_feminino.setSelected(true);
+            }
         }
     }
 
     /**
      * Monta o objeto Usuário com os dados oriundos da interface
      *
-     * @return Usuario
+     * @return <code>Usuario</code>
      */
     private Usuario getUsuarioInterface() {
-        String nome = tf_no.getText();
+        String nome = tf_nome.getText();
         String login = tf_login.getText();
-        String password = tf_password_atual.getSelectedText();
-        String password_novo = tf_novo_password.getSelectedText();
-        String password_re_novo = tf_re_novo_password.getSelectedText();
+        char[] password = tf_password_atual.getPassword();
+        char[] password_novo = tf_novo_password.getPassword();
+        char[] password_re_novo = tf_re_novo_password.getPassword();
         char sexo = rb_masculino.isSelected() ? 'M' : 'F';
 
-        if (!password_novo.isEmpty()) {
-            password = password_novo;
+        if (password_novo != null && password_novo.length > MINPASS) {
+            password = tf_novo_password.getPassword();
         }
-
+        System.out.println("CHER" + Arrays.toString(password));
         return new Usuario(nome, sexo, login, password);
     }
 
     /**
      * Valida os campos de nova senha
      *
-     * @return
+     * @return <code>true</code> se a validção for bem-sucedida ou
+     * <code>false</code> se não
      */
     private boolean validaPassword() {
-        String passNovo = tf_novo_password.getSelectedText();
-        String passReNovo = tf_re_novo_password.getSelectedText();
-        if (!(passNovo.length() < MINPASS)) {
-            if (!passNovo.isEmpty() && !passReNovo.isEmpty()) {
-                if (passNovo.equals(passReNovo)) {
-                    return true;
-                }
+        char[] passNovo = tf_novo_password.getPassword();
+        char[] passReNovo = tf_re_novo_password.getPassword();
+        if (!(passNovo.length < MINPASS)) {
+            if (Arrays.equals(passNovo, passReNovo)) {
+                return true;
             }
+        }
+        return false;
+    }
+
+    /**
+     * Valida a senha atual.
+     *
+     * @return <code>true</code> se a validção for bem-sucedida ou
+     * <code>false</code> se não
+     */
+    private boolean validaPasswordAtual() {
+        if (Arrays.equals(usuario.getPassword(), tf_password_atual.getPassword())) {
+            return true;
         }
         return false;
     }
@@ -387,7 +413,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     private javax.swing.JRadioButton rb_feminino;
     private javax.swing.JRadioButton rb_masculino;
     private javax.swing.JTextField tf_login;
-    private javax.swing.JTextField tf_no;
+    private javax.swing.JTextField tf_nome;
     private javax.swing.JPasswordField tf_novo_password;
     private javax.swing.JPasswordField tf_password_atual;
     private javax.swing.JPasswordField tf_re_novo_password;

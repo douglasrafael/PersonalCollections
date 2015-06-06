@@ -179,9 +179,9 @@ public class TelaLogin extends javax.swing.JFrame {
             manager = new Gerenciador();
             String login = tf_login.getText();
             
-            Usuario u = manager.autenticar(tf_login.getText(), tf_password.getSelectedText());
+            Usuario u = manager.autenticar(tf_login.getText(), tf_password.getPassword());
             
-            if (manager.autenticar(tf_login.getText(), String.valueOf(tf_password.getPassword())) == null) {
+            if (u == null) {
                 tf_login.setText("");
                 tf_password.setText("");
                 tf_login.grabFocus();

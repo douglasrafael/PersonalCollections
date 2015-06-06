@@ -488,7 +488,7 @@ public class Gerenciador {
      * seja
      * @throws PersonalCollectionsException
      */
-    public Usuario autenticar(String login, String password) throws PersonalCollectionsException {
+    public Usuario autenticar(String login, char[] password) throws PersonalCollectionsException {
         return usuario.autenticar(login, password);
     }
 
