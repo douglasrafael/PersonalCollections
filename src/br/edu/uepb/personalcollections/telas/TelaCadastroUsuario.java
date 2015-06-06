@@ -338,7 +338,6 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             usuario = u;
             tf_nome.setText(u.getNome());
             tf_login.setText(u.getLogin());
-            tf_password_atual.setText(Arrays.toString(u.getPassword()));
 
             if (u.getSexo() == 'M') {
                 rb_masculino.setSelected(true);
@@ -364,7 +363,6 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         if (password_novo != null && password_novo.length > MINPASS) {
             password = tf_novo_password.getPassword();
         }
-        System.out.println("CHER" + Arrays.toString(password));
         return new Usuario(nome, sexo, login, password);
     }
 
