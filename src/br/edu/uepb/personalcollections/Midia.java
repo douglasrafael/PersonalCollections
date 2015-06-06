@@ -10,6 +10,7 @@ import br.edu.uepb.personalcollections.enums.TipoItem;
  *
  */
 public class Midia extends Item {
+    private static final long serialVersionUID = -2497614711449537086L;
 
     private String marca;
     private String conteudo;

@@ -11,7 +11,8 @@ import br.edu.uepb.personalcollections.enums.TipoItem;
  */
 public class HQ extends Item {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5886700636491703531L;
+
     private int numero;
     private String editora;
     private String saga;
@@ -44,11 +45,11 @@ public class HQ extends Item {
         this.universo = universo;
         this.lido = lido;
     }
-    
+
     /**
-     * Costrutor que recebe também o id como parametro.
-     * Não usa o auto_icrement para o id
-     * 
+     * Costrutor que recebe também o id como parametro. Não usa o auto_icrement
+     * para o id
+     *
      * @param id
      * @param titulo
      * @param observacao
@@ -63,7 +64,7 @@ public class HQ extends Item {
      * @param editora
      * @param saga
      * @param universo
-     * @param lido 
+     * @param lido
      */
     public HQ(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, String universo, boolean lido) {
         super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);

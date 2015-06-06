@@ -12,6 +12,8 @@ import java.util.Objects;
  */
 public class DLC implements Serializable {
 
+    private static final long serialVersionUID = -424713358112129380L;
+
     private String titulo;
     private LocalizacaoDLC localizacao;
 
@@ -68,7 +70,7 @@ public class DLC implements Serializable {
             return false;
         } else {
             DLC outroDLC = (DLC) o;
-            return outroDLC.getTitulo() == getTitulo() && getLocalizacao() == outroDLC.getLocalizacao();
+            return outroDLC.getTitulo().equals(getTitulo()) && getLocalizacao() == outroDLC.getLocalizacao();
         }
     }
 

@@ -23,6 +23,8 @@ import br.edu.uepb.personalcollections.Tabuleiro;
 import br.edu.uepb.personalcollections.Usuario;
 import br.edu.uepb.personalcollections.enums.FiltroItem;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -310,6 +312,23 @@ public class Gerenciador {
                 } else if (item.getEstado().getTitulo().matches(regex)) {
                     lista_search.add(item);
                 }
+            } else if (filtro.equals(FiltroItem.ITEMREPETIDO)) {
+                int count = 0;
+                for (Item itemOutro : listaDeItens) {
+                    if (item.getTitulo().equals(itemOutro.getTitulo()) && item.getTipo().equals(itemOutro.getTipo())) {
+                        if (++count > 1) {
+                            break;
+                        }
+                    }
+                }
+                if (count > 1) {
+                    if (termo.isEmpty()) {
+                        lista_search.add(item);
+                    } else if (item.getTitulo().matches(regex)) {
+                        lista_search.add(item);
+                    }
+                }
+                count = 0;
             }
         }
         return lista_search;
@@ -471,6 +490,24 @@ public class Gerenciador {
      */
     public Usuario autenticar(String login, String password) throws PersonalCollectionsException {
         return usuario.autenticar(login, password);
+    }
+
+    /**
+     * Recupera os dados do usuário administrador do sistema.
+     *
+     * @return O Usuario
+     */
+    public Usuario listarUsuario() {
+        return usuario.listar();
+    }
+
+    /**
+     * Atualiza os dados do usuário.
+     *
+     * @param u O usuário a ser atualizado
+     */
+    public void atualizarUsuario(Usuario u) {
+        usuario.atualizar(u);
     }
 
     /**
@@ -762,16 +799,16 @@ public class Gerenciador {
         }
         Emprestimo.setAuto_increment(max);
     }
-    
+
     /**
      * Checa se tem item cadastrado
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean temItem() {
         return listaDeItens.isEmpty();
     }
-    
+
     /**
      * Limpa lista de items
      */

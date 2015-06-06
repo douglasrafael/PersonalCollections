@@ -103,22 +103,22 @@ public class TestGerenciador {
         }
     }
 
-    @Test
-    public void limpaListaDeItems() {
-        try {
-            inserir();
-            Assert.assertTrue(manager.listarItens().size() > 0);
-            
-            // Limpando lista de items
-            manager.cleanItems();
-            System.out.println(""+ manager.listarItens());
-            Assert.assertTrue(manager.listarItens().isEmpty());
-            
-        } catch (PersonalCollectionsException ex) {
-            Logger.getLogger(TestGerenciador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+//    @Test
+//    public void limpaListaDeItems() {
+//        try {
+//            inserir();
+//            Assert.assertTrue(manager.listarItens().size() > 0);
+//            
+//            // Limpando lista de items
+//            manager.cleanItems();
+//            System.out.println(""+ manager.listarItens());
+//            Assert.assertTrue(manager.listarItens().isEmpty());
+//            
+//        } catch (PersonalCollectionsException ex) {
+//            Logger.getLogger(TestGerenciador.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//    }
 
 //    @Test
 //    public void testSave() {

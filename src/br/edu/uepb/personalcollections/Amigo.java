@@ -10,6 +10,8 @@ import br.edu.uepb.personalcollections.enums.Parentesco;
  */
 public class Amigo extends Pessoa {
 
+    private static final long serialVersionUID = -7652369002447746103L;
+
     private String endereco;
     private String telefone;
     private String email;
@@ -32,17 +34,17 @@ public class Amigo extends Pessoa {
         this.email = email;
         this.parentesco = parentesco;
     }
-    
+
     /**
      * Contrutor que recebe o id. Não é utilizado o auto_increment par ao id.
-     * 
+     *
      * @param id
      * @param nome
      * @param sexo
      * @param endereco
      * @param telefone
      * @param email
-     * @param parentesco 
+     * @param parentesco
      */
     public Amigo(int id, String nome, char sexo, String endereco, String telefone, String email, Parentesco parentesco) {
         super(id, nome, sexo);
@@ -51,7 +53,7 @@ public class Amigo extends Pessoa {
         this.email = email;
         this.parentesco = parentesco;
     }
-    
+
     /**
      * Recupera o endereço do amigo do usuário.
      *

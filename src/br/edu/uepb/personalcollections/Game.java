@@ -15,6 +15,8 @@ import br.edu.uepb.personalcollections.enums.TipoItem;
  */
 public class Game extends Item {
 
+    private static final long serialVersionUID = -5611502416819270867L;
+    
     private Console console;
     private boolean zerado;
     private boolean possuiDLC;
@@ -43,11 +45,11 @@ public class Game extends Item {
         this.possuiDLC = possuiDLC;
         this.DLCs = dlcs;
     }
-    
+
     /**
-     * Método construtor com id e que possue DLC's. 
-     * Não utiliza o auto_increment para o id.
-     * 
+     * Método construtor com id e que possue DLC's. Não utiliza o auto_increment
+     * para o id.
+     *
      * @param id
      * @param titulo
      * @param observacao
@@ -60,7 +62,7 @@ public class Game extends Item {
      * @param console
      * @param zerado
      * @param possuiDLC
-     * @param dlcs 
+     * @param dlcs
      */
     public Game(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, Console console, boolean zerado, boolean possuiDLC, List<DLC> dlcs) {
         super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOVIDEOGAME);
@@ -92,11 +94,11 @@ public class Game extends Item {
         List<DLC> semDLCs = new ArrayList<>();
         this.DLCs = semDLCs;
     }
-    
+
     /**
-     * Método construtor com id e que não possui DLC's. 
-     * Não utiliza o auto_increment para o id.
-     * 
+     * Método construtor com id e que não possui DLC's. Não utiliza o
+     * auto_increment para o id.
+     *
      * @param id
      * @param titulo
      * @param observacao
@@ -107,7 +109,7 @@ public class Game extends Item {
      * @param estado
      * @param emprestado
      * @param console
-     * @param zerado 
+     * @param zerado
      */
     public Game(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, Console console, boolean zerado) {
         super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOVIDEOGAME);

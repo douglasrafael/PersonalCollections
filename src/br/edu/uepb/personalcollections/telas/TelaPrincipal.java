@@ -36,12 +36,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        bt_ranking = new javax.swing.JButton();
+        bt_series = new javax.swing.JButton();
+        bt_lista = new javax.swing.JButton();
+        bt_emprestimo = new javax.swing.JButton();
+        bt_amigos = new javax.swing.JButton();
         bt_itens = new javax.swing.JButton();
+        tf_editar_cadastro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Personal Collections");
@@ -127,8 +128,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_preco_total)
@@ -137,36 +138,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton8.setIcon(new ImageIcon("images/ranking.png"));
-        jButton8.setText("Ranking");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        bt_ranking.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bt_ranking.setIcon(new ImageIcon("images/ranking.png"));
+        bt_ranking.setText("Ranking");
+        bt_ranking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 abrirRanking(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton7.setIcon(new ImageIcon("images/series.png"));
-        jButton7.setText("Séries");
+        bt_series.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bt_series.setIcon(new ImageIcon("images/series.png"));
+        bt_series.setText("Séries");
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton6.setIcon(new ImageIcon("images/whishlist.png"));
-        jButton6.setText("Lista de Desejos");
+        bt_lista.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bt_lista.setIcon(new ImageIcon("images/whishlist.png"));
+        bt_lista.setText("Lista de Desejos");
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton5.setIcon(new ImageIcon("images/loan.png"));
-        jButton5.setText("Empréstimos");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        bt_emprestimo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bt_emprestimo.setIcon(new ImageIcon("images/loan.png"));
+        bt_emprestimo.setText("Empréstimos");
+        bt_emprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 abrirEmprestimos(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton4.setIcon(new ImageIcon("images/friend.png"));
-        jButton4.setText("Amigos");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bt_amigos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bt_amigos.setIcon(new ImageIcon("images/friend.png"));
+        bt_amigos.setText("Amigos");
+        bt_amigos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 abrirTelaAmigos(evt);
             }
@@ -181,6 +182,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        tf_editar_cadastro.setForeground(new java.awt.Color(102, 102, 102));
+        tf_editar_cadastro.setText("Editar Cadastro");
+        tf_editar_cadastro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tf_editar_cadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abrirCadastro(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -189,28 +199,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(bt_itens)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(bt_amigos)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(bt_emprestimo)
                 .addGap(18, 18, 18)
-                .addComponent(jButton8)
+                .addComponent(bt_ranking)
                 .addGap(18, 18, 18)
-                .addComponent(jButton7)
+                .addComponent(bt_series)
                 .addGap(18, 18, 18)
-                .addComponent(jButton6)
-                .addContainerGap(431, Short.MAX_VALUE))
+                .addComponent(bt_lista)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addComponent(tf_editar_cadastro)
+                .addGap(20, 20, 20))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_itens, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bt_amigos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_itens, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_emprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_lista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_series, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_ranking, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_editar_cadastro))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -221,10 +235,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,9 +247,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -257,6 +271,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void abrirRanking(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirRanking
        new TelaRanking(this, true).setVisible(true);
     }//GEN-LAST:event_abrirRanking
+
+    private void abrirCadastro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirCadastro
+        new TelaCadastroUsuario(this, true).setVisible(true);
+    }//GEN-LAST:event_abrirCadastro
 
     /**
      * @param args the command line arguments
@@ -294,12 +312,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_amigos;
+    private javax.swing.JButton bt_emprestimo;
     private javax.swing.JButton bt_itens;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton bt_lista;
+    private javax.swing.JButton bt_ranking;
+    private javax.swing.JButton bt_series;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -311,5 +329,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel lb_preco_total;
     private javax.swing.JLabel lb_total_itens;
+    private javax.swing.JLabel tf_editar_cadastro;
     // End of variables declaration//GEN-END:variables
 }

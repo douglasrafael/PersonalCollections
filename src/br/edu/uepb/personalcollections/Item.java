@@ -12,7 +12,8 @@ import java.io.Serializable;
  */
 public class Item implements Comparable<Item>, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3949564846392825765L;
+    
     private static int auto_increment = 0;
 
     private int id;
@@ -185,7 +186,7 @@ public class Item implements Comparable<Item>, Serializable {
     public void setTotalEmprestado() {
         this.totalEmprestado += 1;
     }
-    
+
     /**
      * Decrementa em 1 o total de vezes que o item foi emprestado.
      */

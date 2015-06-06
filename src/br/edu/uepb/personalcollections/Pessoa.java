@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 public class Pessoa implements Comparable<Pessoa>, Serializable {
 
+    private static final long serialVersionUID = -7202484515674378544L;
+
     private static int auto_increment = 0;
 
     private int id;
@@ -40,10 +42,10 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
         this.nome = nome;
         this.sexo = sexo;
     }
-    
+
     /**
      * Recupera o valor atual do auto_increment.
-     * 
+     *
      * @return O valor do auto_increment
      */
     public static int getAuto_increment() {
@@ -52,7 +54,7 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
 
     /**
      * Seta o valor inicial do auto_increment.
-     * 
+     *
      * @param auto_increment Valor a ser setado
      */
     public static void setAuto_increment(int auto_increment) {

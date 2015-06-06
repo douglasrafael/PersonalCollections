@@ -11,7 +11,7 @@ public enum FiltroItem {
      * Filtros
      */
     TITULO("Título"), ESTADO("Estado"), HQTITULO("HQ - Título"), MIDIATITULO("Mídia - Título"), GAMETITULO("Jogo de Videogame - Título"), TABULEIROTITULO("Jogo de Tabuleiro - Título"), HQESTADO("HQ - Estado"), MIDIAESTADO("Mídia - Estado"), GAMEESTADO("Jogo de Videogame - Estado"), TABULEIROESTADO("Jogo de Tabuleiro - Estado"),
-    HQEDITORA("HQ - Editora"), HQUNIVERSO("HQ - Universo"), GAMEDLC("Jogo de Videogame - DLC");
+    HQEDITORA("HQ - Editora"), HQUNIVERSO("HQ - Universo"), GAMEDLC("Jogo de Videogame - DLC"), ITEMREPETIDO("Itens Repetidos");
 
     private String titulo;
 

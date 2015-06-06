@@ -2,13 +2,20 @@ package br.edu.uepb.personalcollections;
 
 import java.io.Serializable;
 
+/**
+ * Representa um empréstimo de item.
+ * 
+ * @author Douglas Rafael
+ */
 public class Emprestimo implements Comparable<Emprestimo>, Serializable {
+
+    private static final long serialVersionUID = 6083128787453657324L;
 
     private static int auto_increment = 0;
     private int id;
     private String dataEmprestimo;
     private String dataRetono;
-    private boolean finalizado; 
+    private boolean finalizado;
     private Item item;
     private Amigo amigo;
 
@@ -51,7 +58,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
 
     /**
      * Recupera o valor atual do auto_increment.
-     * 
+     *
      * @return O valor do auto_increment
      */
     public static int getAuto_increment() {
@@ -60,14 +67,13 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
 
     /**
      * Seta o valor inicial do auto_increment.
-     * 
+     *
      * @param auto_increment O valor do auto_increment
      */
     public static void setAuto_increment(int auto_increment) {
         Emprestimo.auto_increment = auto_increment;
     }
 
-    
     /**
      * Recupera o id
      *
@@ -160,7 +166,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
 
     /**
      * Recupera se o empréstimo está finalizado ou não.
-     * 
+     *
      * @return True para finalizado e False para não.
      */
     public boolean isFinalizado() {
@@ -168,18 +174,18 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     }
 
     /**
-     * Seta se o estado do empréstimo como finalizado ou não.
-     * True para finalizado e False para não.
-     * 
-     * @param finalizado 
+     * Seta se o estado do empréstimo como finalizado ou não. True para
+     * finalizado e False para não.
+     *
+     * @param finalizado
      */
     public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
     }
-    
+
     /**
      * Retorna o status do emprestimo (ativo ou inativo)
-     * 
+     *
      * @return O status do emprestimo (Ativo ou Inativo)
      */
     public String getStatus() {
@@ -220,5 +226,4 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
             return 0;
         }
     }
-
 }

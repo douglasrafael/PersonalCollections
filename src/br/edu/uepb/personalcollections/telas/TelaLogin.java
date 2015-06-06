@@ -5,14 +5,15 @@ import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import br.edu.uepb.personalcollections.Usuario;
+import java.awt.event.KeyEvent;
 
 /**
  * Tela de login
- * 
+ *
  * @author Douglas Rafael
  */
 public class TelaLogin extends javax.swing.JFrame {
-
+    
     private Gerenciador manager;
 
     /**
@@ -59,7 +60,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel1.setText("Usuário");
 
         tf_login.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        tf_login.setText("Admin");
+        tf_login.setText("admin");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Password");
@@ -67,6 +68,11 @@ public class TelaLogin extends javax.swing.JFrame {
         tf_password.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tf_password.setText("123456");
         tf_password.setToolTipText("");
+        tf_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                chamaAutenticao(evt);
+            }
+        });
 
         bt_login.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bt_login.setIcon(new ImageIcon("images/save.png"));
@@ -163,8 +169,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_fecharJanela
 
     /**
-     * Autentica usuário no sistema. 
-     * Se a autenticação for válida é aberto a tela principal da aplicação
+     * Autentica usuário no sistema. Se a autenticação for válida é aberto a
+     * tela principal da aplicação
      *
      * @param evt
      */
@@ -172,9 +178,9 @@ public class TelaLogin extends javax.swing.JFrame {
         try {
             manager = new Gerenciador();
             String login = tf_login.getText();
-
-            Usuario u = manager.autenticar(tf_login.getText(), "123456");
-
+            
+            Usuario u = manager.autenticar(tf_login.getText(), tf_password.getSelectedText());
+            
             if (manager.autenticar(tf_login.getText(), String.valueOf(tf_password.getPassword())) == null) {
                 tf_login.setText("");
                 tf_password.setText("");
@@ -189,6 +195,12 @@ public class TelaLogin extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_autenticar
+
+    private void chamaAutenticao(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chamaAutenticao
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            autenticar(null);
+        }
+    }//GEN-LAST:event_chamaAutenticao
 
     /**
      * @param args the command line arguments

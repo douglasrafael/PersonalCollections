@@ -439,6 +439,7 @@ public class TelaItens extends javax.swing.JDialog {
                         throw new PersonalCollectionsException("Não foi possível remover Jogo de Tabuleiro: " + titulo);
                     } else {
                         JOptionPane.showMessageDialog(null, "Item removido com sucesso!", "Remorção", JOptionPane.INFORMATION_MESSAGE);
+                        listaDeItens = manager.listarItens();
                         refresh();
                     }
                 }
@@ -463,6 +464,7 @@ public class TelaItens extends javax.swing.JDialog {
                         throw new PersonalCollectionsException("Não foi possível remover a HQ: " + titulo);
                     } else {
                         JOptionPane.showMessageDialog(null, "Item removido com sucesso!", "Remorção", JOptionPane.INFORMATION_MESSAGE);
+                        listaDeItens = manager.listarItens();
                         refresh();
                     }
                 }
@@ -487,6 +489,7 @@ public class TelaItens extends javax.swing.JDialog {
                         throw new PersonalCollectionsException("Não foi possível remover a Mídia: " + titulo);
                     } else {
                         JOptionPane.showMessageDialog(null, "Item removido com sucesso!", "Remorção", JOptionPane.INFORMATION_MESSAGE);
+                        listaDeItens = manager.listarItens();
                         refresh();
                     }
                 }
@@ -511,6 +514,7 @@ public class TelaItens extends javax.swing.JDialog {
                         throw new PersonalCollectionsException("Não foi possível remover a Mídia: " + titulo);
                     } else {
                         JOptionPane.showMessageDialog(null, "Item removido com sucesso!", "Remorção", JOptionPane.INFORMATION_MESSAGE);
+                        listaDeItens = manager.listarItens();
                         refresh();
                     }
                 }

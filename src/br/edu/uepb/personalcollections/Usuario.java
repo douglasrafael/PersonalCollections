@@ -3,7 +3,9 @@ package br.edu.uepb.personalcollections;
 import java.util.Objects;
 
 public class Usuario extends Pessoa {
-
+    
+    private static final long serialVersionUID = -7344963702457089731L;
+    
     private String login;
     private String password;
 
@@ -63,7 +65,7 @@ public class Usuario extends Pessoa {
             return false;
         }
         Usuario outroUsuario = (Usuario) o;
-        return outroUsuario.getLogin() == getLogin() && outroUsuario.getPassword() == getPassword();
+        return outroUsuario.getLogin().equals(getLogin()) && outroUsuario.getPassword().equals(getPassword());
     }
 
     @Override

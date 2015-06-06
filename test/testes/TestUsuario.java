@@ -11,13 +11,18 @@ import br.edu.uepb.personalcollections.Usuario;
 
 public class TestUsuario {
 
-    private Gerenciador gerencidorUsuario;
+    private Gerenciador manager;
     private Usuario user;
 
     @Before
     public void init() {
-        gerencidorUsuario = new Gerenciador();
-        user = new Usuario("Douglas Rafael", 'M', "Admin", "123456");
+        manager = new Gerenciador();
+        user = new Usuario("Douglas Rafael", 'M', "admin", "123456");
+    }
+    
+    @Test
+    public void testAtualizar() {
+        manager.atualizarUsuario(user);
     }
     
     @Test
@@ -25,7 +30,7 @@ public class TestUsuario {
         Usuario user_compare = new Usuario("Douglas Rafael", 'M', "doug", "12");
         Assert.assertFalse(user.equals(user_compare)); // sao diferentes pois possui login e password diferentes
 
-        user_compare.setLogin("Admin");
+        user_compare.setLogin("admin");
         user_compare.setPassword("123456");
         Assert.assertTrue(user.equals(user_compare)); 
     }
@@ -33,8 +38,9 @@ public class TestUsuario {
     @Test
     public void testAutenticacao() {
         try {
-            Assert.assertTrue(user.equals(gerencidorUsuario.autenticar("Admin", "123456"))); // login válido
-            Assert.assertTrue(gerencidorUsuario.autenticar("user", "12") == null); // login inválido
+            Assert.assertFalse(user.equals(manager.autenticar("Admin", "123456"))); // login inválido
+            Assert.assertEquals(user, manager.autenticar("admin", "123456")); // login válido
+            Assert.assertTrue(manager.autenticar("user", "12") == null); // login inválido
         } catch (PersonalCollectionsException e) {
             System.err.println(e.getMessage());
         }

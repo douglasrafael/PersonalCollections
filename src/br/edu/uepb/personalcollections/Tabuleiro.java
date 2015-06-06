@@ -11,6 +11,8 @@ import br.edu.uepb.personalcollections.enums.TipoItem;
  */
 public class Tabuleiro extends Item {
 
+    private static final long serialVersionUID = -7898727857937184320L;
+
     /**
      * Método construtor.
      *
@@ -26,10 +28,10 @@ public class Tabuleiro extends Item {
     public Tabuleiro(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado) {
         super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOTABULEIRO);
     }
-    
+
     /**
      * Construtor que recebe o id como parametro.
-     * 
+     *
      * @param id
      * @param titulo
      * @param observacao
@@ -38,7 +40,7 @@ public class Tabuleiro extends Item {
      * @param totalEmprestado
      * @param nota
      * @param estado
-     * @param emprestado 
+     * @param emprestado
      */
     public Tabuleiro(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado) {
         super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.JOGOTABULEIRO);
