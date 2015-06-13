@@ -3,11 +3,15 @@ package br.edu.uepb.personalcollections;
 import java.util.Objects;
 import java.util.Arrays;
 
-
+/**
+ * Representa usuário administrador. Apenas um usuário é permitido.
+ *
+ * @author Douglas Rafael
+ */
 public class Usuario extends Pessoa {
-    
+
     private static final long serialVersionUID = -7344963702457089731L;
-    
+
     private String login;
     private char[] password;
 
@@ -67,7 +71,7 @@ public class Usuario extends Pessoa {
             return false;
         }
         Usuario outroUsuario = (Usuario) o;
-        return outroUsuario.getLogin().equals(getLogin()) && Arrays.equals(outroUsuario.getPassword(),getPassword());
+        return outroUsuario.getLogin().equals(getLogin()) && Arrays.equals(outroUsuario.getPassword(), getPassword());
     }
 
     @Override

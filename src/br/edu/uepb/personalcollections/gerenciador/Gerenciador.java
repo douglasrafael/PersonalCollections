@@ -23,10 +23,6 @@ import br.edu.uepb.personalcollections.Tabuleiro;
 import br.edu.uepb.personalcollections.Usuario;
 import br.edu.uepb.personalcollections.enums.FiltroItem;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Classe gerenciador

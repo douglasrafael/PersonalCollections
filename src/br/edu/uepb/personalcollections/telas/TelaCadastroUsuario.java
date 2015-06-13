@@ -60,7 +60,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         bt_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("CAdastro de Usuário");
+        setTitle("Cadastro de Usuário");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 fecharJanela(evt);

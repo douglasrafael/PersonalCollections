@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class Item implements Comparable<Item>, Serializable {
 
-    private static final long serialVersionUID = -3949564846392825765L;
+    private static final long serialVersionUID = 6228383725592637006L;
     
     private static int auto_increment = 0;
 
@@ -26,6 +26,7 @@ public class Item implements Comparable<Item>, Serializable {
     private Estado estado;
     private boolean emprestado;
     private TipoItem tipo;
+    private boolean possui;
 
     /**
      * Método construtor da classe.
@@ -51,6 +52,7 @@ public class Item implements Comparable<Item>, Serializable {
         this.estado = estado;
         this.emprestado = emprestado;
         this.tipo = tipo;
+        this.possui = true;
     }
 
     /**
@@ -79,6 +81,7 @@ public class Item implements Comparable<Item>, Serializable {
         this.estado = estado;
         this.emprestado = emprestado;
         this.tipo = tipo;
+        this.possui = true;
     }
 
     /**
@@ -293,6 +296,24 @@ public class Item implements Comparable<Item>, Serializable {
         this.tipo = tipo;
     }
 
+    /**
+     * Verifica se o item estar contido no acervo.
+     * 
+     * @return <code>true</code> se o item estiver no acervo pessoal ou <code>false</code> caso contrário.
+     */
+    public boolean isPossui() {
+        return possui;
+    }
+
+    /**
+     * Seta se o item estar no acerto ou não.
+     * 
+     * @param possui 
+     */
+    public void setPossui(boolean possui) {
+        this.possui = possui;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Item)) {
