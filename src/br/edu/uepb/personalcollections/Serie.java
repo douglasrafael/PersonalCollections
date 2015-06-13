@@ -61,6 +61,24 @@ public class Serie implements Serializable {
     }
 
     /**
+     * Recupera o valor atual do auto_increment.
+     *
+     * @return <code>int</code> Valor do auto_increment
+     */
+    public static int getAuto_increment() {
+        return auto_increment;
+    }
+
+    /**
+     * Seta o valor inicial do auto_increment.
+     *
+     * @param auto_increment O valor a ser setado
+     */
+    public static void setAuto_increment(int auto_increment) {
+        Serie.auto_increment = auto_increment;
+    }
+
+    /**
      * Recupera o título da série.
      *
      * @return <code>String</code> Título da série
@@ -81,7 +99,7 @@ public class Serie implements Serializable {
     /**
      * Recupera a lista de itens que é da série
      *
-     * @return <code>List<Item></code> Lista dos itens que são da série
+     * @return <code>List</code> Lista dos itens que são da série
      */
     public List<Item> getItens() {
         return itens;
@@ -95,10 +113,10 @@ public class Serie implements Serializable {
     public void setItens(List<Item> itens) {
         this.itens = itens;
     }
-    
+
     @Override
     public boolean equals(Object o) {
-        if(!(o instanceof Serie)) {
+        if (!(o instanceof Serie)) {
             return false;
         } else {
             Serie e = (Serie) o;
