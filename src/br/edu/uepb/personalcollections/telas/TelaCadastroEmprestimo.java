@@ -20,22 +20,26 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 
 /**
- * tela de emprestimos
+ * Tela de Empréstimos
  *
  * @author Douglas Rafael
  */
 public class TelaCadastroEmprestimo extends javax.swing.JDialog {
 
+    private static final long serialVersionUID = 6561682141171362562L;
+
     private final int TOTAL_DIAS_DATA = 15;
+    private final String STRCADASTRAR = "Cadastrar";
+    private final String STRATUALIZAR = "Atualizar";
 
     private int id;
-    private boolean statusEmp;
     private Emprestimo emprestimo;
     private DefaultTableModel modelTable;
     private Gerenciador manager;
 
     private List<Amigo> listaDeAmigos;
     private List<Item> listaDeItens;
+    private TelaPrincipal telaPrincipal;
 
     /**
      * Costrutor TelaEmprestimos
@@ -45,6 +49,10 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      */
     public TelaCadastroEmprestimo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        if(parent != null) {
+            this.telaPrincipal = (TelaPrincipal) parent;
+        }
+        
         manager = new Gerenciador();
         initComponents();
         modelTable = (DefaultTableModel) table_emprestimos.getModel();
@@ -82,6 +90,11 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Empréstimos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                fechaJanela(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Data de Retorno");
@@ -90,13 +103,21 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
         jLabel1.setText("Amigo");
 
         cb_amigos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_amigos.setSelectedIndex(-1);
+        cb_amigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSelecionado(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Item");
 
         cb_itens.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_itens.setSelectedIndex(-1);
+        cb_itens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSelecionado(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Data de Retirada");
@@ -148,7 +169,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
         bt_inserir.setText("Cadastrar");
         bt_inserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarEmprestimo(evt);
+                inserir(evt);
             }
         });
 
@@ -317,9 +338,14 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cadastrarEmprestimo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarEmprestimo
+    /**
+     * Cadastra empréstimo.
+     *
+     * @param evt
+     */
+    private void inserir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserir
         try {
-            if (validarCampos()) {
+            if (!validarCampos()) {
                 throw new ValidacaoException("O prenechimento dos seguintes campos são obrigatórios:"
                         + "\nAmigo"
                         + "\nItem"
@@ -338,7 +364,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar inserir o empréstimo...", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_cadastrarEmprestimo
+    }//GEN-LAST:event_inserir
 
     /**
      * Novo emprestimo. Todos os campos ssão limpados.
@@ -355,7 +381,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      * @param evt
      */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
-        this.dispose();
+        fechaJanela(null);
     }//GEN-LAST:event_cancelar
 
     /**
@@ -365,11 +391,11 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      */
     private void removeEmprestimo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmprestimo
         try {
-            if (this.emprestimo != null) {
+            if (getEmprestimo() != null) {
                 int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente remover o empréstimo selecionado?\n"
                         + "Todo registro relacionado a esse empréstimo será perdido e o item ficará disponível para novos empréstimos.", "Deletar empréstimo", JOptionPane.YES_NO_OPTION);
                 if (opcao == JOptionPane.YES_OPTION) {
-                    if (!manager.removerEmprestimo(this.emprestimo)) {
+                    if (!manager.removerEmprestimo(getEmprestimo())) {
                         throw new PersonalCollectionsException("Não foi possível remover o empréstimo.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Empréstimo removido com sucesso!", "Remorção", JOptionPane.INFORMATION_MESSAGE);
@@ -389,15 +415,18 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      */
     private void linhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linhaSelecionada
         int linha = table_emprestimos.getSelectedRow();
-        if (evt.getClickCount() == 1) {
+        if (evt.getClickCount() == 1 && linha >= 0) {
+            limpaCombos();
             bt_deletar.setEnabled(true);
             bt_finalizar.setEnabled(true);
+            bt_inserir.setEnabled(false);
             setId(Integer.parseInt((String) table_emprestimos.getValueAt(linha, 0)));
-            try {
-                this.emprestimo = manager.pesquisarEmprestimo(getId());
-            } catch (PersonalCollectionsException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Problema na recuperação dos dados do empréstimo.", JOptionPane.WARNING_MESSAGE);
+            if ("Finalizado".equals(table_emprestimos.getValueAt(linha, 5))) {
+                bt_finalizar.setEnabled(false);
+            } else {
+                bt_finalizar.setEnabled(true);
             }
+            setEmprestimo(getId());
         }
     }//GEN-LAST:event_linhaSelecionada
 
@@ -408,15 +437,16 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      */
     private void finalizarEmprestimo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarEmprestimo
         try {
-            if (this.emprestimo != null) {
-                if (emprestimo.getItem().isEmprestado()) {
+            if (getEmprestimo() != null) {
+                Emprestimo e = getEmprestimo();
+                if (e.getItem().isEmprestado()) {
                     int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente finalizar o empréstimo selecionado que está ATIVO?\nSe finalizado o item ficará disponível para novos empréstimos.", "Finalizar empréstimo", JOptionPane.YES_NO_OPTION);
                     if (opcao == JOptionPane.YES_OPTION) {
-                        Item item = manager.pesquisarItem(emprestimo.getItem().getId(), emprestimo.getItem().getTipo());
+                        Item item = manager.pesquisarItem(e.getItem().getId(), e.getItem().getTipo());
                         if (item != null) {
-                            emprestimo.setItem(item);
+                            e.setItem(item);
                         }
-                        manager.finalizarEmprestimo(emprestimo);
+                        manager.finalizarEmprestimo(e);
                         JOptionPane.showMessageDialog(null, "Empréstimo finalizado com sucesso!", "Finalização", JOptionPane.INFORMATION_MESSAGE);
                         populaCoponents();
                     }
@@ -428,6 +458,31 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Problema na finalização do empréstimo!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_finalizarEmprestimo
+
+    /**
+     * Identifica se algum item dos combobox foram selecionados e se sim ativa o
+     * botao adastrar.
+     *
+     * @param evt
+     */
+    private void comboSelecionado(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSelecionado
+        if (cb_amigos.getSelectedIndex() != -1 || cb_itens.getSelectedIndex() != -1) {
+            bt_deletar.setEnabled(false);
+            bt_finalizar.setEnabled(false);
+            bt_inserir.setEnabled(true);
+        }
+    }//GEN-LAST:event_comboSelecionado
+
+    /**
+     * Fecha Janela.
+     *
+     * @param evt
+     */
+    private void fechaJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fechaJanela
+        // Atualiza a tela principal
+        telaPrincipal.refresh();
+        this.dispose();
+    }//GEN-LAST:event_fechaJanela
 
     /**
      * @param args the command line arguments
@@ -472,28 +527,6 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bt_cancelar;
-    private javax.swing.JButton bt_deletar;
-    private javax.swing.JButton bt_finalizar;
-    private javax.swing.JButton bt_inserir;
-    private javax.swing.JButton bt_novo;
-    private javax.swing.JComboBox cb_amigos;
-    private javax.swing.JComboBox cb_itens;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lb_data_retorno;
-    private javax.swing.JLabel lb_data_retorno1;
-    private javax.swing.JPanel panel_principal;
-    private javax.swing.JPanel panel_tabela;
-    private javax.swing.JTable table_emprestimos;
-    private datechooser.beans.DateChooserCombo tf_data_retirada;
-    private datechooser.beans.DateChooserCombo tf_data_retorno;
-    // End of variables declaration//GEN-END:variables
-
     /**
      * Monta o objeto Emprestimo com os dados oriundos da interface
      *
@@ -529,6 +562,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
                 String data_retirada = tf_data_retirada.getText();
                 String data_retorno = tf_data_retorno.getText();
 
+                manager.setIdEmprestimo();
                 return new Emprestimo(data_retirada, data_retorno, false, amigoSelecinado, itemSelecionado);
             }
         } catch (ValidacaoException ex) {
@@ -544,12 +578,22 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      * Limpa todos os campos
      */
     private void limpaCampos() {
+        bt_inserir.setText(STRCADASTRAR);
         bt_deletar.setEnabled(false);
         bt_finalizar.setEnabled(false);
-        cb_amigos.setSelectedIndex(-1);
-        cb_itens.setSelectedIndex(-1);
+        bt_inserir.setEnabled(true);
         tf_data_retirada.setSelectedDate(Calendar.getInstance());
         setSugestaoDataDias(TOTAL_DIAS_DATA);
+        limpaCombos();
+    }
+
+    /**
+     * Limpa combobox.
+     *
+     */
+    private void limpaCombos() {
+        cb_amigos.setSelectedIndex(-1);
+        cb_itens.setSelectedIndex(-1);
     }
 
     /**
@@ -559,7 +603,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
         try {
             limpaCampos();
             this.listaDeAmigos = manager.listarAmigos();
-            this.listaDeItens = manager.listarItens();
+            this.listaDeItens = manager.listarItensDisponivelEmprestimo();
             cb_amigos.setModel(new DefaultComboBoxModel());
             cb_itens.setModel(new DefaultComboBoxModel());
 
@@ -567,12 +611,14 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
                 cb_amigos.addItem(String.format("[%04d] ", amigo.getId()) + amigo.getNome());
             }
 
+            Collections.sort(listaDeItens);
             for (Item item : listaDeItens) {
                 // Se o item já está emprestado ele não irá parecer na lista de disponíveis
                 if (!item.isEmprestado()) {
                     cb_itens.addItem(String.format("[%04d] ", item.getId()) + item.getTitulo() + " [" + item.getTipo().getTitulo() + "]");
                 }
             }
+            // Seta os combobox e botoes para os estados defaults
             limpaCampos();
 
             // Data de retorno
@@ -626,13 +672,8 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      * @return
      */
     private boolean validarCampos() {
-        if (cb_amigos.getSelectedIndex() == -1 || cb_itens.getSelectedIndex() == -1) {
-            return true;
-        } else if (tf_data_retirada.getText().isEmpty() || tf_data_retorno.getText().isEmpty()) {
-            return true;
-        }
-
-        return false;
+        return !((cb_amigos.getSelectedIndex() == -1 || cb_itens.getSelectedIndex() == -1)
+                || (tf_data_retirada.getText() == null || tf_data_retorno.getText() == null));
     }
 
     /**
@@ -671,4 +712,51 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     public void setId(int id) {
         this.id = id;
     }
+
+    /**
+     * Recupera objeto selecionado da tabele.
+     *
+     * @return Objeto empréstimo
+     */
+    public Emprestimo getEmprestimo() {
+        return emprestimo;
+    }
+
+    /**
+     * Seta o objeto empréstimo selecionado da tabela.
+     *
+     * @param idEmp Id do emprestimo
+     */
+    public void setEmprestimo(int idEmp) {
+        try {
+            Emprestimo e = manager.pesquisarEmprestimo(idEmp);
+            if (e != null) {
+                this.emprestimo = e;
+            }
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar recuperar o empréstimo selecionado...", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_cancelar;
+    private javax.swing.JButton bt_deletar;
+    private javax.swing.JButton bt_finalizar;
+    private javax.swing.JButton bt_inserir;
+    private javax.swing.JButton bt_novo;
+    private javax.swing.JComboBox cb_amigos;
+    private javax.swing.JComboBox cb_itens;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_data_retorno;
+    private javax.swing.JLabel lb_data_retorno1;
+    private javax.swing.JPanel panel_principal;
+    private javax.swing.JPanel panel_tabela;
+    private javax.swing.JTable table_emprestimos;
+    private datechooser.beans.DateChooserCombo tf_data_retirada;
+    private datechooser.beans.DateChooserCombo tf_data_retorno;
+    // End of variables declaration//GEN-END:variables
 }

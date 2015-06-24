@@ -11,18 +11,28 @@ import br.edu.uepb.personalcollections.enums.TipoItem;
 import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Calendar;
 import br.edu.uepb.personalcollections.Amigo;
 import br.edu.uepb.personalcollections.DLC;
 import br.edu.uepb.personalcollections.Emprestimo;
 import br.edu.uepb.personalcollections.Game;
 import br.edu.uepb.personalcollections.HQ;
 import br.edu.uepb.personalcollections.Item;
+import br.edu.uepb.personalcollections.ListaDeDesejo;
 import br.edu.uepb.personalcollections.Midia;
 import br.edu.uepb.personalcollections.Pessoa;
+import br.edu.uepb.personalcollections.Serie;
 import br.edu.uepb.personalcollections.Tabuleiro;
 import br.edu.uepb.personalcollections.Usuario;
+import br.edu.uepb.personalcollections.dao.ListaDeDesejoDAO;
+import br.edu.uepb.personalcollections.dao.SerieDAO;
 import br.edu.uepb.personalcollections.enums.FiltroItem;
+import br.edu.uepb.personalcollections.util.MyData;
+import java.text.ParseException;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe gerenciador
@@ -38,10 +48,14 @@ public class Gerenciador {
     private GameDAO game;
     private TabuleiroDAO tabuleiro;
     private EmprestimoDAO emprestimo;
+    private SerieDAO serie;
+    private ListaDeDesejoDAO whishlist;
 
     private static List<Item> listaDeItens = new LinkedList<>();
     private List<Amigo> listaDeAmigos = new LinkedList<>();
     private List<Emprestimo> listaDeEmprestimos = new LinkedList<>();
+    private List<Serie> listaDeSeries = new LinkedList<>();
+    private List<ListaDeDesejo> listaDeDesejos = new LinkedList<>();
 
     /**
      * Método construtor, cria as instâncias dos DAOs.
@@ -54,6 +68,8 @@ public class Gerenciador {
         game = new GameDAO();
         tabuleiro = new TabuleiroDAO();
         emprestimo = new EmprestimoDAO();
+        serie = new SerieDAO();
+        whishlist = new ListaDeDesejoDAO();
     }
 
     /**
@@ -78,12 +94,44 @@ public class Gerenciador {
             listaDeItens.addAll(listartabuleiros());
         }
 
-        // Seta o auto_increment caso ele não esteja setado
-        if (Item.getAuto_increment() == 0) {
-            setIdItem();
-        }
-
         return listaDeItens;
+    }
+
+    /**
+     * Retorna lista com itens disponível para empréstimos.
+     *
+     * @return Lista de Itens
+     * @throws PersonalCollectionsException
+     */
+    public List<Item> listarItensDisponivelEmprestimo() throws PersonalCollectionsException {
+        List<Item> listaDeItensDisponivel = new LinkedList<>();
+        // garante o listar emprestimo e itens
+        listarEmprestimos();
+        listarItens();
+
+        for (Item item : listaDeItens) {
+            boolean naoEmprestado = false;
+            for (Emprestimo e : listaDeEmprestimos) {
+                /**
+                 * verifica se tem pelo menos um emprestimo ativo se sim nao
+                 * estará disponivel para novos emprestimos
+                 */
+                if (e.getItem().equals(item) && !e.isFinalizado()) {
+                    naoEmprestado = true;
+                    break;
+                }
+                // Se encontrou um emprestimo ativo, 
+                // nao precisa procurar mais. o item nao devera ser adicionado na lista de disponiveis
+                if (naoEmprestado) {
+                    break;
+                }
+            }
+            // Se o item nao estar com nenhum emprestimo ativo, está disponivel
+            if (!naoEmprestado) {
+                listaDeItensDisponivel.add(item);
+            }
+        }
+        return listaDeItensDisponivel;
     }
 
     /**
@@ -150,6 +198,29 @@ public class Gerenciador {
     }
 
     /**
+     * Remove um item fazendo o mapeamento de acordo com a instancia do objeto.
+     * OS Empréstimos relacionados ao item também são removidos.
+     *
+     * @param Item Objeto do tipo item a ser removido
+     * @throws PersonalCollectionsException
+     */
+    public void removerItem(Item o) throws PersonalCollectionsException {
+        if (o instanceof Tabuleiro) {
+            Tabuleiro t = (Tabuleiro) o;
+            removerTabuleiro(t.getId());
+        } else if (o instanceof Game) {
+            Game g = (Game) o;
+            removerGame(g.getId());
+        } else if (o instanceof Midia) {
+            Midia m = (Midia) o;
+            removerMidia(m.getId());
+        } else if (o instanceof HQ) {
+            HQ h = (HQ) o;
+            removerHQ(h.getId());
+        }
+    }
+
+    /**
      * Atualiza um item fazendo o mapeamento de acordo com a instancia do
      * objeto, atualizando o item relacionado ao tipo de item.
      *
@@ -170,14 +241,6 @@ public class Gerenciador {
             HQ h = (HQ) o;
             hq.atualizar(h);
         }
-
-        // Atualiza também o item que está associado ao emprestimo
-//        if (listaDeEmprestimos.isEmpty()) {
-//            listarEmprestimos();
-//            if (!listaDeEmprestimos.isEmpty()) {
-//                emprestimo.serializar();
-//            }
-//        }
     }
 
     /**
@@ -209,7 +272,29 @@ public class Gerenciador {
     }
 
     /**
-     * Busca por items utilizando o filtro. Simula um like %termo% do SQL.
+     * Pesquisa por item de acordo com o id
+     *
+     * @param id
+     * @return
+     * @throws PersonalCollectionsException
+     */
+    public Item pesquisarItem(int id) throws PersonalCollectionsException {
+        Item item = null;
+        if (listaDeItens.isEmpty()) {
+            this.listarItens();
+        } else {
+            for (Item i : listaDeItens) {
+                if (i.getId() == id) {
+                    item = i;
+                    break;
+                }
+            }
+        }
+        return item;
+    }
+
+    /**
+     * Busca por itens utilizando o filtro. Simula um like %termo% do SQL.
      * Maiuscula e minuscula são ignorados.
      *
      * @param filtro
@@ -292,7 +377,7 @@ public class Gerenciador {
                     for (DLC dlc : g.getDLCs()) {
                         if (dlc.getTitulo().matches(regex)) {
                             lista_search.add(item);
-                            break; // Achou um dlc com o termo da busca, sai do loop
+                            break; // Achou um DLC com o termo da busca, sai do loop
                         }
                     }
                 }
@@ -389,15 +474,41 @@ public class Gerenciador {
      */
     public boolean removerHQ(int id) throws PersonalCollectionsException {
         HQ h = hq.pesquisar(id);
+
         if (h != null) {
             if (hq.remove(h)) {
+                atualizarItemAssociadoSerie(h);
+
                 // remove todos os emprestimos relacionados ao item
                 removeAllEmprestimoItem(id);
                 return true;
             }
         }
         return false;
+    }
 
+    /**
+     * Atualiza o item que esteja associado a uma série.
+     *
+     * @param o Item
+     * @throws PersonalCollectionsException
+     */
+    public void atualizarItemAssociadoSerie(Item o) throws PersonalCollectionsException {
+        /**
+         * Se o item estiver associado com alguma série, ele é sinalizado como
+         * não possui o item.
+         */
+        for (Serie s : listarSeries()) {
+            if (s.getItens().contains(o)) {
+                Item novoItem = o;
+                novoItem.setPossui(false);
+                novoItem.setTotalEmprestado(0);
+                novoItem.setEmprestado(false);
+
+                s.getItens().set(s.getItens().indexOf(o), novoItem);
+                serie.atualizar(s);
+            }
+        }
     }
 
     /**
@@ -417,6 +528,8 @@ public class Gerenciador {
         Midia m = midia.pesquisar(id);
         if (m != null) {
             if (midia.remove(m)) {
+                atualizarItemAssociadoSerie(m);
+
                 // remove todos os emprestimos relacionados ao item
                 removeAllEmprestimoItem(id);
                 return true;
@@ -442,6 +555,8 @@ public class Gerenciador {
         Game g = game.pesquisar(id);
         if (g != null) {
             if (game.remove(g)) {
+                atualizarItemAssociadoSerie(g);
+
                 // remove todos os emprestimos relacionados ao item
                 removeAllEmprestimoItem(id);
                 return true;
@@ -467,6 +582,8 @@ public class Gerenciador {
         Tabuleiro t = tabuleiro.pesquisar(id);
         if (t != null) {
             if (tabuleiro.remove(t)) {
+                atualizarItemAssociadoSerie(t);
+
                 // remove todos os emprestimos relacionados ao item
                 removeAllEmprestimoItem(id);
                 return true;
@@ -513,12 +630,9 @@ public class Gerenciador {
      * @throws PersonalCollectionsException
      */
     public List<Amigo> listarAmigos() throws PersonalCollectionsException {
+        listaDeAmigos.clear();
         listaDeAmigos = amigo.listar();
 
-        // Seta o auto_increment caso ele não esteja setado
-        if (Pessoa.getAuto_increment() == 0) {
-            setIdAmigo();
-        }
         return listaDeAmigos;
     }
 
@@ -582,13 +696,35 @@ public class Gerenciador {
      * @throws PersonalCollectionsException
      */
     public List<Emprestimo> listarEmprestimos() throws PersonalCollectionsException {
+        listaDeEmprestimos.clear();
         listaDeEmprestimos = emprestimo.listar();
 
-        // Seta o auto_increment caso ele não esteja setado
-        if (Emprestimo.getAuto_increment() == 0) {
-            setIdEmprestimo();
-        }
         return listaDeEmprestimos;
+    }
+
+    /**
+     * Recupera lista de emprestimos vencidos.
+     *
+     * @return Lista com os empréstimos vencidos
+     * @throws PersonalCollectionsException
+     * @throws ParseException
+     */
+    public List<Emprestimo> listarEmprestimosVencidos() throws PersonalCollectionsException, ParseException {
+        List<Emprestimo> listaDeEmprestimosVencidos = new LinkedList<>();
+        listaDeEmprestimos.clear();
+        listaDeEmprestimos = emprestimo.listar();
+        if (listaDeEmprestimos != null && !listaDeEmprestimos.isEmpty()) {
+            for (Emprestimo e : listaDeEmprestimos) {
+                if (!e.isFinalizado()) {
+                    Calendar dataAtual = new GregorianCalendar();
+                    Calendar dataRetorno = MyData.stringToCalendar(e.getDataRetono());
+                    if (dataAtual.compareTo(dataRetorno) > 0) {
+                        listaDeEmprestimosVencidos.add(e);
+                    }
+                }
+            }
+        }
+        return listaDeEmprestimosVencidos;
     }
 
     /**
@@ -599,6 +735,17 @@ public class Gerenciador {
      */
     public void inserirEmprestimo(Emprestimo e) throws PersonalCollectionsException {
         emprestimo.save(e);
+        atualizarItem(e.getItem());
+    }
+
+    /**
+     * Atualiza o empretismo.
+     *
+     * @param e O Emprestimo a ser atualizado
+     * @throws PersonalCollectionsException
+     */
+    public void atualizarEmprestimo(Emprestimo e) throws PersonalCollectionsException {
+        emprestimo.atualizar(e);
         atualizarItem(e.getItem());
     }
 
@@ -631,9 +778,7 @@ public class Gerenciador {
             if (emprestimo.remove(e)) {
                 // Como o emprestimo antes está sendo apagado o total de vezes que o item foi emprestado é decrementado
                 e.getItem().decrementaTotalEmprestado();
-                if (e.getItem().isEmprestado()) {
-                    e.getItem().setEmprestado(false);
-                }
+                e.getItem().setEmprestado(false);
                 atualizarItem(e.getItem());
                 return true;
             }
@@ -687,9 +832,7 @@ public class Gerenciador {
         if (e != null) {
             // Item devolvido
             e.getItem().setEmprestado(false);
-            if (!e.isFinalizado()) {
-                e.setFinalizado(true);
-            }
+            e.setFinalizado(true);
             emprestimo.atualizar(e);
             atualizarItem(e.getItem());
         }
@@ -752,32 +895,60 @@ public class Gerenciador {
      * Percorre a lista de itens e seta o auto_icrement com o maior id (último)
      * cadastrado.
      *
-     * @throws PersonalCollectionsException
      */
-    public void setIdItem() throws PersonalCollectionsException {
-        int max = 0;
-        for (Item item : listaDeItens) {
-            if (item.getId() > max) {
-                max = item.getId();
+    public void setIdItem() {
+        try {
+            int max = 0;
+            listaDeItens = listarItens();
+            for (Item item : listaDeItens) {
+                if (item.getId() > max) {
+                    max = item.getId();
+                }
             }
+            Item.setAuto_increment(max);
+        } catch (PersonalCollectionsException ex) {
+            Logger.getLogger(Gerenciador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Item.setAuto_increment(max);
     }
 
     /**
      * Percorre a lista de amigos e seta o auto_icrement com o maior id (último)
      * cadastrado.
      *
-     * @throws PersonalCollectionsException
      */
-    public void setIdAmigo() throws PersonalCollectionsException {
-        int max = 0;
-        for (Pessoa pessoa : listaDeAmigos) {
-            if (pessoa.getId() > max) {
-                max = pessoa.getId();
+    public void setIdAmigo() {
+        try {
+            int max = 0;
+            listaDeAmigos = listarAmigos();
+            for (Pessoa p : listaDeAmigos) {
+                if (p.getId() > max) {
+                    max = p.getId();
+                }
             }
+            Pessoa.setAuto_increment(max);
+        } catch (PersonalCollectionsException ex) {
+            Logger.getLogger(Gerenciador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Pessoa.setAuto_increment(max);
+    }
+
+    /**
+     * Percorre a lista de series e seta o auto_icrement com o maior id (último)
+     * cadastrado.
+     *
+     */
+    public void setIdSerie() {
+        try {
+            int max = 0;
+            listaDeSeries = listarSeries();
+            for (Serie s : listaDeSeries) {
+                if (s.getId() > max) {
+                    max = s.getId();
+                }
+            }
+            Serie.setAuto_increment(max);
+        } catch (PersonalCollectionsException ex) {
+            Logger.getLogger(Gerenciador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -786,14 +957,20 @@ public class Gerenciador {
      *
      * @throws PersonalCollectionsException
      */
-    public void setIdEmprestimo() throws PersonalCollectionsException {
-        int max = 0;
-        for (Emprestimo emp : listaDeEmprestimos) {
-            if (emp.getId() > max) {
-                max = emp.getId();
+    public void setIdEmprestimo() {
+        try {
+            int max = 0;
+            listaDeEmprestimos = listarEmprestimos();
+
+            for (Emprestimo emp : listaDeEmprestimos) {
+                if (emp.getId() > max) {
+                    max = emp.getId();
+                }
             }
+            Emprestimo.setAuto_increment(max);
+        } catch (PersonalCollectionsException ex) {
+            Logger.getLogger(Gerenciador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Emprestimo.setAuto_increment(max);
     }
 
     /**
@@ -810,5 +987,174 @@ public class Gerenciador {
      */
     public void cleanItems() throws PersonalCollectionsException {
         listarItens().clear();
+    }
+
+    /**
+     * Retorna lista de séries cadastradas.
+     *
+     * @return @throws PersonalCollectionsException
+     */
+    public List<Serie> listarSeries() throws PersonalCollectionsException {
+        listaDeSeries.clear();
+        listaDeSeries = serie.listar();
+        return listaDeSeries;
+    }
+
+    /**
+     * Insere uma nova serie.
+     *
+     * @param s Serie a ser inserida
+     * @throws PersonalCollectionsException
+     */
+    public void inserirSerie(Serie s) throws PersonalCollectionsException {
+        serie.save(s);
+    }
+
+    /**
+     * Atualiza série.
+     *
+     * @param s Serie a ser atualizada
+     * @throws PersonalCollectionsException
+     */
+    public void atualizarSerie(Serie s) throws PersonalCollectionsException {
+        serie.atualizar(s);
+    }
+
+    /**
+     * Remove uma série de acordo com o id.
+     *
+     * @param id Código da Série a ser removida
+     * @return true se a remoção foi bem sucedida e false caso não foi
+     * @throws PersonalCollectionsException
+     */
+    public boolean removerSerie(int id) throws PersonalCollectionsException {
+        Serie s = serie.pesquisar(id);
+        if (s != null) {
+            if (serie.remove(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retorna lista com os itens que estão disponíveis para cadastro de novas
+     * séries. Se um item estiver cadastrado em alguma série ele automaticamente
+     * estará indisponivel par anovas séries.
+     *
+     * @return <code>List<Item> </code> Lista com os itens disponíveis
+     * @throws PersonalCollectionsException
+     */
+    public List<Item> getItensDisponivelSerie() throws PersonalCollectionsException {
+        List<Item> result = new LinkedList<>();
+        listarSeries();
+
+        for (Item item : listarItens()) {
+            boolean flag = false;
+
+            for (Serie s : listarSeries()) {
+                if (s.getItens().contains(item) && flag != true) {
+                    flag = true;
+                }
+            }
+            if (!flag) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Pesquisa por Série
+     *
+     * @param id do objeto Série a ser pesquisado
+     * @return O objeto caso encontrado ou null caso não seja encontrado
+     * @throws PersonalCollectionsException
+     */
+    public Serie pesquisarSerie(int id) throws PersonalCollectionsException {
+        return serie.pesquisar(id);
+    }
+
+    /**
+     * Retorna lista de desejo cadastrada.
+     *
+     * @return @throws PersonalCollectionsException
+     */
+    public List<ListaDeDesejo> listarListaDeDesejo() throws PersonalCollectionsException {
+        listaDeDesejos.clear();
+        listaDeDesejos = whishlist.listar();
+        return listaDeDesejos;
+    }
+
+    /**
+     * Retorna lista de desejo com itens disponíveis para compra de acordo com a
+     * data de lançamento.
+     *
+     * @return @throws PersonalCollectionsException
+     */
+    public List<ListaDeDesejo> listarListaDeDesejoDisponiveis() throws PersonalCollectionsException, ParseException {
+        List<ListaDeDesejo> listaDesejoisponivel = new LinkedList<>();
+        // garante o listar
+        listarListaDeDesejo();
+
+        for (ListaDeDesejo l : listaDeDesejos) {
+            // se houver data de lançamento
+            if (!("".equals(l.getDataDeLancamento()))) {
+                Calendar dataAtual = new GregorianCalendar();
+                Calendar dataLancamento = MyData.stringToCalendar(l.getDataDeLancamento());
+                if (dataAtual.compareTo(dataLancamento) != -1) {
+                    listaDesejoisponivel.add(l);
+                }
+
+            }
+        }
+        return listaDesejoisponivel;
+    }
+
+    /**
+     * Insere um novo item na lista de desejo.
+     *
+     * @param o ListaDeDesejo contendo o item a ser inserido
+     * @throws PersonalCollectionsException
+     */
+    public void inserirItemListaDeDesejo(ListaDeDesejo o) throws PersonalCollectionsException {
+        whishlist.save(o);
+    }
+
+    /**
+     * Atualiza item da lista de desejo.
+     *
+     * @param o ListaDeDesejo contendo o item a ser atualizado
+     * @throws PersonalCollectionsException
+     */
+    public void atualizarItemListaDeDesejo(ListaDeDesejo o) throws PersonalCollectionsException {
+        whishlist.atualizar(o);
+    }
+
+    /**
+     * Remove o item da Lista de Desejo de acordo com o id do item.
+     *
+     * @param ListaDeDesejo Objeto contendo item a ser removido da lista de
+     * desejo
+     * @return true se a remoção foi bem sucedida e false caso não foi
+     * @throws PersonalCollectionsException
+     */
+    public boolean removerItemListaDeDesejo(ListaDeDesejo o) throws PersonalCollectionsException {
+        if (whishlist.remove(o)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Pesquisa por item na lista de desejo.
+     *
+     * @param String Título do Item a ser pesquisado
+     * @return ListaDeDesejo contendo Item caso encontrado ou null caso não seja
+     * encontrado
+     * @throws PersonalCollectionsException
+     */
+    public ListaDeDesejo pesquisarItemListaDeDesejo(String titulo) throws PersonalCollectionsException {
+        return whishlist.pesquisar(titulo);
     }
 }

@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar, serializar, deserializar...) referente ao tipo Game 
+ * 
+ * @author Douglas Rafael
+ */
 public class GameDAO implements DAO<Game> {
 
     private static List<Game> listaDeGames = new LinkedList<>();
@@ -123,7 +128,7 @@ public class GameDAO implements DAO<Game> {
         try {
             ser.serializar(PATH, listaDeGames);
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -135,9 +140,9 @@ public class GameDAO implements DAO<Game> {
                 listaDeGames = (LinkedList<Game>) o;
             }
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

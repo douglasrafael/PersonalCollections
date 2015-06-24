@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar, serializar, deserializar...) referente ao tipo Amigo 
+ * 
+ * @author Douglas Rafael
+ */
 public class AmigoDAO implements DAO<Amigo> {
 
     private static List<Amigo> listaDeAmigos = new LinkedList<>();
@@ -105,7 +110,7 @@ public class AmigoDAO implements DAO<Amigo> {
         try {
             ser.serializar(PATH, listaDeAmigos);
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AmigoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -117,9 +122,9 @@ public class AmigoDAO implements DAO<Amigo> {
                 listaDeAmigos = (LinkedList<Amigo>) o;
             }
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AmigoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AmigoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

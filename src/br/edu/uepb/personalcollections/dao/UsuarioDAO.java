@@ -7,6 +7,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Arrays;
 
+/**
+ * Contém as implementações de: (listar, autenticar, atualizar, serializar, deserializar...) referente ao tipo Amigo 
+ * 
+ * @author Douglas Rafael
+ */
 public class UsuarioDAO {
 
     private Serializador ser;
@@ -70,7 +75,7 @@ public class UsuarioDAO {
         try {
             ser.serializar(PATH, usuario);
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -84,9 +89,9 @@ public class UsuarioDAO {
                 usuario = (Usuario) o;
             }
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar, serializar, deserializar...) referente ao tipo HQ 
+ * 
+ * @author Douglas Rafael
+ */
 public class HqDAO implements DAO<HQ> {
 
     private static List<HQ> listaDeHQs = new LinkedList<>();
@@ -124,7 +129,7 @@ public class HqDAO implements DAO<HQ> {
         try {
             ser.serializar(PATH, listaDeHQs);
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HqDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -136,9 +141,9 @@ public class HqDAO implements DAO<HQ> {
                 listaDeHQs = (LinkedList<HQ>) o;
             }
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HqDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HqDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

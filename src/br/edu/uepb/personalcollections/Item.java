@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Item implements Comparable<Item>, Serializable {
 
     private static final long serialVersionUID = 6228383725592637006L;
-    
+
     private static int auto_increment = 0;
 
     private int id;
@@ -191,6 +191,13 @@ public class Item implements Comparable<Item>, Serializable {
     }
 
     /**
+     * Seta o total de emprestimos que o item sofreu.
+     */
+    public void setTotalEmprestado(int total) {
+        this.totalEmprestado = total;
+    }
+
+    /**
      * Decrementa em 1 o total de vezes que o item foi emprestado.
      */
     public void decrementaTotalEmprestado() {
@@ -298,8 +305,9 @@ public class Item implements Comparable<Item>, Serializable {
 
     /**
      * Verifica se o item estar contido no acervo.
-     * 
-     * @return <code>true</code> se o item estiver no acervo pessoal ou <code>false</code> caso contrário.
+     *
+     * @return <code>true</code> se o item estiver no acervo pessoal ou
+     * <code>false</code> caso contrário.
      */
     public boolean isPossui() {
         return possui;
@@ -307,13 +315,22 @@ public class Item implements Comparable<Item>, Serializable {
 
     /**
      * Seta se o item estar no acerto ou não.
-     * 
-     * @param possui 
+     *
+     * @param possui
      */
     public void setPossui(boolean possui) {
         this.possui = possui;
     }
-    
+
+    /**
+     * Retorna em <code>String</code> se possui item ou não.
+     *
+     * @return <code>String</code> Sim (caso possuir), Não (se nao possuir)
+     */
+    public String getStringPossui() {
+        return isPossui() ? "Sim" : "Não";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Item)) {

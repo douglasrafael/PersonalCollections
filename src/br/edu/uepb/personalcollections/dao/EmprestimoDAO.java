@@ -7,12 +7,16 @@ import java.util.List;
 import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
 import br.edu.uepb.personalcollections.Emprestimo;
 import br.edu.uepb.personalcollections.Item;
-import br.edu.uepb.personalcollections.enums.TipoItem;
 import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar, serializar, deserializar...) referente ao tipo Emprestimo 
+ * 
+ * @author Douglas Rafael
+ */
 public class EmprestimoDAO implements DAO<Emprestimo> {
 
     private static List<Emprestimo> listaDeEmprestimos = new LinkedList<>();
@@ -77,7 +81,7 @@ public class EmprestimoDAO implements DAO<Emprestimo> {
         try {
             ser.serializar(PATH, listaDeEmprestimos);
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -116,9 +120,9 @@ public class EmprestimoDAO implements DAO<Emprestimo> {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TabuleiroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (PersonalCollectionsException ex) {
             Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -13,9 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import br.edu.uepb.personalcollections.Tabuleiro;
 import br.edu.uepb.personalcollections.util.Validacao;
+import java.awt.Frame;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Tela cadastro de Jogos de Tabuleiro
@@ -24,11 +27,15 @@ import java.util.Calendar;
  */
 public class TelaCadastroTabuleiro extends javax.swing.JDialog {
 
+    private static final long serialVersionUID = -6971270093970271855L;
+
     private final String STRCADASTRAR = "Cadastrar";
     private final String STRATUALIZAR = "Atualizar";
     private static int id;
     private Gerenciador manager;
     private Tabuleiro tabuleiro;
+    private boolean interfaceSerie = false;
+    private boolean interfaceListaDeDesejo = false;
 
     /**
      * Construtor TelaCadastroTabuleiro
@@ -100,6 +107,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Estado");
 
+        cb_estado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cb_estado.setModel(new DefaultComboBoxModel(Estado.values()));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -253,9 +261,24 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fecha janela.
+     *
+     * @param evt
+     */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
-        new TelaItens(null, true).setVisible(true);
+
+        if (isInterfaceSerie()) {
+            TelaCadastroSerie.setFlag(false);
+            TelaCadastroSerie telaCadastroSerie = new TelaCadastroSerie(null, true, getTabuleiro(), TelaCadastroSerie.getIdSerie());
+            telaCadastroSerie.setVisible(true);
+        } else if (isInterfaceListaDeDesejo()) {
+            new TelaCadastroListaDeDesejo(null, true, getTabuleiro()).setVisible(true);
+        } else {
+            // Se nao veio da tela de cadastro de serie nem de lista de desejo
+            new TelaItens(null, true).setVisible(true);
+        }
     }//GEN-LAST:event_fecharJanela
 
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
@@ -273,12 +296,12 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
             if (Validacao.validarCamposVazios(panelPrincipal, getCamposValidar())) {
                 throw new ValidacaoException("O prenechimento dos seguintes campos são obrigatórios:\nTítulo");
             } else {
-                Tabuleiro tabuleiro = getTabuleiroInterface();
-                if (tabuleiro != null) {
+                Tabuleiro t = getTabuleiroInterface();
+                if (t != null) {
                     if (isInsert()) {
-                        inserir(tabuleiro);
+                        inserir(t);
                     } else if (isUpadate()) {
-                        atualizar(tabuleiro);
+                        atualizar(t);
                     }
                 }
             }
@@ -317,10 +340,22 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
      */
     private void inserir(Tabuleiro tabuleiro) {
         try {
-            manager.inserirItem(tabuleiro);
-            JOptionPane.showMessageDialog(null, "Item insirido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
-            limpaCampos();
-            tf_titulo.grabFocus();
+            if (isInterfaceSerie()) {
+                tabuleiro.setPossui(false);
+                setTabuleiro(tabuleiro);
+                JOptionPane.showMessageDialog(null, "Item inserido na lista de série com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else if (isInterfaceListaDeDesejo()) {
+                tabuleiro.setPossui(false);
+                setTabuleiro(tabuleiro);
+                JOptionPane.showMessageDialog(null, "Item foi pré-inserido na lista de desejo com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.inserirItem(tabuleiro);
+                JOptionPane.showMessageDialog(null, "Item insirido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                limpaCampos();
+                tf_titulo.grabFocus();
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar inserir o item", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -333,9 +368,16 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
      */
     private void atualizar(Tabuleiro tabuleiro) {
         try {
-            manager.atualizarItem(tabuleiro);
-            JOptionPane.showMessageDialog(null, "Item atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
-            fecharJanela(null);
+            if (isInterfaceListaDeDesejo()) {
+                tabuleiro.setPossui(false);
+                setTabuleiro(tabuleiro);
+                JOptionPane.showMessageDialog(null, "Item pré-inserido na lista de desejo foi atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.atualizarItem(tabuleiro);
+                JOptionPane.showMessageDialog(null, "Item atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar atualizar o item", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -426,6 +468,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
 
         // Se não for inserir é atualizar ou deletar
         if (isInsert()) {
+            manager.setIdItem();
             return new Tabuleiro(titulo, observacao, dataCompra, precoDeCompra, 0, nota, estado, false);
         } else {
             return new Tabuleiro(getId(), titulo, observacao, dataCompra, precoDeCompra, getTabuleiro().getTotalEmprestado(), nota, estado, getTabuleiro().isEmprestado());
@@ -460,13 +503,30 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     }
 
     /**
-     * Monta a interface com os dados para atualização
+     * Preenche a interface gráfica com os dados para atualização de a cordo com
+     * o id do Tabuleiro.
      *
      * @param idTabuleiro
      */
     private void montaAlterarDados(int idTabuleiro) {
         try {
-            Tabuleiro tab = manager.pesquisarTabuleiro(idTabuleiro);
+            Tabuleiro t = manager.pesquisarTabuleiro(idTabuleiro);
+            if (t != null) {
+                montaAlterarDados(t);
+            }
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Preenche a interface gráfica com os dados para atualização de acordo com
+     * o objeto Tabuleiro.
+     *
+     * @param tab Objeto Tabuleiro
+     */
+    public void montaAlterarDados(Tabuleiro tab) {
+        try {
             if (tab != null) {
                 setTabuleiro(tab);
                 bt_deletar.setEnabled(true); // habilita o botao deletar
@@ -485,14 +545,12 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
                 } else {
                     tf_data_compra.setSelectedDate(null);
                 }
-                
+
                 tf_preco.setValue(tab.getPrecoDeCompra());
                 cb_estado.setSelectedItem(tab.getEstado());
                 sp_nota.setValue(tab.getNota());
                 tf_obs.setText(tab.getObservacao());
             }
-        } catch (PersonalCollectionsException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar a data...", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -500,8 +558,8 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
 
     /**
      * Recupera o tabuleiro para edição
-     * 
-     * @return 
+     *
+     * @return
      */
     public Tabuleiro getTabuleiro() {
         return tabuleiro;
@@ -509,13 +567,53 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
 
     /**
      * Seta o tabuleiro para edição
-     * 
-     * @param tabuleiro 
+     *
+     * @param tabuleiro
      */
     public void setTabuleiro(Tabuleiro tabuleiro) {
         this.tabuleiro = tabuleiro;
     }
-    
+
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica TelaCadastroSerie
+     * que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceSerie() {
+        return interfaceSerie;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
+     * nao.
+     *
+     * @param interfaceSerie
+     */
+    public void setInterfaceSerie(boolean interfaceSerie) {
+        this.interfaceSerie = interfaceSerie;
+    }
+
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica
+     * TelaCadastroListaDeDesejo que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceListaDeDesejo() {
+        return interfaceListaDeDesejo;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
+     * tela ou nao.
+     *
+     * @param interfaceLista
+     */
+    public void setInterfaceListaDeDesejo(boolean interfaceLista) {
+        this.interfaceListaDeDesejo = interfaceLista;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_cancelar;
     private javax.swing.JButton bt_deletar;

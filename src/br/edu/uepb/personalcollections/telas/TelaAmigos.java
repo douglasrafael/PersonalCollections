@@ -23,6 +23,9 @@ import br.edu.uepb.personalcollections.util.Validacao;
  * @author Douglas Rafael
  */
 public class TelaAmigos extends javax.swing.JDialog {
+
+    private static final long serialVersionUID = 7271224899690477236L;
+
     private final String STRINFORDEL = "Todo histórico relacionado ao amigo, como por exemplo os empréstimos serão perdidos!";
     private final String STRCADASTRAR = "Cadastrar";
     private final String STRATUALIZAR = "Atualizar";
@@ -30,6 +33,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     private DefaultTableModel modelTable;
 
     private Gerenciador manager;
+    private TelaPrincipal telaPrincipal;
 
     /**
      * Contrutor TelaAmigos
@@ -40,6 +44,9 @@ public class TelaAmigos extends javax.swing.JDialog {
     public TelaAmigos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         manager = new Gerenciador();
+        if (parent != null) {
+            this.telaPrincipal = (TelaPrincipal) parent;
+        }
 
         initComponents();
         modelTable = (DefaultTableModel) table_amigos.getModel();
@@ -130,6 +137,7 @@ public class TelaAmigos extends javax.swing.JDialog {
         }
         tf_telefone.setMargin(new java.awt.Insets(2, 5, 2, 2));
 
+        cb_parentesco.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cb_parentesco.setModel(new DefaultComboBoxModel(Parentesco.values()));
 
         panel_dlc.setBorder(javax.swing.BorderFactory.createTitledBorder("Útimos Amigos Cadastrados"));
@@ -263,7 +271,7 @@ public class TelaAmigos extends javax.swing.JDialog {
                         .addGap(58, 58, 58)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(cb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -303,20 +311,22 @@ public class TelaAmigos extends javax.swing.JDialog {
                         .addGap(25, 25, 25)
                         .addComponent(tf_endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel6))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(tf_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(48, 48, 48))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(cb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2))))
-                .addGap(20, 20, 20)
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel6))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(tf_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(cb_parentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)))
                 .addComponent(panel_dlc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -349,6 +359,8 @@ public class TelaAmigos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
+        // Atualiza a tela principal
+        telaPrincipal.refresh();
         this.dispose();
     }//GEN-LAST:event_fecharJanela
 
@@ -358,7 +370,7 @@ public class TelaAmigos extends javax.swing.JDialog {
 
     /**
      * Verifica se a ação é de inserção ou atualização e chama seu respectivo
-     * método
+     * método.
      *
      * @param evt
      */
@@ -402,7 +414,7 @@ public class TelaAmigos extends javax.swing.JDialog {
                 }
             }
         } catch (PersonalCollectionsException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Problema na exclusão!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Problema na exclusão!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_removeAmigo
 
@@ -566,6 +578,7 @@ public class TelaAmigos extends javax.swing.JDialog {
                 ((JTextField) component).setText("");
             }
         }
+        bt_inserir.setText(STRCADASTRAR);
         bt_deletar.setEnabled(false);
         cb_parentesco.setSelectedIndex(0);
         tf_nome.grabFocus();
@@ -586,6 +599,7 @@ public class TelaAmigos extends javax.swing.JDialog {
         Parentesco parentesco = (Parentesco) cb_parentesco.getSelectedItem();
 
         if (isInsert()) {
+            manager.setIdAmigo();
             return new Amigo(nome, sexo, endereco, telefone, email, parentesco);
         } else {
             return new Amigo(getId(), nome, sexo, endereco, telefone, email, parentesco);
@@ -604,7 +618,7 @@ public class TelaAmigos extends javax.swing.JDialog {
             if (amigo != null) {
                 bt_deletar.setEnabled(true); // habilita o botao deletar
                 TelaAmigos.id = amigo.getId(); // seta o valor do id para variavel static 
-                bt_inserir.setText("Atualizar");
+                bt_inserir.setText(STRATUALIZAR);
 
                 tf_nome.setText(amigo.getNome());
                 tf_endereco.setText(amigo.getEndereco());

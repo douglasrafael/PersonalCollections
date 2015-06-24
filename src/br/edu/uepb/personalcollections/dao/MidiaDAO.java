@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar, serializar, deserializar...) referente ao tipo Midia 
+ * 
+ * @author Douglas Rafael
+ */
 public class MidiaDAO implements DAO<Midia> {
 
     private static List<Midia> listaDeMidias = new LinkedList<>();

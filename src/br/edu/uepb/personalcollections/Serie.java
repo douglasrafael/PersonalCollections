@@ -8,7 +8,7 @@ import java.io.Serializable;
  *
  * @author Douglas Rafael
  */
-public class Serie implements Serializable {
+public class Serie implements Comparable<Serie>, Serializable {
 
     private static final long serialVersionUID = 4028397478239954676L;
 
@@ -114,6 +114,31 @@ public class Serie implements Serializable {
         this.itens = itens;
     }
 
+    /**
+     * Retorna o total de itens cadastrados na serie
+     *
+     * @return <code>int</code> Total de itens
+     */
+    public int getTotalItens() {
+        return getItens().size();
+    }
+
+    /**
+     * Retorna uma string com todos os itens separados por virgula
+     *
+     * @return String de itens
+     */
+    public String getStringItens() {
+        String str_itens = "";
+        for (Item item : getItens()) {
+            str_itens += ", " + item.getTitulo();
+        }
+        if (str_itens.length() > 0 && str_itens.substring(0, 1).equals(",")) {
+            str_itens = str_itens.substring(2, str_itens.length());
+        }
+        return str_itens;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Serie)) {
@@ -136,5 +161,16 @@ public class Serie implements Serializable {
         return getId() + "\n"
                 + getTitulo() + "\n"
                 + getItens();
+    }
+
+    @Override
+    public int compareTo(Serie outro) {
+        if (getId() < outro.getId()) {
+            return 1;
+        } else if (getId() > outro.getId()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

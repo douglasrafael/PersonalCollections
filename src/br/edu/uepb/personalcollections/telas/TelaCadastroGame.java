@@ -29,12 +29,16 @@ import java.util.Calendar;
  */
 public class TelaCadastroGame extends javax.swing.JDialog {
 
+    private static final long serialVersionUID = -2388416104434894722L;
+
     private final String STRCADASTRAR = "Cadastrar";
     private final String STRATUALIZAR = "Atualizar";
     private static int id;
     private DefaultTableModel modelTable;
     private static List<DLC> listaDeDLCs = new ArrayList<>();
     private Game game;
+    private boolean interfaceSerie = false;
+    private boolean interfaceListaDeDesejo = false;
 
     private Gerenciador manager;
 
@@ -127,6 +131,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Estado");
 
+        cb_estado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cb_estado.setModel(new DefaultComboBoxModel(Estado.values()));
 
         group_lido.add(rb_nao);
@@ -173,6 +178,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
         tf_preco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         tf_preco.setMargin(new java.awt.Insets(2, 5, 2, 2));
 
+        cb_console.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cb_console.setModel(new DefaultComboBoxModel(Console.values()));
 
         panel_dlc.setBorder(javax.swing.BorderFactory.createTitledBorder("Inserir DLC's"));
@@ -407,11 +413,30 @@ public class TelaCadastroGame extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fecha janela.
+     *
+     * @param evt
+     */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
-        new TelaItens(null, true).setVisible(true);
+        if (isInterfaceSerie()) {
+            TelaCadastroSerie.setFlag(false);
+            TelaCadastroSerie telaCadastroSerie = new TelaCadastroSerie(null, true, getGame(), TelaCadastroSerie.getIdSerie());
+            telaCadastroSerie.setVisible(true);
+        } else if (isInterfaceListaDeDesejo()) {
+            new TelaCadastroListaDeDesejo(null, true, getGame()).setVisible(true);
+        } else {
+            // Se nao veio da tela de cadastro de serie nem da lista de desejo
+            new TelaItens(null, true).setVisible(true);
+        }
     }//GEN-LAST:event_fecharJanela
 
+    /**
+     * Fecha Janela.
+     *
+     * @param evt
+     */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
     }//GEN-LAST:event_cancelar
@@ -532,10 +557,22 @@ public class TelaCadastroGame extends javax.swing.JDialog {
      */
     private void inserir(Game game) {
         try {
-            manager.inserirItem(game);
-            JOptionPane.showMessageDialog(null, "Jogo de Vídeogame inserido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
-            limpaCampos();
-            tf_titulo.grabFocus();
+            if (isInterfaceSerie()) {
+                game.setPossui(false);
+                setGame(game);
+                JOptionPane.showMessageDialog(null, "Item inserido na lista de série com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else if (isInterfaceListaDeDesejo()) {
+                game.setPossui(false);
+                setGame(game);
+                JOptionPane.showMessageDialog(null, "Item foi pré-inserido na lista de desejo com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.inserirItem(game);
+                JOptionPane.showMessageDialog(null, "Jogo de Vídeogame inserido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                limpaCampos();
+                tf_titulo.grabFocus();
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar inserir o Jogo de Videogame", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -548,9 +585,16 @@ public class TelaCadastroGame extends javax.swing.JDialog {
      */
     private void atualizar(Game game) {
         try {
-            manager.atualizarItem(game);
-            JOptionPane.showMessageDialog(null, "Jogo de Videogame atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
-            fecharJanela(null);
+            if (isInterfaceListaDeDesejo()) {
+                game.setPossui(false);
+                setGame(game);
+                JOptionPane.showMessageDialog(null, "Item pré-inserido na lista de desejo foi atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.atualizarItem(game);
+                JOptionPane.showMessageDialog(null, "Jogo de Videogame atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar atualizar o Jogo de Videogame", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -616,12 +660,14 @@ public class TelaCadastroGame extends javax.swing.JDialog {
         if (getDLCs().isEmpty()) {
             // Se não for inserir é atualizar ou deletar
             if (isInsert()) {
+                manager.setIdItem();
                 return new Game(titulo, observacao, dataCompra, precoDeCompra, 0, nota, estado, false, console, zerado);
             } else {
                 return new Game(id, titulo, observacao, dataCompra, precoDeCompra, getGame().getTotalEmprestado(), nota, estado, getGame().isEmprestado(), console, zerado);
             }
         } else {
             if (isInsert()) {
+                manager.setIdItem();
                 return new Game(titulo, observacao, dataCompra, precoDeCompra, 0, nota, estado, false, console, zerado, true, getDLCs());
             } else {
                 return new Game(id, titulo, observacao, dataCompra, precoDeCompra, getGame().getTotalEmprestado(), nota, estado, getGame().isEmprestado(), console, zerado, true, getDLCs());
@@ -699,13 +745,30 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     }
 
     /**
-     * Monta a interface com os dados para atualização
+     * Preenche a interface gráfica com os dados para atualização de a cordo com
+     * o id do Game.
      *
-     * @param idGame
+     * @param idGame id do Game
      */
     private void montaAlterarDados(int idGame) {
         try {
-            Game game = manager.pesquisarGame(idGame);
+            Game g = manager.pesquisarGame(idGame);
+            if (g != null) {
+                montaAlterarDados(g);
+            }
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Preenche a interface gráfica com os dados para atualização de acordo com
+     * o objeto Midia.
+     *
+     * @param game Objeto Game
+     */
+    public void montaAlterarDados(Game game) {
+        try {
             if (game != null) {
                 setGame(game);
                 bt_deletar.setEnabled(true); // habilita o botao deletar
@@ -738,8 +801,6 @@ public class TelaCadastroGame extends javax.swing.JDialog {
 
                 montaTabelaDLC();
             }
-        } catch (PersonalCollectionsException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar a data...", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -763,6 +824,45 @@ public class TelaCadastroGame extends javax.swing.JDialog {
         this.game = game;
     }
 
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica TelaCadastroSerie
+     * que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceSerie() {
+        return interfaceSerie;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
+     * nao.
+     *
+     * @param interfaceSerie
+     */
+    public void setInterfaceSerie(boolean interfaceSerie) {
+        this.interfaceSerie = interfaceSerie;
+    }
+
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica
+     * TelaCadastroListaDeDesejo que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceListaDeDesejo() {
+        return interfaceListaDeDesejo;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
+     * tela ou nao.
+     *
+     * @param interfaceLista
+     */
+    public void setInterfaceListaDeDesejo(boolean interfaceLista) {
+        this.interfaceListaDeDesejo = interfaceLista;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_cancelar;

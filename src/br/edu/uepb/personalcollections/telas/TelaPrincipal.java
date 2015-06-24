@@ -1,19 +1,38 @@
 package br.edu.uepb.personalcollections.telas;
 
+import br.edu.uepb.personalcollections.Emprestimo;
+import br.edu.uepb.personalcollections.ListaDeDesejo;
+import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
+import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
+import br.edu.uepb.personalcollections.util.MyData;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Tela principal da aplicação
- * 
+ *
  * @author Douglas Rafael
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+
+    private static final long serialVersionUID = 8641010221981182804L;
+    private DefaultTableModel modelTableEmprestimo;
+    private DefaultTableModel modelTableListaDeDesejo;
 
     /**
      * Construtor da TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
+        modelTableEmprestimo = (DefaultTableModel) table_emprestimos.getModel();
+        modelTableListaDeDesejo = (DefaultTableModel) table_lista_desejo.getModel();
+        refresh();
     }
 
     /**
@@ -29,12 +48,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lb_total_itens = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        table_emprestimos = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lb_preco_total = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table_lista_desejo = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         bt_ranking = new javax.swing.JButton();
         bt_series = new javax.swing.JButton();
@@ -56,15 +75,36 @@ public class TelaPrincipal extends javax.swing.JFrame {
         lb_total_itens.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_total_itens.setText("00");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        table_emprestimos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table_emprestimos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Item", "Tipo do Item", "Amigo", "Data do Empréstimo", "Data Para Devolução", "Dias em Atraso"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(table_emprestimos);
+        if (table_emprestimos.getColumnModel().getColumnCount() > 0) {
+            table_emprestimos.getColumnModel().getColumn(1).setPreferredWidth(50);
+            table_emprestimos.getColumnModel().getColumn(4).setResizable(false);
+            table_emprestimos.getColumnModel().getColumn(5).setPreferredWidth(40);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -95,20 +135,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Itens da Minha Lista de Desejo Disponíveis Para Compra"));
 
-        jLabel2.setText("Preço Total R$:");
+        jLabel2.setText("Preço Total dos Itens Disponíveis Para Compra R$:");
 
         lb_preco_total.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lb_preco_total.setText("00.00");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table_lista_desejo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table_lista_desejo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Título do Item", "Tipo do Item", "Data de Lançamento", "Site Para Compra", "Preço"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_lista_desejo.setToolTipText("Duplo clique para abrir o site de compra caso exista.");
+        table_lista_desejo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abrirUrl(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table_lista_desejo);
+        if (table_lista_desejo.getColumnModel().getColumnCount() > 0) {
+            table_lista_desejo.getColumnModel().getColumn(4).setPreferredWidth(70);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,10 +215,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         bt_series.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bt_series.setIcon(new ImageIcon("images/series.png"));
         bt_series.setText("Séries");
+        bt_series.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirSeries(evt);
+            }
+        });
 
         bt_lista.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bt_lista.setIcon(new ImageIcon("images/whishlist.png"));
         bt_lista.setText("Lista de Desejos");
+        bt_lista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirListaDeDesejo(evt);
+            }
+        });
 
         bt_emprestimo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bt_emprestimo.setIcon(new ImageIcon("images/loan.png"));
@@ -187,7 +262,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tf_editar_cadastro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tf_editar_cadastro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                abrirCadastro(evt);
+                abrirCadastroUsuario(evt);
             }
         });
 
@@ -256,25 +331,86 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Abre Tela Itens.
+     *
+     * @param evt
+     */
     private void abrirTelaItens(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirTelaItens
         new TelaItens(this, true).setVisible(true);
     }//GEN-LAST:event_abrirTelaItens
 
+    /**
+     * Abre Tela Amigos.
+     *
+     * @param evt
+     */
     private void abrirTelaAmigos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirTelaAmigos
         new TelaAmigos(this, true).setVisible(true);
     }//GEN-LAST:event_abrirTelaAmigos
 
+    /**
+     * Abre Tela Emprestimos.
+     *
+     * @param evt
+     */
     private void abrirEmprestimos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirEmprestimos
         new TelaCadastroEmprestimo(this, true).setVisible(true);
     }//GEN-LAST:event_abrirEmprestimos
 
+    /**
+     * Abre Tela Ranking.
+     *
+     * @param evt
+     */
     private void abrirRanking(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirRanking
-       new TelaRanking(this, true).setVisible(true);
+        new TelaRanking(this, true).setVisible(true);
     }//GEN-LAST:event_abrirRanking
 
-    private void abrirCadastro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirCadastro
+    /**
+     * Abre Tela CadastroUsuario.
+     *
+     * @param evt
+     */
+    private void abrirCadastroUsuario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirCadastroUsuario
         new TelaCadastroUsuario(this, true).setVisible(true);
-    }//GEN-LAST:event_abrirCadastro
+    }//GEN-LAST:event_abrirCadastroUsuario
+
+    /**
+     * Abre Tela de Series.
+     *
+     * @param evt
+     */
+    private void abrirSeries(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirSeries
+        new TelaSeries(this, true).setVisible(true);
+    }//GEN-LAST:event_abrirSeries
+
+    /**
+     * Abre Tela ListaDeDesejo.
+     *
+     * @param evt
+     */
+    private void abrirListaDeDesejo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirListaDeDesejo
+        new TelaListaDeDesejo(this, true).setVisible(true);
+    }//GEN-LAST:event_abrirListaDeDesejo
+
+    /**
+     * Abre url se existir.
+     *
+     * @param evt
+     */
+    private void abrirUrl(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirUrl
+        if (evt.getClickCount() == 2) { // Se foi um duplo clique
+            try {
+                String url_open = (String) table_lista_desejo.getValueAt(table_lista_desejo.getSelectedRow(), 3);
+                if (!url_open.isEmpty()) {
+                    java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_open));
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar abrir URL", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_abrirUrl
 
     /**
      * @param args the command line arguments
@@ -311,6 +447,84 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Atualiza todos os componentes da interface principal.
+     *
+     */
+    public void refresh() {
+        montaTabelaEmprestimo();
+        montaTabelaListaDeDesejo();
+    }
+
+    /**
+     * Monta tabela de emprestimso vencidos
+     *
+     */
+    private void montaTabelaEmprestimo() {
+        try {
+            modelTableEmprestimo.setNumRows(0); // Zera a tabela
+
+            Gerenciador manager = new Gerenciador();
+            // Monta tabela de emprestimos vencidos
+            List<Emprestimo> listaDeEmprestimosVencidos = manager.listarEmprestimosVencidos();
+            if (!listaDeEmprestimosVencidos.isEmpty()) {
+                for (Emprestimo e : listaDeEmprestimosVencidos) {
+                    int dias = MyData.diferencaDias(MyData.stringToCalendar(e.getDataRetono()), new GregorianCalendar());
+                    String diasEmAtraso = "";
+                    if (dias == 0) {
+                        diasEmAtraso = "Se vence hoje!";
+                    } else {
+                        diasEmAtraso = String.format("%02d dia(s)", Math.abs(dias));
+                    }
+                    Object[] o = {e.getItem().getTitulo(), e.getItem().getTipo(), e.getAmigo().getNome(), e.getDataEmprestimo(), e.getDataRetono(), diasEmAtraso};
+                    modelTableEmprestimo.addRow(o);
+                }
+                // Seta o total de empréstimos em atraso
+                lb_total_itens.setText(String.valueOf(listaDeEmprestimosVencidos.size()));
+            }
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar preenchertabelas...", "ERRO", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar manipular as datas...", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Monta tabela de lista de desejo
+     *
+     */
+    private void montaTabelaListaDeDesejo() {
+        try {
+            modelTableListaDeDesejo.setNumRows(0); // Zera a tabela
+
+            Gerenciador manager = new Gerenciador();
+            // Monta tabela de emprestimos vencidos
+            List<ListaDeDesejo> listaDeDesejoDisponivel = manager.listarListaDeDesejoDisponiveis();
+            if (!listaDeDesejoDisponivel.isEmpty()) {
+                double precoTotal = 0.0;
+                for (ListaDeDesejo l : listaDeDesejoDisponivel) {
+                    String dataLancamento = "";
+                    int dias = MyData.diferencaDias(MyData.stringToCalendar(l.getDataDeLancamento()), new GregorianCalendar());
+                    if (dias == 0) {
+                        dataLancamento = l.getDataDeLancamento() + " - Hoje";
+                    } else {
+                        dataLancamento = l.getDataDeLancamento() + String.format(" - Há %02d dia(s)", dias);
+                    }
+                    
+                    Object[] o = {l.getItem().getTitulo(), l.getItem().getTipo().getTitulo(), dataLancamento, l.getUrlDeCompra(), String.format("%.2f", l.getItem().getPrecoDeCompra())};
+                    precoTotal += l.getItem().getPrecoDeCompra();
+                    modelTableListaDeDesejo.addRow(o);
+                }
+                // Seta o total do valor dos itens disponivel para compra
+                lb_preco_total.setText(String.format("%.2f", precoTotal));
+            }
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar preenchertabelas...", "ERRO", JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar manipular as datas...", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_amigos;
     private javax.swing.JButton bt_emprestimo;
@@ -325,10 +539,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lb_preco_total;
     private javax.swing.JLabel lb_total_itens;
+    private javax.swing.JTable table_emprestimos;
+    private javax.swing.JTable table_lista_desejo;
     private javax.swing.JLabel tf_editar_cadastro;
     // End of variables declaration//GEN-END:variables
 }

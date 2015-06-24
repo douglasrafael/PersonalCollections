@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.uepb.personalcollections.telas;
 
 import br.edu.uepb.personalcollections.enums.Estado;
@@ -30,15 +25,19 @@ import java.util.Calendar;
  */
 public class TelaCadastroHQ extends javax.swing.JDialog {
 
+    private static final long serialVersionUID = 1285339136486948005L;
+
     private final String STRCADASTRAR = "Cadastrar";
     private final String STRATUALIZAR = "Atualizar";
     private static int id = 0;
+    private boolean interfaceSerie = false;
+    private boolean interfaceListaDeDesejo = false;
     private HQ hq;
 
     private Gerenciador manager;
 
     /**
-     * Creates new form TelaCadastroHQ
+     * Método construtor TelaCadastroHQ
      *
      * @param parent
      * @param modal
@@ -142,6 +141,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Estado");
 
+        cb_estado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cb_estado.setModel(new DefaultComboBoxModel(Estado.values()));
 
         group_lido.add(rb_nao);
@@ -353,11 +353,31 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fecha Janela.
+     *
+     * @param evt
+     */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
-        new TelaItens(null, true).setVisible(true);
+        // Se nao veio da tela de cadastro de serie
+        if (isInterfaceSerie()) {
+            TelaCadastroSerie.setFlag(false);
+            TelaCadastroSerie telaCadastroSerie = new TelaCadastroSerie(null, true, getHq(), TelaCadastroSerie.getIdSerie());
+            telaCadastroSerie.setVisible(true);
+        } else if (isInterfaceListaDeDesejo()) {
+            new TelaCadastroListaDeDesejo(null, true, getHq()).setVisible(true);
+        } else {
+            // Se nao veio da tela de cadastro de serie nem de lista de desejo
+            new TelaItens(null, true).setVisible(true);
+        }
     }//GEN-LAST:event_fecharJanela
 
+    /**
+     * Fecha janela.
+     *
+     * @param evt
+     */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
     }//GEN-LAST:event_cancelar
@@ -420,10 +440,23 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
      */
     private void inserir(HQ hq) {
         try {
-            manager.inserirItem(hq);
-            JOptionPane.showMessageDialog(null, "Item insirido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
-            limpaCampos();
-            tf_titulo.grabFocus();
+            // Verifica se a tela não foi aberta via tela de serie
+            if (isInterfaceSerie()) {
+                hq.setPossui(false);
+                setHq(hq);
+                JOptionPane.showMessageDialog(null, "Item inserido na lista de série com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else if (isInterfaceListaDeDesejo()) {
+                hq.setPossui(false);
+                setHq(hq);
+                JOptionPane.showMessageDialog(null, "Item foi pré-inserido na lista de desejo com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.inserirItem(hq);
+                JOptionPane.showMessageDialog(null, "Item insirido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                limpaCampos();
+                tf_titulo.grabFocus();
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar inserir o item", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -436,27 +469,51 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
      */
     private void atualizar(HQ hq) {
         try {
-            manager.atualizarItem(hq);
-            JOptionPane.showMessageDialog(null, "Item atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
-            fecharJanela(null);
+            if (isInterfaceListaDeDesejo()) {
+                hq.setPossui(false);
+                setHq(hq);
+                JOptionPane.showMessageDialog(null, "Item pré-inserido na lista de desejo foi atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.atualizarItem(hq);
+                JOptionPane.showMessageDialog(null, "Item atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar atualizar o item", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     /**
-     * Monta a interface com os dados para atualização
+     * Preenche a interface gráfica com os dados para atualização de acordo com
+     * o id da HQ
      *
-     * @param idHQ
+     * @param idHQ Id da HQ
      */
     private void montaAlterarDados(int idHQ) {
         try {
-            HQ hq = manager.pesquisarHQ(idHQ);
+            HQ h = manager.pesquisarHQ(idHQ);
+            if (h != null) {
+                montaAlterarDados(h);
+            }
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Preenche a interface gráfica com dados para atualização de acordo com o
+     * objeto HQ.
+     *
+     * @param hq Objeto contendo os dados
+     */
+    public void montaAlterarDados(HQ hq) {
+        try {
             if (hq != null) {
                 setHq(hq);
                 bt_deletar.setEnabled(true); // habilita o botao deletar
                 TelaCadastroHQ.id = hq.getId(); // seta o valor do id para variavel static 
-                bt_inserir.setText("Atualizar");
+                bt_inserir.setText(STRATUALIZAR);
 
                 tf_titulo.setText(hq.getTitulo());
                 tf_numero.setValue(hq.getNumero());
@@ -483,8 +540,6 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
                     rb_sim.setSelected(true);
                 }
             }
-        } catch (PersonalCollectionsException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar a data...", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -493,7 +548,8 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de inserção
      *
-     * @return
+     * @return <code>true</code> se for insert ou <code>false</code> caso não
+     * seja
      */
     public boolean isInsert() {
         return bt_inserir.getText().equals(STRCADASTRAR);
@@ -502,7 +558,8 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de atualização
      *
-     * @return
+     * @return <code>true</code> se for insert ou <code>false</code> caso não
+     * seja
      */
     public boolean isUpadate() {
         return bt_inserir.getText().equals(STRATUALIZAR);
@@ -518,6 +575,8 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     }
 
     /**
+     * Método main.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -579,6 +638,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
 
         // Se não for inserir é atualizar ou deletar
         if (isInsert()) {
+            manager.setIdItem();
             return new HQ(titulo, observacao, dataCompra, precoDeCompra, 0, nota, estado, false, TipoItem.HQ, numero, editora, saga, universo, lido);
         } else {
             return new HQ(getId(), titulo, observacao, dataCompra, precoDeCompra, getHq().getTotalEmprestado(), nota, estado, getHq().isEmprestado(), TipoItem.HQ, numero, editora, saga, universo, lido);
@@ -618,8 +678,8 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
 
     /**
      * Recupera o HQ para edição.
-     * 
-     * @return 
+     *
+     * @return
      */
     public HQ getHq() {
         return hq;
@@ -627,11 +687,51 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
 
     /**
      * Seta o HQ para edição.
-     * 
-     * @param hq 
+     *
+     * @param hq
      */
     public void setHq(HQ hq) {
         this.hq = hq;
+    }
+
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica TelaCadastroSerie
+     * que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceSerie() {
+        return interfaceSerie;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
+     * nao.
+     *
+     * @param interfaceSerie
+     */
+    public void setInterfaceSerie(boolean interfaceSerie) {
+        this.interfaceSerie = interfaceSerie;
+    }
+
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica
+     * TelaCadastroListaDeDesejo que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceListaDeDesejo() {
+        return interfaceListaDeDesejo;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
+     * tela ou nao.
+     *
+     * @param interfaceLista
+     */
+    public void setInterfaceListaDeDesejo(boolean interfaceLista) {
+        this.interfaceListaDeDesejo = interfaceLista;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -9,6 +9,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar, serializar, deserializar...) referente ao tipo Tabuleiro 
+ * 
+ * @author Douglas Rafael
+ */
 public class TabuleiroDAO implements DAO<Tabuleiro> {
 
     private static List<Tabuleiro> listaDeJogosTabuleiro = new LinkedList<>();

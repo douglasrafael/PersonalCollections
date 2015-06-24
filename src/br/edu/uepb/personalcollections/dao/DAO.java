@@ -59,7 +59,7 @@ public interface DAO<T> {
     public T pesquisar(int id) throws PersonalCollectionsException;
     
     /**
-     *  Salva (Grava) no arquivo a lista atual completa do item em questão
+     * Salva (Grava) no arquivo a lista atual completa do item em questão
      * 
      * @throws java.io.FileNotFoundException
      * @throws IOException 

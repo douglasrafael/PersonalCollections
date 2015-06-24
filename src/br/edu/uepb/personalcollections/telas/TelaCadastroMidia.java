@@ -1,5 +1,6 @@
 package br.edu.uepb.personalcollections.telas;
 
+import br.edu.uepb.personalcollections.Item;
 import br.edu.uepb.personalcollections.enums.Estado;
 import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
 import br.edu.uepb.personalcollections.excecoes.ValidacaoException;
@@ -24,12 +25,16 @@ import java.util.Calendar;
  * @author Douglas Rafael
  */
 public class TelaCadastroMidia extends javax.swing.JDialog {
-
+    
+    private static final long serialVersionUID = 5150131249487073402L;
+    
     private final String STRCADASTRAR = "Cadastrar";
     private final String STRATUALIZAR = "Atualizar";
     private static int id;
     private Midia midia;
-
+    private boolean interfaceSerie = false;
+    private boolean interfaceListaDeDesejo = false;
+    
     private Gerenciador manager;
 
     /**
@@ -41,7 +46,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
      */
     public TelaCadastroMidia(java.awt.Frame parent, boolean modal, int idMidia) {
         super(parent, modal);
-
+        
         manager = new Gerenciador();
         initComponents();
         // Se vier do contrutor um id é porque os dados deverão ser atualizados
@@ -116,6 +121,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Estado");
 
+        cb_estado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cb_estado.setModel(new DefaultComboBoxModel(Estado.values()));
 
         group_assistido.add(rb_nao);
@@ -314,11 +320,30 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fecha Janela.
+     *
+     * @param evt
+     */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
-        new TelaItens(null, true).setVisible(true);
+        if (isInterfaceSerie()) {
+            TelaCadastroSerie.setFlag(false);
+            TelaCadastroSerie telaCadastroSerie = new TelaCadastroSerie(null, true, getMidia(), TelaCadastroSerie.getIdSerie());
+            telaCadastroSerie.setVisible(true);
+        } else if (isInterfaceListaDeDesejo()) {
+            new TelaCadastroListaDeDesejo(null, true, getMidia()).setVisible(true);
+        } else {
+            // Se nao veio da tela de cadastro de serie nem da lista de desejo
+            new TelaItens(null, true).setVisible(true);
+        }
     }//GEN-LAST:event_fecharJanela
 
+    /**
+     * Fecha Janela.
+     *
+     * @param evt
+     */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
     }//GEN-LAST:event_cancelar
@@ -377,10 +402,24 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
      */
     private void inserir(Midia midia) {
         try {
-            manager.inserirItem(midia);
-            JOptionPane.showMessageDialog(null, "Item insirido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
-            limpaCampos();
-            tf_titulo.grabFocus();
+            // Verifica se a tela não foi aberta via tela de serie
+            if (isInterfaceSerie()) {
+                midia.setPossui(false);
+                setMidia(midia);
+                JOptionPane.showMessageDialog(null, "Item inserido na lista de série com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else if (isInterfaceListaDeDesejo()) {
+                midia.setPossui(false);
+                setMidia(midia);
+                JOptionPane.showMessageDialog(null, "Item foi pré-inserido na lista de desejo com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.inserirItem(midia);
+                JOptionPane.showMessageDialog(null, "Item insirido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                limpaCampos();
+                tf_titulo.grabFocus();
+                
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar inserir o item", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -393,9 +432,16 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
      */
     private void atualizar(Midia midia) {
         try {
-            manager.atualizarItem(midia);
-            JOptionPane.showMessageDialog(null, "Item atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
-            fecharJanela(null);
+            if (isInterfaceListaDeDesejo()) {
+                midia.setPossui(false);
+                setMidia(midia);
+                JOptionPane.showMessageDialog(null, "Item pré-inserido na lista de desejo foi atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            } else {
+                manager.atualizarItem(midia);
+                JOptionPane.showMessageDialog(null, "Item atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                fecharJanela(null);
+            }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar atualizar o item", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -489,6 +535,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
 
         // Se não for inserir é atualizar ou deletar
         if (isInsert()) {
+            manager.setIdItem();
             return new Midia(titulo, observacao, dataCompra, precoDeCompra, 0, nota, estado, false, marca, conteudo, assistido);
         } else {
             return new Midia(getId(), titulo, observacao, dataCompra, precoDeCompra, getMidia().getTotalEmprestado(), nota, estado, getMidia().isEmprestado(), marca, conteudo, assistido);
@@ -496,19 +543,34 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     }
 
     /**
-     * Monta a interface com os dados para atualização
+     * Preenche a interface gráfica com os dados para atualização de a cordo com o id da midia
      *
-     * @param idMidia
+     * @param idMidia Id da mídia
      */
     private void montaAlterarDados(int idMidia) {
         try {
-            Midia midia = manager.pesquisarMidia(idMidia);
+            Midia m = manager.pesquisarMidia(idMidia);
+            if (m != null) {
+                montaAlterarDados(m);
+            }
+        } catch (PersonalCollectionsException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Preenche a interface gráfica com os dados para atualização de acordo com o objeto Midia.
+     *
+     * @param midia Objeto Midia
+     */
+    public void montaAlterarDados(Midia midia) {
+        try {
             if (midia != null) {
                 setMidia(midia);
                 bt_deletar.setEnabled(true); // habilita o botao deletar
                 TelaCadastroMidia.id = midia.getId(); // seta o valor do id para variavel static 
                 bt_inserir.setText("Atualizar");
-
+                
                 tf_titulo.setText(midia.getTitulo());
                 tf_marca.setText(midia.getMarca());
                 tf_conteudo.setText(midia.getConteudo());
@@ -532,8 +594,6 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
                     rb_sim.setSelected(true);
                 }
             }
-        } catch (PersonalCollectionsException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar os dados do item para atualização", "ERRO", JOptionPane.ERROR_MESSAGE);
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar montar a data...", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -570,8 +630,8 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
 
     /**
      * Recupera a Midia a ser editada.
-     * 
-     * @return 
+     *
+     * @return
      */
     public Midia getMidia() {
         return midia;
@@ -579,11 +639,51 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
 
     /**
      * Seta a Midia a ser editada.
-     * 
-     * @param midia 
+     *
+     * @param midia
      */
     public void setMidia(Midia midia) {
         this.midia = midia;
+    }
+
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica TelaCadastroSerie
+     * que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceSerie() {
+        return interfaceSerie;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
+     * nao.
+     *
+     * @param interfaceSerie
+     */
+    public void setInterfaceSerie(boolean interfaceSerie) {
+        this.interfaceSerie = interfaceSerie;
+    }
+
+    /**
+     * Retorna <code>true</code> se foi a interface gráfica
+     * TelaCadastroListaDeDesejo que chamou ou <code>false</code> caso nao.
+     *
+     * @return <code>true</code> ou <code>false</code>
+     */
+    public boolean isInterfaceListaDeDesejo() {
+        return interfaceListaDeDesejo;
+    }
+
+    /**
+     * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
+     * tela ou nao.
+     *
+     * @param interfaceLista
+     */
+    public void setInterfaceListaDeDesejo(boolean interfaceLista) {
+        this.interfaceListaDeDesejo = interfaceLista;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

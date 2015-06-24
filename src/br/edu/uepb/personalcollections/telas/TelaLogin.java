@@ -61,6 +61,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
         tf_login.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tf_login.setText("admin");
+        tf_login.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                chamaAutenticacao(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Password");
@@ -70,7 +75,7 @@ public class TelaLogin extends javax.swing.JFrame {
         tf_password.setToolTipText("");
         tf_password.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                chamaAutenticao(evt);
+                chamaAutenticacao(evt);
             }
         });
 
@@ -196,11 +201,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_autenticar
 
-    private void chamaAutenticao(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chamaAutenticao
+    private void chamaAutenticacao(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chamaAutenticacao
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             autenticar(null);
         }
-    }//GEN-LAST:event_chamaAutenticao
+    }//GEN-LAST:event_chamaAutenticacao
 
     /**
      * @param args the command line arguments

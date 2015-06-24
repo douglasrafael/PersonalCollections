@@ -21,21 +21,27 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class TelaItens extends javax.swing.JDialog {
 
+    private static final long serialVersionUID = -4816491591252503257L;
+
     private final String STREDITAR = "Editar Item";
     private final String STRDELETAR = "Deletar Item";
     private final String STRINFORDEL = "Todo histórico relacionado ao item, como por exemplo os empréstimos serão perdidos!";
 
     private List<Item> listaDeItens;
     private Gerenciador manager;
+    private static TelaPrincipal telaPrincipal;
 
     /**
-     * Creates new form TelaItens
+     * contrutor de TelaItens
      *
      * @param parent
      * @param modal
      */
     public TelaItens(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        if (parent != null) {
+            TelaItens.telaPrincipal = (TelaPrincipal) parent;
+        }
         listaDeItens = new LinkedList<>();
         manager = new Gerenciador();
         initComponents();
@@ -72,6 +78,11 @@ public class TelaItens extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Personal Collections - Itens");
         setIconImage(new ImageIcon("images/logo.png").getImage());
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                fechaJanela(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Inserir Novos Itens"));
 
@@ -313,21 +324,40 @@ public class TelaItens extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Abre cadastro de HQ.
+     *
+     * @param evt
+     */
     private void abrirCadastroHQ(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroHQ
         this.dispose();
         new TelaCadastroHQ(null, true, 0).setVisible(true);
     }//GEN-LAST:event_abrirCadastroHQ
-
+    /**
+     * Abre cadastro de Tabuleiro.
+     *
+     * @param evt
+     */
     private void abrirCadastroTabuleiro(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroTabuleiro
         this.dispose();
         new TelaCadastroTabuleiro(null, true, 0).setVisible(true);
     }//GEN-LAST:event_abrirCadastroTabuleiro
 
+    /**
+     * Abre cadastro de Midia.
+     *
+     * @param evt
+     */
     private void abrirCadastroMidia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroMidia
         this.dispose();
         new TelaCadastroMidia(null, true, 0).setVisible(true);
     }//GEN-LAST:event_abrirCadastroMidia
 
+    /**
+     * Abre cadastro de Game.
+     *
+     * @param evt
+     */
     private void abrirCadastroGame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroGame
         this.dispose();
         new TelaCadastroGame(null, true, 0).setVisible(true);
@@ -346,7 +376,7 @@ public class TelaItens extends javax.swing.JDialog {
     }//GEN-LAST:event_linhaSelecionada
 
     /**
-     * Recupera o idex da linha selecionada da tabela de itens
+     * Recupera o index da linha selecionada da tabela de itens
      *
      * @return O index da linha selecionada
      */
@@ -390,6 +420,11 @@ public class TelaItens extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_acao
 
+    /**
+     * Relza pesquisa de item utilizando campo de busca e filtro.
+     *
+     * @param evt
+     */
     private void pesquisar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisar
         if (!tf_pesquisa.getText().isEmpty()) {
             listaDeItens = manager.pesquisarItem((FiltroItem) cb_filtro.getSelectedItem(), tf_pesquisa.getText());
@@ -403,17 +438,40 @@ public class TelaItens extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_pesquisar
 
+    /**
+     * Chama método pesquisar.
+     *
+     * @param evt
+     */
     private void chamaPesquisar(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chamaPesquisar
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             pesquisar(null);
         }
     }//GEN-LAST:event_chamaPesquisar
 
+    /**
+     * Realiza pesquisa com o item selecionado no combo de filtro.
+     *
+     * @param evt
+     */
     private void itemSelecionado(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemSelecionado
         tf_pesquisa.setText("");
         tf_pesquisa.grabFocus();
         pesquisaVazia();
     }//GEN-LAST:event_itemSelecionado
+
+    /**
+     * Fecha Janela.
+     *
+     * @param evt
+     */
+    private void fechaJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fechaJanela
+        // Atualiza a tela principal
+        if (TelaItens.telaPrincipal != null) {
+            telaPrincipal.refresh();
+        }
+        this.dispose();
+    }//GEN-LAST:event_fechaJanela
 
     /**
      * Realiza busca por item com base apenas no filtro, ou lista tudo se o
@@ -567,6 +625,8 @@ public class TelaItens extends javax.swing.JDialog {
     }
 
     /**
+     * Método main.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -683,5 +743,4 @@ public class TelaItens extends javax.swing.JDialog {
     private javax.swing.JTable table_itens;
     private javax.swing.JTextField tf_pesquisa;
     // End of variables declaration//GEN-END:variables
-
 }
