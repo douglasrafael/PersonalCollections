@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- * Tela de itens
+ * Interface gráfica. Tela de itens
  *
  * @author Douglas Rafael
  */
@@ -32,10 +32,10 @@ public class TelaItens extends javax.swing.JDialog {
     private static TelaPrincipal telaPrincipal;
 
     /**
-     * contrutor de TelaItens
+     * Método construtor TelaItens
      *
-     * @param parent
-     * @param modal
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
      */
     public TelaItens(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -327,7 +327,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre cadastro de HQ.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirCadastroHQ(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroHQ
         this.dispose();
@@ -336,7 +336,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre cadastro de Tabuleiro.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirCadastroTabuleiro(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroTabuleiro
         this.dispose();
@@ -346,7 +346,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre cadastro de Midia.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirCadastroMidia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroMidia
         this.dispose();
@@ -356,7 +356,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre cadastro de Game.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirCadastroGame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCadastroGame
         this.dispose();
@@ -366,7 +366,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Chama a ação respectiva
      *
-     * @param evt
+     * @param evt O evento
      */
     private void linhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linhaSelecionada
         if (evt.getClickCount() == 1) {
@@ -387,7 +387,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * mapeia qual ação será executada (atualização ou exclusão)
      *
-     * @param evt
+     * @param evt O evento
      */
     private void acao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acao
         int linha = getLinhaSelecionada();
@@ -423,7 +423,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Relza pesquisa de item utilizando campo de busca e filtro.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void pesquisar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisar
         if (!tf_pesquisa.getText().isEmpty()) {
@@ -441,7 +441,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Chama método pesquisar.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void chamaPesquisar(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chamaPesquisar
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -452,7 +452,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Realiza pesquisa com o item selecionado no combo de filtro.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void itemSelecionado(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemSelecionado
         tf_pesquisa.setText("");
@@ -463,7 +463,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Fecha Janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fechaJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fechaJanela
         // Atualiza a tela principal
@@ -484,9 +484,10 @@ public class TelaItens extends javax.swing.JDialog {
     }
 
     /**
-     * Remove o jogo de tabuleiro listado na tabela de itens
+     * Remove Tabuleiro
      *
-     * @param id Id do jogo de tabuleiro a ser removido
+     * @param id O id do tabuleiro a ser removido
+     * @param titulo O título do tabuleiro
      */
     private void removeTabuleiro(int id, String titulo) {
         try {
@@ -510,8 +511,8 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Remove HQ
      *
-     * @param id
-     * @param titulo
+     * @param id O id da HQ a ser removida
+     * @param titulo O título da HQ
      */
     private void removeHQ(int id, String titulo) {
         try {
@@ -535,8 +536,8 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Remove Midia
      *
-     * @param id
-     * @param titulo
+     * @param id O id da mídia a ser removida
+     * @param titulo O título da mídia
      */
     private void removeMidia(int id, String titulo) {
         try {
@@ -558,10 +559,10 @@ public class TelaItens extends javax.swing.JDialog {
     }
 
     /**
-     * Remove Midia
+     * Remove Game
      *
-     * @param id
-     * @param titulo
+     * @param id O id do game a ser removido
+     * @param titulo O título do game
      */
     private void removeGame(int id, String titulo) {
         try {
@@ -585,7 +586,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre tela editar HQ
      *
-     * @param id
+     * @param id O id da HQ
      */
     private void abreTelaEditarHQ(int id) {
         this.dispose();
@@ -597,7 +598,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre tela editar Midia
      *
-     * @param id
+     * @param id O id da midia
      */
     private void abreTelaEditarMidia(int id) {
         this.dispose();
@@ -607,7 +608,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre tela editar Game
      *
-     * @param id
+     * @param id O id do game
      */
     private void abreTelaEditarGame(int id) {
         this.dispose();
@@ -617,7 +618,7 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Abre tela editar tabuleiro
      *
-     * @param id
+     * @param id O id do tabuleiro
      */
     private void abreTelaEditarTabuleiro(int id) {
         this.dispose();
@@ -671,7 +672,6 @@ public class TelaItens extends javax.swing.JDialog {
     /**
      * Monta a tabela de itens
      *
-     * @param itens
      */
     private void montaTabela() {
         DefaultTableModel modelTable = (DefaultTableModel) table_itens.getModel();

@@ -12,22 +12,24 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
- * Tela para alteração dos dodos do usuário (administrador) do sistema Só é
+ * Interface gráfica. Tela para alteração dos dodos do usuário (administrador) do sistema Só é
  * possível um administrador
  *
  * @author Douglas Rafael
  */
 public class TelaCadastroUsuario extends javax.swing.JDialog {
 
+    private static final long serialVersionUID = 8086664178090872820L;
+
     private final int MINPASS = 5;
     private Gerenciador manager;
     private Usuario usuario;
 
     /**
-     * Construtor Tela de cadastro de usuário
+     * Método construtor TelaCadastroUsuario
      *
-     * @param parent
-     * @param modal
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
      */
     public TelaCadastroUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -236,14 +238,29 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fecha janela.
+     *
+     * @param evt O evento
+     */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
     }//GEN-LAST:event_cancelar
 
+    /**
+     * Fecha janela.
+     *
+     * @param evt O evento
+     */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
     }//GEN-LAST:event_fecharJanela
 
+    /**
+     * Atualiza usuário.
+     *
+     * @param evt O evento
+     */
     private void atualizar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizar
         try {
             if (Validacao.validarCamposVazios(panel_dados, getCamposValidar())) {
@@ -275,6 +292,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_atualizar
 
     /**
+     * Método main.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {

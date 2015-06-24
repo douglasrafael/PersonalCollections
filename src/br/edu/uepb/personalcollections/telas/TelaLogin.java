@@ -13,11 +13,12 @@ import java.awt.event.KeyEvent;
  * @author Douglas Rafael
  */
 public class TelaLogin extends javax.swing.JFrame {
+    private static final long serialVersionUID = -4019343524864628662L;
     
     private Gerenciador manager;
 
     /**
-     * Creates new form TelaLogin
+     * Método construtor TelaLogin
      */
     public TelaLogin() {
         initComponents();
@@ -167,7 +168,7 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Fecha tela de login
      *
-     * @param evt
+     * @param evt O evento O evento
      */
     private void fecharJanela(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecharJanela
         System.exit(0);
@@ -177,7 +178,7 @@ public class TelaLogin extends javax.swing.JFrame {
      * Autentica usuário no sistema. Se a autenticação for válida é aberto a
      * tela principal da aplicação
      *
-     * @param evt
+     * @param evt O evento O evento
      */
     private void autenticar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autenticar
         try {
@@ -201,6 +202,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_autenticar
 
+    /**
+     * Autentica usuário.
+     * 
+     * @param evt O evento 
+     */
     private void chamaAutenticacao(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chamaAutenticacao
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             autenticar(null);
@@ -208,6 +214,8 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_chamaAutenticacao
 
     /**
+     * Método main.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {

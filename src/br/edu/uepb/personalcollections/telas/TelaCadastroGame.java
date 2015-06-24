@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Tela cadastro de Jogos de Videogame
+ * Interface gráfica. Tela cadastro de Jogos de Videogame
  *
  * @author Douglas Rafael
  */
@@ -43,10 +43,12 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     private Gerenciador manager;
 
     /**
-     * Creates new form TelaCadastroGame
+     * Método construtor TelaCadastroGame
      *
-     * @param parent
-     * @param modal
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
+     * @param idGame O id do game, se o id for diferente de 0 sinal que o form
+     * devera estar no estado de edição
      */
     public TelaCadastroGame(java.awt.Frame parent, boolean modal, int idGame) {
         super(parent, modal);
@@ -416,7 +418,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Fecha janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
@@ -435,7 +437,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Fecha Janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
@@ -444,7 +446,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Verifica se à ação é de inserção ou atualização
      *
-     * @param evt
+     * @param evt O evento
      */
     private void acao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acao
         try {
@@ -472,7 +474,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Add dlc
      *
-     * @param evt
+     * @param evt O evento
      */
     private void adicionarDLC(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarDLC
         try {
@@ -498,7 +500,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Remove o Jogo de Videogame
      *
-     * @param evt
+     * @param evt O evento
      */
     private void removeGame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeGame
         try {
@@ -521,7 +523,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Remove dlc da lista de DLC's
      *
-     * @param evt
+     * @param evt O evento
      */
     private void removeDLC(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeDLC
         if (evt.getClickCount() == 2) {
@@ -538,7 +540,6 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Preenche tabela com os DLC's
      *
-     * @param dlc
      */
     private void montaTabelaDLC() {
         modelTable.setNumRows(0);
@@ -553,7 +554,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Insere jogo de video game
      *
-     * @param game
+     * @param game o game
      */
     private void inserir(Game game) {
         try {
@@ -581,7 +582,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Atualiza dados do Game
      *
-     * @param game
+     * @param game O game
      */
     private void atualizar(Game game) {
         try {
@@ -601,6 +602,8 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     }
 
     /**
+     * Método main.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -644,7 +647,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Monta o objeto Game com os dados oriundos da interface
      *
-     * @return Game
+     * @return O game
      */
     private Game getGameInterface() {
         String titulo = tf_titulo.getText();
@@ -678,7 +681,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de inserção
      *
-     * @return
+     * @return true se o estado do form é insert ou false caso contrário
      */
     public boolean isInsert() {
         return bt_inserir.getText().equals(STRCADASTRAR);
@@ -687,7 +690,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de atualização
      *
-     * @return
+     * @return true se o estado do form é de updat ou false caso contrário
      */
     public boolean isUpadate() {
         return bt_inserir.getText().equals(STRATUALIZAR);
@@ -696,7 +699,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Retorna o valor de id, o qual é uma variavel static da classe
      *
-     * @return int
+     * @return int O id
      */
     private int getId() {
         return TelaCadastroGame.id;
@@ -705,7 +708,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Retorna lista de DLCs
      *
-     * @return
+     * @return Lista de DLCs
      */
     private List<DLC> getDLCs() {
         return TelaCadastroGame.listaDeDLCs;
@@ -809,7 +812,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Recupera o Game a ser editado.
      *
-     * @return
+     * @return O game
      */
     public Game getGame() {
         return game;
@@ -818,7 +821,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
     /**
      * Seta o Game a ser editado.
      *
-     * @param game
+     * @param game O game
      */
     public void setGame(Game game) {
         this.game = game;
@@ -838,7 +841,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
      * nao.
      *
-     * @param interfaceSerie
+     * @param interfaceSerie true ou false
      */
     public void setInterfaceSerie(boolean interfaceSerie) {
         this.interfaceSerie = interfaceSerie;
@@ -858,7 +861,7 @@ public class TelaCadastroGame extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
      * tela ou nao.
      *
-     * @param interfaceLista
+     * @param interfaceLista true ou false
      */
     public void setInterfaceListaDeDesejo(boolean interfaceLista) {
         this.interfaceListaDeDesejo = interfaceLista;

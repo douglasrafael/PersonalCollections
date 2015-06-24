@@ -18,7 +18,7 @@ public enum Parentesco {
     /**
      * Método construtor.
      *
-     * @param parentesco
+     * @param parentesco o parantesco
      */
     Parentesco(String nome) {
         this.nome = nome;

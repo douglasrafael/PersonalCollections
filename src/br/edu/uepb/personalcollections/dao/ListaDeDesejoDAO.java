@@ -1,7 +1,5 @@
 package br.edu.uepb.personalcollections.dao;
 
-import br.edu.uepb.personalcollections.Item;
-import br.edu.uepb.personalcollections.ListaDeDesejo;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,7 +85,7 @@ public class ListaDeDesejoDAO implements DAO<ListaDeDesejo> {
      * Procura por Item na lista de desejo utilizando o título. Caso não seja encontrado, é
      * retornado null.
      *
-     * @param String O título do item a ser procurada na lista de desejo
+     * @param titulo O título do item a ser procurada na lista de desejo
      * @return O objeto Item encontrado ou null caso não seja
      */
     public ListaDeDesejo pesquisar(String titulo) {

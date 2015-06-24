@@ -15,7 +15,7 @@ public enum LocalizacaoDLC {
     /**
      * Método Construtor
      *
-     * @param nome
+     * @param nome O nome
      */
     LocalizacaoDLC(String nome) {
         this.nome = nome;

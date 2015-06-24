@@ -108,8 +108,8 @@ public class MidiaDAO implements DAO<Midia> {
     /**
      * Pesquisa utilizando o objeto
      *
-     * @param midia
-     * @return
+     * @param midia A midia a ser pesquisada
+     * @return O objeto midia se encontrado ou null caso não seja
      */
     public Midia pesquisar(Midia midia) {
         if (!listaDeMidias.isEmpty()) {

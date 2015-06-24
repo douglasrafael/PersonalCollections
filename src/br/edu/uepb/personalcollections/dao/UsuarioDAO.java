@@ -29,10 +29,10 @@ public class UsuarioDAO {
      * Faz autenticação do usuário no sistema. Se o login foi feito com sucesso
      * retorna o objeto usuário, se não null.
      *
-     * @param login
-     * @param password
+     * @param login O login
+     * @param password O password
      * @return O usuário ou null
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se houver uma exceção
      */
     public Usuario autenticar(String login, char[] password) throws PersonalCollectionsException {
         deserializar();

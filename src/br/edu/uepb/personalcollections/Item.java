@@ -30,16 +30,17 @@ public class Item implements Comparable<Item>, Serializable {
 
     /**
      * Método construtor da classe.
+     * Para o id é utilizado o auto_increment.
      *
-     * @param titulo
-     * @param observacao
-     * @param dataDeCompra
-     * @param precoDeCompra
-     * @param totalEmprestado
-     * @param nota
-     * @param estado
-     * @param emprestado
-     * @param tipo
+     * @param titulo O título do item
+     * @param observacao As observações
+     * @param dataDeCompra A data em que foi realizada a compra
+     * @param precoDeCompra O preço pago pelo item
+     * @param totalEmprestado O total de vez que o item foi emprestado
+     * @param nota A nota
+     * @param estado O estado que se encontra
+     * @param emprestado Se estar emprestado (true), caso contrário (false)
+     * @param tipo O tipo do item
      */
     public Item(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo) {
         this.id = ++auto_increment;
@@ -59,16 +60,16 @@ public class Item implements Comparable<Item>, Serializable {
      * Método construtor que recebe o id como parametro, não uso o
      * auto_increment.
      *
-     * @param id
-     * @param titulo
-     * @param observacao
-     * @param dataDeCompra
-     * @param precoDeCompra
-     * @param totalEmprestado
-     * @param nota
-     * @param estado
-     * @param emprestado
-     * @param tipo
+     * @param id O id
+     * @param titulo O título do item
+     * @param observacao As observações
+     * @param dataDeCompra A data em que foi realizada a compra
+     * @param precoDeCompra O preço pago pelo item
+     * @param totalEmprestado O total de vez que o item foi emprestado
+     * @param nota A nota
+     * @param estado O estado que se encontra
+     * @param emprestado Se estar emprestado (true), caso contrário (false)
+     * @param tipo O tipo do item
      */
     public Item(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo) {
         this.id = id;
@@ -114,7 +115,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta o título do item.
      *
-     * @param titulo
+     * @param titulo O título
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -132,7 +133,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta a observação do item.
      *
-     * @param observacao
+     * @param observacao As observações
      */
     public void setObservacao(String observacao) {
         this.observacao = observacao;
@@ -150,7 +151,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta a data em que o item foi comprado.
      *
-     * @param dataDeCompra
+     * @param dataDeCompra A data de compra
      */
     public void setDataDeCompra(String dataDeCompra) {
         this.dataDeCompra = dataDeCompra;
@@ -159,7 +160,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Recupera o preço de compra do item.
      *
-     * @return
+     * @return O preço de compra
      */
     public double getPrecoDeCompra() {
         return precoDeCompra;
@@ -168,7 +169,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta o preço pago pela compra do item.
      *
-     * @param precoDeCompra
+     * @param precoDeCompra O preço de compra
      */
     public void setPrecoDeCompra(double precoDeCompra) {
         this.precoDeCompra = precoDeCompra;
@@ -192,6 +193,8 @@ public class Item implements Comparable<Item>, Serializable {
 
     /**
      * Seta o total de emprestimos que o item sofreu.
+     * 
+     * @param total O total a setar
      */
     public void setTotalEmprestado(int total) {
         this.totalEmprestado = total;
@@ -216,7 +219,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Atribui um anota ao item.
      *
-     * @param nota
+     * @param nota A nota
      */
     public void setNota(double nota) {
         this.nota = nota;
@@ -234,7 +237,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta o Estado (novo, rasurado, defeituoso, quebrado...) do item.
      *
-     * @param estado
+     * @param estado O estado
      */
     public void setEstado(Estado estado) {
         this.estado = estado;
@@ -261,7 +264,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta o status do item: true se estiver emprestado e false se não;
      *
-     * @param emprestado
+     * @param emprestado true ou false
      */
     public void setEmprestado(boolean emprestado) {
         this.emprestado = emprestado;
@@ -279,7 +282,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta o id
      *
-     * @param id
+     * @param id O id
      */
     public void setId(int id) {
         this.id = id;
@@ -316,7 +319,7 @@ public class Item implements Comparable<Item>, Serializable {
     /**
      * Seta se o item estar no acerto ou não.
      *
-     * @param possui
+     * @param possui true ou false
      */
     public void setPossui(boolean possui) {
         this.possui = possui;

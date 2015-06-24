@@ -18,10 +18,10 @@ public class Usuario extends Pessoa {
     /**
      * Método construtor.
      *
-     * @param nome
-     * @param sexo
-     * @param login
-     * @param password
+     * @param nome O nome
+     * @param sexo O sexo
+     * @param login o login
+     * @param password O password, senha
      */
     public Usuario(String nome, char sexo, String login, char[] password) {
         super(0, nome, sexo);
@@ -41,7 +41,7 @@ public class Usuario extends Pessoa {
     /**
      * Seta o login do usuário.
      *
-     * @param login
+     * @param login O login
      */
     public void setLogin(String login) {
         this.login = login;
@@ -59,7 +59,7 @@ public class Usuario extends Pessoa {
     /**
      * Seta o password do usuário.
      *
-     * @param password
+     * @param password O password
      */
     public void setPassword(char[] password) {
         this.password = password;

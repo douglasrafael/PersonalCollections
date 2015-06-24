@@ -18,14 +18,14 @@ public class Amigo extends Pessoa {
     private Parentesco parentesco;
 
     /**
-     * Método construtor.
+     * Método construtor sem o id. É utilizado o auto-incremnet da classe Pai
      *
-     * @param nome
-     * @param sexo
-     * @param endereco
-     * @param telefone
-     * @param email
-     * @param parentesco
+     * @param nome Nome
+     * @param sexo Sexo
+     * @param endereco Endereço
+     * @param telefone Telefone de contato
+     * @param email E-Mail para contato
+     * @param parentesco Parantesco da pessoa
      */
     public Amigo(String nome, char sexo, String endereco, String telefone, String email, Parentesco parentesco) {
         super(nome, sexo);
@@ -36,15 +36,15 @@ public class Amigo extends Pessoa {
     }
 
     /**
-     * Contrutor que recebe o id. Não é utilizado o auto_increment par ao id.
+     * Contrutor que recebe o id. Não é utilizado o auto_increment para o id.
      *
-     * @param id
-     * @param nome
-     * @param sexo
-     * @param endereco
-     * @param telefone
-     * @param email
-     * @param parentesco
+     * @param id id da pessoa
+     * @param nome Nome
+     * @param sexo Sexo
+     * @param endereco Endereço
+     * @param telefone Telefone de contato
+     * @param email E-Mail para contato
+     * @param parentesco Parantesco da pessoa
      */
     public Amigo(int id, String nome, char sexo, String endereco, String telefone, String email, Parentesco parentesco) {
         super(id, nome, sexo);
@@ -66,7 +66,7 @@ public class Amigo extends Pessoa {
     /**
      * Seta o endereço.
      *
-     * @param endereco
+     * @param endereco Endereço
      */
     public void setEndereco(String endereco) {
         this.endereco = endereco;
@@ -84,7 +84,7 @@ public class Amigo extends Pessoa {
     /**
      * Seta o telefone.
      *
-     * @param telefone
+     * @param telefone O Telefone
      */
     public void setTelefone(String telefone) {
         this.telefone = telefone;
@@ -102,7 +102,7 @@ public class Amigo extends Pessoa {
     /**
      * Seta o email.
      *
-     * @param email
+     * @param email O E-Mail
      */
     public void setEmail(String email) {
         this.email = email;
@@ -120,7 +120,7 @@ public class Amigo extends Pessoa {
     /**
      * Seta o parentesco do amigo.
      *
-     * @param parentesco
+     * @param parentesco O Paraentesco
      */
     public void setParentesco(Parentesco parentesco) {
         this.parentesco = parentesco;

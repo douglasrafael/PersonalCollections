@@ -156,9 +156,6 @@
                       <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="table_rankinglinhaSelecionada"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -255,9 +252,6 @@
                       <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="table_ranking_notaslinhaSelecionada"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>

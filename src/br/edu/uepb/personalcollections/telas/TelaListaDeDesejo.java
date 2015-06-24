@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Tela da WhishList (Lista de Desejo)
+ * Interface gráfica. Tela da WhishList (Lista de Desejo)
  *
  * @author Douglas Rafael
  */
@@ -28,10 +28,10 @@ public class TelaListaDeDesejo extends javax.swing.JDialog {
     private static TelaPrincipal telaPrincipal;
 
     /**
-     * Método construtor da TelaListaDeDesejo.
+     * Método construtor TelaListaDeDesejo.
      *
-     * @param parent
-     * @param modal
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
      */
     public TelaListaDeDesejo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -244,7 +244,7 @@ public class TelaListaDeDesejo extends javax.swing.JDialog {
     /**
      * Remove item da lista de desejo.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void deletarItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarItem
         try {
@@ -270,7 +270,7 @@ public class TelaListaDeDesejo extends javax.swing.JDialog {
     /**
      * Fecha Janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         // Atualiza a tela principal
@@ -283,7 +283,7 @@ public class TelaListaDeDesejo extends javax.swing.JDialog {
     /**
      * Abre tela para cadastro de item na lista de desejo.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void novoItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoItem
         this.dispose();
@@ -310,7 +310,7 @@ public class TelaListaDeDesejo extends javax.swing.JDialog {
      * Sinaliza item como comprado e remove-o da lista de desejo. O mesmo irá
      * aparecer no acervo de itens cadastrados.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void itemComprado(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComprado
         try {
@@ -346,7 +346,7 @@ public class TelaListaDeDesejo extends javax.swing.JDialog {
      * Sinaliza todos os itens da lista de desejo como comprado e remove-os da
      * lista de desejo. Os mesmos irão aparecer no acervo de itens cadastrados.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void todosItensComprados(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todosItensComprados
         try {

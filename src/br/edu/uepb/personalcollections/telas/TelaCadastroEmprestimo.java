@@ -20,7 +20,7 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 
 /**
- * Tela de Empréstimos
+ * Interface gráfica. Tela de Empréstimos
  *
  * @author Douglas Rafael
  */
@@ -42,17 +42,17 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     private TelaPrincipal telaPrincipal;
 
     /**
-     * Costrutor TelaEmprestimos
+     * Método construtor TelaEmprestimos
      *
-     * @param parent
-     * @param modal
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
      */
     public TelaCadastroEmprestimo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        if(parent != null) {
+        if (parent != null) {
             this.telaPrincipal = (TelaPrincipal) parent;
         }
-        
+
         manager = new Gerenciador();
         initComponents();
         modelTable = (DefaultTableModel) table_emprestimos.getModel();
@@ -341,7 +341,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Cadastra empréstimo.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void inserir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserir
         try {
@@ -369,7 +369,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Novo emprestimo. Todos os campos ssão limpados.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void novoEmprestimo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoEmprestimo
         limpaCampos();
@@ -378,7 +378,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * A JDialog é fechado.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fechaJanela(null);
@@ -387,7 +387,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Remove o empréstimo do sistema.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void removeEmprestimo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEmprestimo
         try {
@@ -411,7 +411,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Captura dodos do empréstimo que foi selecionado pelo mouse.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void linhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linhaSelecionada
         int linha = table_emprestimos.getSelectedRow();
@@ -433,7 +433,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Finaliza um empréstimo.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void finalizarEmprestimo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarEmprestimo
         try {
@@ -463,7 +463,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
      * Identifica se algum item dos combobox foram selecionados e se sim ativa o
      * botao adastrar.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void comboSelecionado(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSelecionado
         if (cb_amigos.getSelectedIndex() != -1 || cb_itens.getSelectedIndex() != -1) {
@@ -476,7 +476,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Fecha Janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fechaJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fechaJanela
         // Atualiza a tela principal
@@ -485,6 +485,8 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     }//GEN-LAST:event_fechaJanela
 
     /**
+     * Método main.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -530,7 +532,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Monta o objeto Emprestimo com os dados oriundos da interface
      *
-     * @return Emprestimo
+     * @return O Emprestimo ou null caso não seja possível montar o objeto
      */
     private Emprestimo getEmprestimoInterface() {
         try {
@@ -669,7 +671,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Valida campos obrigatorios
      *
-     * @return
+     * @return true se a validação for bem suscedida ou false caso contrário
      */
     private boolean validarCampos() {
         return !((cb_amigos.getSelectedIndex() == -1 || cb_itens.getSelectedIndex() == -1)
@@ -698,7 +700,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Recupera o id do emprestimo a ser editado
      *
-     * @return
+     * @return O id
      */
     public int getId() {
         return id;
@@ -707,7 +709,7 @@ public class TelaCadastroEmprestimo extends javax.swing.JDialog {
     /**
      * Seta o id do emprestimo a ser editado
      *
-     * @param id
+     * @param id O id
      */
     public void setId(int id) {
         this.id = id;

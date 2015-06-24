@@ -18,7 +18,7 @@ import br.edu.uepb.personalcollections.Amigo;
 import br.edu.uepb.personalcollections.util.Validacao;
 
 /**
- * Tela gerenciamento de Amigos
+ * Interface gráfica. Tela para gerenciar Amigos
  *
  * @author Douglas Rafael
  */
@@ -38,8 +38,8 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Contrutor TelaAmigos
      *
-     * @param parent
-     * @param modal
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
      */
     public TelaAmigos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -372,7 +372,7 @@ public class TelaAmigos extends javax.swing.JDialog {
      * Verifica se a ação é de inserção ou atualização e chama seu respectivo
      * método.
      *
-     * @param evt
+     * @param evt O envento
      */
     private void acao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acao
         try {
@@ -397,7 +397,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Remove o Amigo
      *
-     * @param evt
+     * @param evt O evento
      */
     private void removeAmigo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAmigo
         try {
@@ -421,7 +421,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Remove dlc da lista de DLC's
      *
-     * @param evt
+     * @param evt O envento
      */
     private void linhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_linhaSelecionada
         int linha = table_amigos.getSelectedRow();
@@ -431,15 +431,19 @@ public class TelaAmigos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_linhaSelecionada
 
+    /**
+     * Prepara tela para inserir um noco amigo.
+     *
+     * @param evt O evento
+     */
     private void novoAmigo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoAmigo
         limpaCampos();
         bt_inserir.setText(STRCADASTRAR);
     }//GEN-LAST:event_novoAmigo
 
     /**
-     * Preenche tabela com os Amigos
+     * Preenche tabela com oa lista de amigos.
      *
-     * @param dlc
      */
     private void montaTabelaAmigos() {
         try {
@@ -460,7 +464,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Insere Amigo
      *
-     * @param amigo
+     * @param amigo O Amigo
      */
     private void inserir(Amigo amigo) {
         try {
@@ -476,7 +480,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Atualiza dados do Amigo
      *
-     * @param amigo
+     * @param amigo O amigo
      */
     private void atualizar(Amigo amigo) {
         try {
@@ -490,6 +494,8 @@ public class TelaAmigos extends javax.swing.JDialog {
     }
 
     /**
+     * Método main.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -533,7 +539,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de inserção
      *
-     * @return
+     * @return true se o estado do form é insert ou false caso contrário
      */
     public boolean isInsert() {
         return bt_inserir.getText().equals(STRCADASTRAR);
@@ -542,7 +548,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de atualização
      *
-     * @return
+     * @return true se o estado do form é de update ou false caso contrário
      */
     public boolean isUpadate() {
         return bt_inserir.getText().equals(STRATUALIZAR);
@@ -551,7 +557,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Retorna o valor de id, o qual é uma variavel static da classe
      *
-     * @return int
+     * @return int O id do amigo selecionado na tabela
      */
     private int getId() {
         return TelaAmigos.id;
@@ -588,7 +594,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Monta o objeto Amigo com os dados oriundos da interface
      *
-     * @return Amigo
+     * @return Amigo O amigo
      */
     private Amigo getAmigoInterface() {
         String nome = tf_nome.getText();
@@ -609,7 +615,7 @@ public class TelaAmigos extends javax.swing.JDialog {
     /**
      * Monta a interface com os dados para atualização
      *
-     * @param idAmigo
+     * @param idAmigo O id
      */
     private void montaAlterarDados(int idAmigo) {
         try {

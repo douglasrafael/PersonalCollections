@@ -15,7 +15,7 @@ public enum TipoItem {
     /**
      * Método construtor.
      *
-     * @param titulo
+     * @param titulo O título
      */
     private TipoItem(String titulo) {
         this.titulo = titulo;
@@ -24,7 +24,7 @@ public enum TipoItem {
     /**
      * Recupera o título do enum
      *
-     * @return
+     * @return Titulo
      */
     public String getTitulo() {
         return titulo;

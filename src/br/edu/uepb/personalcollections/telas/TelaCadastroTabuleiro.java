@@ -13,15 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import br.edu.uepb.personalcollections.Tabuleiro;
 import br.edu.uepb.personalcollections.util.Validacao;
-import java.awt.Frame;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Tela cadastro de Jogos de Tabuleiro
+ * Interface gráfica. Tela cadastro de Jogos de Tabuleiro
  *
  * @author Douglas Rafael
  */
@@ -38,11 +35,12 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     private boolean interfaceListaDeDesejo = false;
 
     /**
-     * Construtor TelaCadastroTabuleiro
+     * Método construtor TelaCadastroTabuleiro
      *
-     * @param parent
-     * @param modal
-     * @param idTtabuleiro
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
+     * @param idTtabuleiro  O id do tabuleiro, se o id for diferente de 0 sinal que o form
+     * devera estar no estado de edição
      */
     public TelaCadastroTabuleiro(java.awt.Frame parent, boolean modal, int idTtabuleiro) {
         super(parent, modal);
@@ -264,7 +262,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Fecha janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
@@ -289,7 +287,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
      * Verifica qual ação deve ser realizada (inserir ou atualizar) e chama seu
      * respectivo método
      *
-     * @param evt
+     * @param evt O evento
      */
     private void acao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acao
         try {
@@ -313,7 +311,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Remove o tabuleiro que foi aberto para edição.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void removeTabuleiro(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTabuleiro
         try {
@@ -336,7 +334,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Insere o o item
      *
-     * @param tabuleiro
+     * @param tabuleiro O tabuleiro
      */
     private void inserir(Tabuleiro tabuleiro) {
         try {
@@ -364,7 +362,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Atualiza os dados do item
      *
-     * @param tabuleiro
+     * @param tabuleiro O tabuleiro
      */
     private void atualizar(Tabuleiro tabuleiro) {
         try {
@@ -384,6 +382,8 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     }
 
     /**
+     * Método main.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -429,7 +429,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de inserção
      *
-     * @return
+     * @return true se o estado do form é insert ou false caso contrário
      */
     public boolean isInsert() {
         return bt_inserir.getText().equals(STRCADASTRAR);
@@ -438,7 +438,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de atualização
      *
-     * @return
+     * @return true se o estado do form é de update ou false caso contrário
      */
     public boolean isUpadate() {
         return bt_inserir.getText().equals(STRATUALIZAR);
@@ -447,7 +447,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Retorna o valor de id, o qual é uma variavel static da classe
      *
-     * @return int
+     * @return int O id
      */
     public int getId() {
         return TelaCadastroTabuleiro.id;
@@ -506,7 +506,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
      * Preenche a interface gráfica com os dados para atualização de a cordo com
      * o id do Tabuleiro.
      *
-     * @param idTabuleiro
+     * @param idTabuleiro O id
      */
     private void montaAlterarDados(int idTabuleiro) {
         try {
@@ -559,7 +559,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Recupera o tabuleiro para edição
      *
-     * @return
+     * @return O tabuleiro
      */
     public Tabuleiro getTabuleiro() {
         return tabuleiro;
@@ -568,7 +568,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
     /**
      * Seta o tabuleiro para edição
      *
-     * @param tabuleiro
+     * @param tabuleiro O tabuleiro
      */
     public void setTabuleiro(Tabuleiro tabuleiro) {
         this.tabuleiro = tabuleiro;
@@ -588,7 +588,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
      * nao.
      *
-     * @param interfaceSerie
+     * @param interfaceSerie false ou true
      */
     public void setInterfaceSerie(boolean interfaceSerie) {
         this.interfaceSerie = interfaceSerie;
@@ -608,7 +608,7 @@ public class TelaCadastroTabuleiro extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
      * tela ou nao.
      *
-     * @param interfaceLista
+     * @param interfaceLista false ou true
      */
     public void setInterfaceListaDeDesejo(boolean interfaceLista) {
         this.interfaceListaDeDesejo = interfaceLista;

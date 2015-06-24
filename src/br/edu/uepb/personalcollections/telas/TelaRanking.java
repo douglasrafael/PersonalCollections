@@ -9,21 +9,22 @@ import javax.swing.table.DefaultTableModel;
 import br.edu.uepb.personalcollections.Item;
 
 /**
- * tela de emprestimos
+ * Interface gráfica. Tela de emprestimos
  *
  * @author Douglas Rafael
  */
 public class TelaRanking extends javax.swing.JDialog {
+    private static final long serialVersionUID = 7586565435023125485L;
 
     private DefaultTableModel modelTableRanking;
     private DefaultTableModel modelTableNotas;
     private Gerenciador manager;
 
     /**
-     * Costrutor TelaEmprestimos
+     * Método construtor TelaEmprestimos
      *
-     * @param parent
-     * @param modal
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
      */
     public TelaRanking(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -83,11 +84,6 @@ public class TelaRanking extends javax.swing.JDialog {
         });
         table_ranking.setToolTipText("Selecione o Iitem e clique em editar para atualizar os dados");
         table_ranking.getTableHeader().setReorderingAllowed(false);
-        table_ranking.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_rankinglinhaSelecionada(evt);
-            }
-        });
         jScrollPane4.setViewportView(table_ranking);
         if (table_ranking.getColumnModel().getColumnCount() > 0) {
             table_ranking.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -146,11 +142,6 @@ public class TelaRanking extends javax.swing.JDialog {
         });
         table_ranking_notas.setToolTipText("Selecione o Iitem e clique em editar para atualizar os dados");
         table_ranking_notas.getTableHeader().setReorderingAllowed(false);
-        table_ranking_notas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_ranking_notaslinhaSelecionada(evt);
-            }
-        });
         jScrollPane6.setViewportView(table_ranking_notas);
         if (table_ranking_notas.getColumnModel().getColumnCount() > 0) {
             table_ranking_notas.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -219,15 +210,10 @@ public class TelaRanking extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void table_rankinglinhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_rankinglinhaSelecionada
-        // TODO add your handling code here:
-    }//GEN-LAST:event_table_rankinglinhaSelecionada
-
-    private void table_ranking_notaslinhaSelecionada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_ranking_notaslinhaSelecionada
-        // TODO add your handling code here:
-    }//GEN-LAST:event_table_ranking_notaslinhaSelecionada
-
+   
     /**
+     * Método main.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {

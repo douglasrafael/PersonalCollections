@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Tela de Cadastro de HQ
+ * Interface gráfica. Tela de Cadastro de HQ
  *
  * @author Douglas Rafael
  */
@@ -39,9 +39,10 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Método construtor TelaCadastroHQ
      *
-     * @param parent
-     * @param modal
-     * @param idHQ
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
+     * @param idHQ O id da HQ, se o id for diferente de 0 sinal que o form
+     * devera estar no estado de edição
      */
     public TelaCadastroHQ(java.awt.Frame parent, boolean modal, int idHQ) {
         super(parent, modal);
@@ -356,7 +357,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Fecha Janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
@@ -376,7 +377,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Fecha janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
@@ -385,7 +386,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Verifica se à ação é de inserção ou atualização
      *
-     * @param evt
+     * @param evt O evento
      */
     private void acao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acao
         try {
@@ -413,7 +414,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Remoev HQ
      *
-     * @param evt
+     * @param evt O evento
      */
     private void removeHQ(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeHQ
         try {
@@ -436,7 +437,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Insere item
      *
-     * @param hq
+     * @param hq A HQ
      */
     private void inserir(HQ hq) {
         try {
@@ -465,7 +466,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Atualiza dados da HQ
      *
-     * @param hq
+     * @param hq A HQ
      */
     private void atualizar(HQ hq) {
         try {
@@ -568,7 +569,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Retorna o valor de id, o qual é uma variavel static da classe
      *
-     * @return int
+     * @return int O id
      */
     private int getId() {
         return TelaCadastroHQ.id;
@@ -621,7 +622,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Monta o objeto HQ com os dados oriundos da interface
      *
-     * @return HQ
+     * @return A HQ
      */
     private HQ getHQInterface() {
         String titulo = tf_titulo.getText();
@@ -679,7 +680,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Recupera o HQ para edição.
      *
-     * @return
+     * @return A HQ
      */
     public HQ getHq() {
         return hq;
@@ -688,7 +689,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     /**
      * Seta o HQ para edição.
      *
-     * @param hq
+     * @param hq A hq
      */
     public void setHq(HQ hq) {
         this.hq = hq;
@@ -708,7 +709,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
      * nao.
      *
-     * @param interfaceSerie
+     * @param interfaceSerie true ou false
      */
     public void setInterfaceSerie(boolean interfaceSerie) {
         this.interfaceSerie = interfaceSerie;
@@ -728,7 +729,7 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
      * tela ou nao.
      *
-     * @param interfaceLista
+     * @param interfaceLista true ou false
      */
     public void setInterfaceListaDeDesejo(boolean interfaceLista) {
         this.interfaceListaDeDesejo = interfaceLista;
@@ -765,5 +766,4 @@ public class TelaCadastroHQ extends javax.swing.JDialog {
     private javax.swing.JTextField tf_titulo;
     private javax.swing.JTextField tf_universo;
     // End of variables declaration//GEN-END:variables
-
 }

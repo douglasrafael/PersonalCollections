@@ -39,17 +39,4 @@ public class Validacao {
         }
         return false;
     }
-
-    public static Calendar validarDate(String dataString) {
-        Calendar data = Calendar.getInstance();
-        try {
-            SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dataFormat.setLenient(false);
-
-            dataFormat.parse(dataString);
-        } catch (ParseException e) {
-            return null;
-        }
-        return data;
-    }
 }

@@ -20,7 +20,7 @@ public interface DAO<T> {
      * Monta lista contendo os objetos.
      *
      * @return A lista com os objetos
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se houver uma exceção 
      */
     public List<T> listar() throws PersonalCollectionsException;
 
@@ -28,7 +28,7 @@ public interface DAO<T> {
      * Salva um objeto.
      *
      * @param o Objeto a ser salvo
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se houver uma exceção 
      */
     public void save(T o) throws PersonalCollectionsException;
 
@@ -36,7 +36,7 @@ public interface DAO<T> {
      * Atualiza um objeto específico.
      *
      * @param o Objeto a ser atualizado
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se houver uma exceção 
      */
     public void atualizar(T o) throws PersonalCollectionsException;
 
@@ -45,33 +45,33 @@ public interface DAO<T> {
      *
      * @param o Objeto a ser removido
      * @return True se removeu e False se não
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se houver uma exceção 
      */
     public boolean remove(T o) throws PersonalCollectionsException;
     
     /**
      * Pesquisar item pelo id. Uma vez que o ID é único para cada item.
      * 
-     * @param id 
+     * @param id O id
      * @return O Objeto ou null caso não encontre
-     * @throws PersonalCollectionsException 
+     * @throws PersonalCollectionsException se houver uma exceção 
      */
     public T pesquisar(int id) throws PersonalCollectionsException;
     
     /**
      * Salva (Grava) no arquivo a lista atual completa do item em questão
      * 
-     * @throws java.io.FileNotFoundException
-     * @throws IOException 
+     * @throws java.io.FileNotFoundException se houver uma exceção por não encontrar o arquivo
+     * @throws IOException se houver uma exceção
      */
     public void serializar() throws FileNotFoundException, IOException; 
     
     /**
      * Recupera a lista completa do item que está no PATH específico ao tipo de item
      * 
-     * @throws IOException
-     * @throws java.io.FileNotFoundException
-     * @throws ClassNotFoundException 
+     * @throws IOException se houver uma exceção
+     * @throws java.io.FileNotFoundException se houver uma exceção por não encontrar o arquivo
+     * @throws ClassNotFoundException se houver uma exceção
      */
     public void deserializar() throws IOException, FileNotFoundException, ClassNotFoundException;
 }

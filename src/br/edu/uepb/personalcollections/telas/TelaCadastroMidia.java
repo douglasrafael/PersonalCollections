@@ -1,6 +1,5 @@
 package br.edu.uepb.personalcollections.telas;
 
-import br.edu.uepb.personalcollections.Item;
 import br.edu.uepb.personalcollections.enums.Estado;
 import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
 import br.edu.uepb.personalcollections.excecoes.ValidacaoException;
@@ -20,33 +19,34 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Tela cadastro de Mídia
+ * Interface gráfica. Tela cadastro de Mídia
  *
  * @author Douglas Rafael
  */
 public class TelaCadastroMidia extends javax.swing.JDialog {
-    
+
     private static final long serialVersionUID = 5150131249487073402L;
-    
+
     private final String STRCADASTRAR = "Cadastrar";
     private final String STRATUALIZAR = "Atualizar";
     private static int id;
     private Midia midia;
     private boolean interfaceSerie = false;
     private boolean interfaceListaDeDesejo = false;
-    
+
     private Gerenciador manager;
 
     /**
-     * Creates new form TelaCadastroMidia
+     * Método construtor TelaCadastroMidia
      *
-     * @param parent
-     * @param modal
-     * @param idMidia
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
+     * @param idMidia O id da midia, se o id for diferente de 0 sinal que o form
+     * devera estar no estado de edição
      */
     public TelaCadastroMidia(java.awt.Frame parent, boolean modal, int idMidia) {
         super(parent, modal);
-        
+
         manager = new Gerenciador();
         initComponents();
         // Se vier do contrutor um id é porque os dados deverão ser atualizados
@@ -323,7 +323,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Fecha Janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
@@ -342,7 +342,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Fecha Janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
@@ -351,7 +351,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Verifica se à ação é de inserção ou atualização
      *
-     * @param evt
+     * @param evt O evento
      */
     private void acao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acao
         try {
@@ -375,7 +375,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * remove a mídia
      *
-     * @param evt
+     * @param evt O evento
      */
     private void removeMidia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMidia
         try {
@@ -398,7 +398,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Insere o o item
      *
-     * @param midia
+     * @param midia A midia
      */
     private void inserir(Midia midia) {
         try {
@@ -418,7 +418,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Item insirido com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
                 limpaCampos();
                 tf_titulo.grabFocus();
-                
+
             }
         } catch (PersonalCollectionsException ex) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar inserir o item", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -428,7 +428,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Atualiza os dados do item
      *
-     * @param midia
+     * @param midia A midia
      */
     private void atualizar(Midia midia) {
         try {
@@ -450,7 +450,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de inserção
      *
-     * @return
+     * @return true se o estado do form é insert ou false caso contrário
      */
     public boolean isInsert() {
         return bt_inserir.getText().equals(STRCADASTRAR);
@@ -459,7 +459,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Verifica se o estado do form é de atualização
      *
-     * @return
+     * @return true se o estado do form é de updat ou false caso contrário
      */
     public boolean isUpadate() {
         return bt_inserir.getText().equals(STRATUALIZAR);
@@ -468,13 +468,15 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Retorna o valor de id, o qual é uma variavel static da classe
      *
-     * @return int
+     * @return int O id
      */
     public int getId() {
         return TelaCadastroMidia.id;
     }
 
     /**
+     * Método main.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -520,7 +522,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Monta o objeto Mídia com os dados oriundos da interface
      *
-     * @return Mídia
+     * @return A Mídia
      */
     private Midia getMidiaInterface() {
         String titulo = tf_titulo.getText();
@@ -543,7 +545,8 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     }
 
     /**
-     * Preenche a interface gráfica com os dados para atualização de a cordo com o id da midia
+     * Preenche a interface gráfica com os dados para atualização de a cordo com
+     * o id da midia
      *
      * @param idMidia Id da mídia
      */
@@ -559,7 +562,8 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     }
 
     /**
-     * Preenche a interface gráfica com os dados para atualização de acordo com o objeto Midia.
+     * Preenche a interface gráfica com os dados para atualização de acordo com
+     * o objeto Midia.
      *
      * @param midia Objeto Midia
      */
@@ -570,11 +574,11 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
                 bt_deletar.setEnabled(true); // habilita o botao deletar
                 TelaCadastroMidia.id = midia.getId(); // seta o valor do id para variavel static 
                 bt_inserir.setText("Atualizar");
-                
+
                 tf_titulo.setText(midia.getTitulo());
                 tf_marca.setText(midia.getMarca());
                 tf_conteudo.setText(midia.getConteudo());
-                
+
                 String dataCompra = midia.getDataDeCompra();
                 // prepara a data e seta no campo
                 if (!dataCompra.isEmpty()) {
@@ -585,7 +589,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
                 } else {
                     tf_data_compra.setSelectedDate(null);
                 }
-                
+
                 tf_preco.setValue(midia.getPrecoDeCompra());
                 cb_estado.setSelectedItem(midia.getEstado());
                 sp_nota.setValue(midia.getNota());
@@ -631,7 +635,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Recupera a Midia a ser editada.
      *
-     * @return
+     * @return A midia
      */
     public Midia getMidia() {
         return midia;
@@ -640,7 +644,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
     /**
      * Seta a Midia a ser editada.
      *
-     * @param midia
+     * @param midia A midia
      */
     public void setMidia(Midia midia) {
         this.midia = midia;
@@ -660,7 +664,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroSerie que chamou a tela ou
      * nao.
      *
-     * @param interfaceSerie
+     * @param interfaceSerie true ou false
      */
     public void setInterfaceSerie(boolean interfaceSerie) {
         this.interfaceSerie = interfaceSerie;
@@ -680,7 +684,7 @@ public class TelaCadastroMidia extends javax.swing.JDialog {
      * Seta se foi a interface grafica TelaCadastroListaDeDesejo que chamou a
      * tela ou nao.
      *
-     * @param interfaceLista
+     * @param interfaceLista true ou false
      */
     public void setInterfaceListaDeDesejo(boolean interfaceLista) {
         this.interfaceListaDeDesejo = interfaceLista;

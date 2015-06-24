@@ -18,18 +18,19 @@ public class Midia extends Item {
 
     /**
      * Método construtor.
+     * Para o id é utilizado o auto_increment da class mãe.
      *
-     * @param titulo
-     * @param observacao
-     * @param dataDeCompra
-     * @param precoDeCompra
-     * @param totalEmprestado
-     * @param nota
-     * @param estado
-     * @param emprestado
-     * @param marca
-     * @param conteudo
-     * @param assistido
+     * @param titulo O título
+     * @param observacao As observações
+     * @param dataDeCompra A data de compra
+     * @param precoDeCompra O preço que foi pago
+     * @param totalEmprestado O total de vezes que o item foi emprestado
+     * @param nota A nota do item
+     * @param estado O estado em que o item se encontra
+     * @param emprestado Se o item encontra-se emprestado (true), caso contrário (false)
+     * @param marca A marca
+     * @param conteudo O conteúdo
+     * @param assistido Se assitido (true), caso contrário (false)
      */
     public Midia(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, String marca, String conteudo, boolean assistido) {
         super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.MIDIA);
@@ -42,18 +43,18 @@ public class Midia extends Item {
      * Construtor que recebe o id.
      * Não é utilizado o auto_increment para o id
      * 
-     * @param id
-     * @param titulo
-     * @param observacao
-     * @param dataDeCompra
-     * @param precoDeCompra
-     * @param totalEmprestado
-     * @param nota
-     * @param estado
-     * @param emprestado
-     * @param marca
-     * @param conteudo
-     * @param assistido 
+     * @param id O id
+     * @param titulo O título
+     * @param observacao As observações
+     * @param dataDeCompra A data de compra
+     * @param precoDeCompra O preço que foi pago
+     * @param totalEmprestado O total de vezes que o item foi emprestado
+     * @param nota A nota do item
+     * @param estado O estado em que o item se encontra
+     * @param emprestado Se o item encontra-se emprestado (true), caso contrário (false)
+     * @param marca A marca
+     * @param conteudo O conteúdo
+     * @param assistido Se assitido (true), caso contrário (false)
      */
     public Midia(int id , String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, String marca, String conteudo, boolean assistido) {
         super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, TipoItem.MIDIA);
@@ -74,7 +75,7 @@ public class Midia extends Item {
     /**
      * Seta a marca da mídia.
      *
-     * @param marca
+     * @param marca A marca
      */
     public void setMarca(String marca) {
         this.marca = marca;
@@ -92,7 +93,7 @@ public class Midia extends Item {
     /**
      * Seta o conteúdo da mídia.
      *
-     * @param conteudo
+     * @param conteudo O conteúdo
      */
     public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
@@ -110,7 +111,7 @@ public class Midia extends Item {
     /**
      * Seta o status da mídia: true se já foi assistido e false se não.
      *
-     * @param assistido
+     * @param assistido true ou false
      */
     public void setAssistido(boolean assistido) {
         this.assistido = assistido;

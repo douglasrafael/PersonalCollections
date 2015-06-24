@@ -36,7 +36,12 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
     private Gerenciador manager;
 
     /**
-     * Método construtor TelaSeries
+     * Método construtor TelaSeries.
+     *
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
+     * @param item O item
+     * @param idS O id da serie
      */
     public TelaCadastroSerie(java.awt.Frame parent, boolean modal, Item item, int idS) {
         super(parent, modal);
@@ -341,7 +346,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
      * <code>showConfirmDialog</code> é utilizado para receber a decição do
      * usuário de fechar a janela sem salvar os dados ou não.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE); // Nao deixa a tela fechar sem antes fazer as validações abaixo
@@ -366,7 +371,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
     /**
      * Fecha janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void bt_cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelar
         fecharJanela(null);
@@ -376,7 +381,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
      * Ativa botões: deletar e adquirido quando um item da tabela for
      * selecionado.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void ativaBotoes(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ativaBotoes
         if (evt.getClickCount() == 1) {
@@ -394,7 +399,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
     /**
      * Excluí item da série.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void deletarItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarItem
         try {
@@ -430,7 +435,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
      * Abre a tela do item correspondente de acordo com o tipo de item
      * selecionado no combobox.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void inserirNovoItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirNovoItem
         TipoItem tipoItem = (TipoItem) cb_tipoItem.getSelectedItem();
@@ -459,7 +464,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
      * Insere o item selecionado do combobox de itens na lista de itens da
      * serie.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void inserirItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirItem
         try {
@@ -481,7 +486,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
     /**
      * Atualiza dados da série.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void salvarSerie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarSerie
         try {
@@ -508,7 +513,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
     /**
      * Sinaliza item como possui ou não possui.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void PossuiItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PossuiItem
         try {
@@ -616,28 +621,6 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bt_cancelar;
-    private javax.swing.JButton bt_deletar;
-    private javax.swing.JButton bt_inserir;
-    private javax.swing.JButton bt_inserir_item;
-    private javax.swing.JButton bt_novo_item;
-    private javax.swing.JButton bt_possui;
-    private javax.swing.JComboBox cb_itens;
-    private javax.swing.JComboBox cb_tipoItem;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lb_total;
-    private javax.swing.JTable table_itens;
-    private javax.swing.JTextField tf_titulo;
-    // End of variables declaration//GEN-END:variables
 
     /**
      * Monta a tabela de itens.
@@ -767,7 +750,7 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
     /**
      * Retorna lista de itens da série.
      *
-     * @return
+     * @return Lista de itens
      */
     public List<Item> getListaDeItens() {
         return listaDeItensSerie;
@@ -831,4 +814,27 @@ public class TelaCadastroSerie extends javax.swing.JDialog {
     public boolean isPossui() {
         return bt_possui.getText().equals(STRPOSSUI);
     }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_cancelar;
+    private javax.swing.JButton bt_deletar;
+    private javax.swing.JButton bt_inserir;
+    private javax.swing.JButton bt_inserir_item;
+    private javax.swing.JButton bt_novo_item;
+    private javax.swing.JButton bt_possui;
+    private javax.swing.JComboBox cb_itens;
+    private javax.swing.JComboBox cb_tipoItem;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_total;
+    private javax.swing.JTable table_itens;
+    private javax.swing.JTextField tf_titulo;
+    // End of variables declaration//GEN-END:variables
+
 }

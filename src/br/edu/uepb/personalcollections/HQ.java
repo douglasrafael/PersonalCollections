@@ -21,21 +21,22 @@ public class HQ extends Item {
 
     /**
      * Método construtor.
+     * Para o id é utilizado o auto-increment do classe mãe.
      *
-     * @param titulo
-     * @param observacao
-     * @param dataDeCompra
-     * @param precoDeCompra
-     * @param totalEmprestado
-     * @param nota
-     * @param estado
-     * @param emprestado
-     * @param tipo
-     * @param numero
-     * @param editora
-     * @param saga
-     * @param universo
-     * @param lido
+     * @param titulo O título
+     * @param observacao As observações
+     * @param dataDeCompra A data de compra
+     * @param precoDeCompra O preço que foi pago
+     * @param totalEmprestado O total de vezes que o item foi emprestado
+     * @param nota A nota do item
+     * @param estado O estado em que o item se encontra
+     * @param emprestado Se o item encontra-se emprestado (true), caso contrário (false)
+     * @param tipo O tipo do item
+     * @param numero O número
+     * @param editora A editora
+     * @param saga A saga
+     * @param universo O universo
+     * @param lido Se foi lido (true), caso contrário (false)
      */
     public HQ(String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, String universo, boolean lido) {
         super(titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
@@ -50,21 +51,21 @@ public class HQ extends Item {
      * Costrutor que recebe também o id como parametro. Não usa o auto_icrement
      * para o id
      *
-     * @param id
-     * @param titulo
-     * @param observacao
-     * @param dataDeCompra
-     * @param precoDeCompra
-     * @param totalEmprestado
-     * @param nota
-     * @param estado
-     * @param emprestado
-     * @param tipo
-     * @param numero
-     * @param editora
-     * @param saga
-     * @param universo
-     * @param lido
+     * @param id o id
+     * @param titulo O titulo
+     * @param observacao As observações
+     * @param dataDeCompra A data em que foi realizada a compra
+     * @param precoDeCompra O preço pago pelo item
+     * @param totalEmprestado O total de vez que o item foi emprestado
+     * @param nota A nota
+     * @param estado O estado que se encontra
+     * @param emprestado Se estar emprestado (true), caso contrário (false)
+     * @param tipo O tipo do item
+     * @param numero O número
+     * @param editora A editora
+     * @param saga A saga
+     * @param universo O universo
+     * @param lido Se foi lido (true), caso contrário (false)
      */
     public HQ(int id, String titulo, String observacao, String dataDeCompra, double precoDeCompra, int totalEmprestado, double nota, Estado estado, boolean emprestado, TipoItem tipo, int numero, String editora, String saga, String universo, boolean lido) {
         super(id, titulo, observacao, dataDeCompra, precoDeCompra, totalEmprestado, nota, estado, emprestado, tipo);
@@ -87,7 +88,7 @@ public class HQ extends Item {
     /**
      * Seta o nome da HQ.
      *
-     * @param numero
+     * @param numero O número
      */
     public void setNumero(int numero) {
         this.numero = numero;
@@ -105,7 +106,7 @@ public class HQ extends Item {
     /**
      * Seta a editora da HQ.
      *
-     * @param editora
+     * @param editora A editora
      */
     public void setEditora(String editora) {
         this.editora = editora;
@@ -123,7 +124,7 @@ public class HQ extends Item {
     /**
      * Seta a saga da HQ.
      *
-     * @param saga
+     * @param saga A saga
      */
     public void setSaga(String saga) {
         this.saga = saga;
@@ -141,7 +142,7 @@ public class HQ extends Item {
     /**
      * Seta o universo da HQ.
      *
-     * @param universo
+     * @param universo o universo
      */
     public void setUniverso(String universo) {
         this.universo = universo;
@@ -159,7 +160,7 @@ public class HQ extends Item {
     /**
      * Seta o status de leitura da HQ: true se foi lida e false se não.
      *
-     * @param lido
+     * @param lido true ou false
      */
     public void setLido(boolean lido) {
         this.lido = lido;

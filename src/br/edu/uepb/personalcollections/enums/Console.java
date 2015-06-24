@@ -17,7 +17,7 @@ public enum Console {
     /**
      * Método Construtor
      *
-     * @param nome
+     * @param nome o nome
      */
     Console(String nome) {
         this.nome = nome;

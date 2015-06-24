@@ -28,6 +28,9 @@ public class TelaSeries extends javax.swing.JDialog {
 
     /**
      * Método construtor TelaSeries
+     *
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
      */
     public TelaSeries(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -239,7 +242,7 @@ public class TelaSeries extends javax.swing.JDialog {
     /**
      * Fecha a tela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
@@ -248,7 +251,7 @@ public class TelaSeries extends javax.swing.JDialog {
     /**
      * Fecha a tela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void bt_cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelar
         fecharJanela(null);
@@ -257,7 +260,7 @@ public class TelaSeries extends javax.swing.JDialog {
     /**
      * Abre tela de criar série.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void criarSerie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarSerie
         try {
@@ -308,7 +311,7 @@ public class TelaSeries extends javax.swing.JDialog {
     /**
      * Ativa botoes deletar e editar ao selecionar o item da tabela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void ativaBotoes(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ativaBotoes
         if (evt.getClickCount() == 1) {
@@ -320,7 +323,7 @@ public class TelaSeries extends javax.swing.JDialog {
     /**
      * Remove série.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void deletarSerie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarSerie
         int linha = table_series.getSelectedRow();
@@ -347,7 +350,7 @@ public class TelaSeries extends javax.swing.JDialog {
     /**
      * Abre tela para edição da série.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void editarSerie(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarSerie
         try {
@@ -369,7 +372,7 @@ public class TelaSeries extends javax.swing.JDialog {
     /**
      * Método main
      *
-     * @param args
+     * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -409,21 +412,6 @@ public class TelaSeries extends javax.swing.JDialog {
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton br_cadastrar;
-    private javax.swing.JButton bt_cancelar;
-    private javax.swing.JButton bt_deletar;
-    private javax.swing.JButton bt_editar;
-    private javax.swing.JComboBox cb_itens;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lb_total;
-    private javax.swing.JTable table_series;
-    // End of variables declaration//GEN-END:variables
 
     /**
      * Popula os principais componentes.
@@ -473,4 +461,20 @@ public class TelaSeries extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao tentar popular tabela...", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton br_cadastrar;
+    private javax.swing.JButton bt_cancelar;
+    private javax.swing.JButton bt_deletar;
+    private javax.swing.JButton bt_editar;
+    private javax.swing.JComboBox cb_itens;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_total;
+    private javax.swing.JTable table_series;
+    // End of variables declaration//GEN-END:variables
+
 }

@@ -13,8 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar, serializar, deserializar...) referente ao tipo Emprestimo 
- * 
+ * Contém as implementações de: (listar, buscar, inserir, atualizar, deletar,
+ * serializar, deserializar...) referente ao tipo Emprestimo
+ *
  * @author Douglas Rafael
  */
 public class EmprestimoDAO implements DAO<Emprestimo> {
@@ -32,9 +33,7 @@ public class EmprestimoDAO implements DAO<Emprestimo> {
 
     @Override
     public List<Emprestimo> listar() throws PersonalCollectionsException {
-//        if (listaDeEmprestimos.isEmpty()) {
         deserializar();
-//        }
         return listaDeEmprestimos;
     }
 

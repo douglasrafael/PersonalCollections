@@ -20,8 +20,8 @@ public class DLC implements Serializable {
     /**
      * Método construtor
      *
-     * @param titulo
-     * @param localizacao
+     * @param titulo Título do DLC
+     * @param localizacao A localização do DLC
      */
     public DLC(String titulo, LocalizacaoDLC localizacao) {
         this.titulo = titulo;

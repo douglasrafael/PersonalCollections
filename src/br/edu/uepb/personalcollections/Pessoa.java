@@ -20,9 +20,10 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
 
     /**
      * Método construtor.
+     * Para o id é utilizado o auto_increment.
      *
-     * @param nome
-     * @param sexo
+     * @param nome O nome da pessoa
+     * @param sexo O sexo
      */
     public Pessoa(String nome, char sexo) {
         this.id = ++auto_increment;
@@ -33,9 +34,9 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
     /**
      * Construtor que não utiliza o auto_increment para id.
      *
-     * @param id
-     * @param nome
-     * @param sexo
+     * @param id O id
+     * @param nome O nome da pessoa
+     * @param sexo O sexo
      */
     public Pessoa(int id, String nome, char sexo) {
         this.id = id;
@@ -73,7 +74,7 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
     /**
      * Seta o nome da pessoa.
      *
-     * @param nome
+     * @param nome O nome
      */
     public void setNome(String nome) {
         this.nome = nome;
@@ -91,7 +92,7 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
     /**
      * Seta o sexo da pessoa.
      *
-     * @param sexo
+     * @param sexo O sexo
      */
     public void setSexo(char sexo) {
         this.sexo = sexo;
@@ -100,7 +101,7 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
     /**
      * Recupera o id
      *
-     * @return
+     * @return O id
      */
     public int getId() {
         return id;
@@ -109,7 +110,7 @@ public class Pessoa implements Comparable<Pessoa>, Serializable {
     /**
      * Seta o id
      *
-     * @param id
+     * @param id O id
      */
     public void setId(int id) {
         this.id = id;

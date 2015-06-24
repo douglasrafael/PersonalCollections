@@ -12,7 +12,6 @@ import br.edu.uepb.personalcollections.ListaDeDesejo;
 import br.edu.uepb.personalcollections.Midia;
 import br.edu.uepb.personalcollections.Tabuleiro;
 import br.edu.uepb.personalcollections.enums.TipoItem;
-import static br.edu.uepb.personalcollections.enums.TipoItem.HQ;
 import br.edu.uepb.personalcollections.excecoes.PersonalCollectionsException;
 import br.edu.uepb.personalcollections.excecoes.ValidacaoException;
 import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
@@ -21,8 +20,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
+ * Interface gráfica. Tela para cadastrar WhishList (Lista de Desejo)
  *
- * @author Douglas
+ * @author Douglas Rafael
  */
 public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
 
@@ -31,7 +31,11 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
     private Gerenciador manager;
 
     /**
-     * Creates new form TelaCadastroListaDeDesejo
+     * Método construtor TelaCadastroListaDeDesejo.
+     *
+     * @param parent O JFrame de origem
+     * @param modal Se modal (true), caso contrário (false)
+     * @param item O item
      */
     public TelaCadastroListaDeDesejo(java.awt.Frame parent, boolean modal, Item item) {
         super(parent, modal);
@@ -368,7 +372,7 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
      * Abre tela para cadastro de item de acordo com o tipo escolhido no
      * combobox
      *
-     * @param evt
+     * @param evt O evento
      */
     private void inserirNovoItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirNovoItem
         TipoItem tipoItem = (TipoItem) cb_tipoItem.getSelectedItem();
@@ -395,7 +399,7 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
     /**
      * Salva item na lista de desejo.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void salvar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvar
         try {
@@ -416,7 +420,7 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
     /**
      * Fecha janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         this.dispose();
@@ -426,7 +430,7 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
     /**
      * Fecha janela.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         fecharJanela(null);
@@ -435,7 +439,7 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
     /**
      * Abre a tela do último item adicionado para edição dos dados
      *
-     * @param evt
+     * @param evt O evento
      */
     private void editarItem(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarItem
         Item o = getItem();
@@ -512,7 +516,7 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
     /**
      * Popula o os campos do item com os dados.
      *
-     * @param o
+     * @param o O item
      */
     private void populaItem(Item o) {
         lb_titulo.setText(o.getTitulo());
@@ -526,7 +530,7 @@ public class TelaCadastroListaDeDesejo extends javax.swing.JDialog {
     /**
      * Valida campos
      *
-     * @return
+     * @return true se a validação foi bem suscedida ou false caso contrário
      */
     private boolean validaCampos() {
         if (getItem() != null) {

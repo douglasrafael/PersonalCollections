@@ -7,7 +7,6 @@ import br.edu.uepb.personalcollections.gerenciador.Gerenciador;
 import br.edu.uepb.personalcollections.util.MyData;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -15,18 +14,17 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Tela principal da aplicação
+ * Interface gráfica. Tela principal da aplicação
  *
  * @author Douglas Rafael
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
     private static final long serialVersionUID = 8641010221981182804L;
     private DefaultTableModel modelTableEmprestimo;
     private DefaultTableModel modelTableListaDeDesejo;
 
     /**
-     * Construtor da TelaPrincipal
+     * Método construtor TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
@@ -334,7 +332,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre Tela Itens.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirTelaItens(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirTelaItens
         new TelaItens(this, true).setVisible(true);
@@ -343,7 +341,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre Tela Amigos.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirTelaAmigos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirTelaAmigos
         new TelaAmigos(this, true).setVisible(true);
@@ -352,7 +350,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre Tela Emprestimos.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirEmprestimos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirEmprestimos
         new TelaCadastroEmprestimo(this, true).setVisible(true);
@@ -361,7 +359,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre Tela Ranking.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirRanking(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirRanking
         new TelaRanking(this, true).setVisible(true);
@@ -370,7 +368,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre Tela CadastroUsuario.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirCadastroUsuario(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirCadastroUsuario
         new TelaCadastroUsuario(this, true).setVisible(true);
@@ -379,7 +377,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre Tela de Series.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirSeries(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirSeries
         new TelaSeries(this, true).setVisible(true);
@@ -388,7 +386,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre Tela ListaDeDesejo.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirListaDeDesejo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirListaDeDesejo
         new TelaListaDeDesejo(this, true).setVisible(true);
@@ -397,7 +395,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * Abre url se existir.
      *
-     * @param evt
+     * @param evt O evento
      */
     private void abrirUrl(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirUrl
         if (evt.getClickCount() == 2) { // Se foi um duplo clique
@@ -413,6 +411,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_abrirUrl
 
     /**
+     * Método main.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {

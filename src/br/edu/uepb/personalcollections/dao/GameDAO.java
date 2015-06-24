@@ -66,7 +66,7 @@ public class GameDAO implements DAO<Game> {
      * retornada vazia. Método útil quando se quer listar todas os games que tem
      * título igual ou parecido, mais que são diferentes
      *
-     * @param titulo_item
+     * @param titulo_item Título do item
      * @return Lista com Games encontrados
      */
     public List<Game> pesquisar(String titulo_item) {

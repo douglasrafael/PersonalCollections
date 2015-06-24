@@ -18,11 +18,11 @@ public class Serie implements Comparable<Serie>, Serializable {
     private List<Item> itens;
 
     /**
-     * Construtor com id
-     *
-     * @param id
-     * @param titulo
-     * @param itens
+     * Construtor com id. É utilizado o auto_increment.
+     * 
+     * @param id O id
+     * @param titulo O título
+     * @param itens A lista de itens
      */
     public Serie(int id, String titulo, List<Item> itens) {
         this.id = id;
@@ -33,8 +33,8 @@ public class Serie implements Comparable<Serie>, Serializable {
     /**
      * Construtor sem id.
      *
-     * @param titulo
-     * @param itens
+     * @param titulo O título
+     * @param itens A lista de itens
      */
     public Serie(String titulo, List<Item> itens) {
         this.id = ++auto_increment;
@@ -54,7 +54,7 @@ public class Serie implements Comparable<Serie>, Serializable {
     /**
      * Seta o id da série
      *
-     * @param id
+     * @param id O id
      */
     public void setId(int id) {
         this.id = id;
@@ -90,7 +90,7 @@ public class Serie implements Comparable<Serie>, Serializable {
     /**
      * Seta o título da série.
      *
-     * @param nome
+     * @param nome O título
      */
     public void setTitulo(String nome) {
         this.titulo = nome;
@@ -108,7 +108,7 @@ public class Serie implements Comparable<Serie>, Serializable {
     /**
      * Seta a lista de itens da série.
      *
-     * @param itens
+     * @param itens A lista de itens
      */
     public void setItens(List<Item> itens) {
         this.itens = itens;

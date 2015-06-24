@@ -90,9 +90,9 @@ public class TabuleiroDAO implements DAO<Tabuleiro> {
      * Procura Tabuleiro pelo id passado como parâmetro. Caso não seja
      * encontrado o Tabuleiro é retornado null.
      *
-     * @param id
+     * @param id O id do item
      * @return O objeto Tabuleiro encontrado ou null caso não seja
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se houver uma exceção
      */
     @Override
     public Tabuleiro pesquisar(int id) throws PersonalCollectionsException {
@@ -110,9 +110,9 @@ public class TabuleiroDAO implements DAO<Tabuleiro> {
      * Procura Tabuleiro pelo objeto passado como parâmetro. Caso não seja
      * encontrado o Tabuleiro é retornado null.
      *
-     * @param tab
+     * @param tab O objeto Tabuleiro
      * @return O objeto Tabuleiro encontrado ou null caso não seja
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se houver uma exceção
      */
     public Tabuleiro pesquisar(Tabuleiro tab) throws PersonalCollectionsException {
         if (!listaDeJogosTabuleiro.isEmpty()) {

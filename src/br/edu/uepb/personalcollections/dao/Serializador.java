@@ -19,14 +19,27 @@ public class Serializador {
 
     private File file;
 
+    /**
+     * Recupera o arquivo
+     * 
+     * @return O arquivo
+     */
     public File getFile() {
         return file;
     }
 
+    /**
+     * Seta o arquivo.
+     * 
+     * @param file O arquivo
+     */
     public void setFile(String file) {
         this.file = new File(file);
     }
 
+    /**
+     * Construtor
+     */
     public Serializador() {
     }
 
@@ -34,10 +47,10 @@ public class Serializador {
      * Serializa objeto e grava em disco. Irá gravar no path passado como
      * parametro no construtor
      *
-     * @param path
+     * @param path o caminho onde se encontra o arquivo
      * @param o Objeto a ser gravado
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException se houver uma exceção por não encontrar o arquivo
+     * @throws IOException se houver uma exceção
      */
     public void serializar(String path, Object o) throws FileNotFoundException, IOException {
         setFile(path);
@@ -53,11 +66,11 @@ public class Serializador {
     /**
      * Deserializa objeto de acordo com o path.
      *
-     * @param path
+     * @param path o caminho onde se encontra o arquivo
      * @return Objeto da deserialização
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws FileNotFoundException se houver uma exceção por não encontrar o arquivo
+     * @throws IOException se houver uma exceção
+     * @throws ClassNotFoundException se houver uma exceção
      */
     public Object deserializar(String path) throws FileNotFoundException, IOException, ClassNotFoundException {
         setFile(path);

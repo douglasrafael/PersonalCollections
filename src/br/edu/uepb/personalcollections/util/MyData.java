@@ -33,8 +33,9 @@ public class MyData {
      * Converte uma string em um Calendar. Formato da data passado como
      * parametro: "dd/MM/yyyy"
      *
+     * @param str_data data a ser convertida
      * @return O objeto Calendar ou null
-     * @throws ParseException
+     * @throws ParseException se houver erro no converter datas
      */
     public static Calendar stringToCalendar(String str_data) throws ParseException {
         if (str_data == null || "".equals(str_data)) {
@@ -66,9 +67,9 @@ public class MyData {
 
     /**
      * Retorna em dias a diferença entre duas datas.
-     * 
-     * @param dataInicial
-     * @param dataFinal
+     *
+     * @param dataInicial Data inicial
+     * @param dataFinal Data final
      * @return int Dias da diferença das duas datas dataFinal - DataInicial
      */
     public static int diferencaDias(Calendar dataInicial, Calendar dataFinal) {

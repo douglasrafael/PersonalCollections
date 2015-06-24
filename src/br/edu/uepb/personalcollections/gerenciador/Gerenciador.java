@@ -77,7 +77,7 @@ public class Gerenciador {
      * item, a lista é retornada vazia.
      *
      * @return A lista com todos os items
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Item> listarItens() throws PersonalCollectionsException {
         listaDeItens.clear();
@@ -101,7 +101,7 @@ public class Gerenciador {
      * Retorna lista com itens disponível para empréstimos.
      *
      * @return Lista de Itens
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Item> listarItensDisponivelEmprestimo() throws PersonalCollectionsException {
         List<Item> listaDeItensDisponivel = new LinkedList<>();
@@ -138,7 +138,7 @@ public class Gerenciador {
      * Recupera lista de HQs.
      *
      * @return Lista de HQs
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<HQ> listarHQs() throws PersonalCollectionsException {
         return hq.listar();
@@ -148,7 +148,7 @@ public class Gerenciador {
      * Recupera lista de mídias (CD/DVD/Blu Ray...).
      *
      * @return Lista de mídias
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Midia> listarMidias() throws PersonalCollectionsException {
         return midia.listar();
@@ -158,7 +158,7 @@ public class Gerenciador {
      * Recupera lista de jogos de videogame.
      *
      * @return Lista de jogos de videogame
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Game> listarGames() throws PersonalCollectionsException {
         return game.listar();
@@ -168,7 +168,7 @@ public class Gerenciador {
      * Recupera lista de jogos de tabuleiro.
      *
      * @return Lista de jogos de tabuleiro
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Tabuleiro> listartabuleiros() throws PersonalCollectionsException {
         return tabuleiro.listar();
@@ -179,7 +179,7 @@ public class Gerenciador {
      * insere na lista correspondente.
      *
      * @param o Objeto do tipo item a ser inserido
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void inserirItem(Object o) throws PersonalCollectionsException {
         if (o instanceof Tabuleiro) {
@@ -201,8 +201,8 @@ public class Gerenciador {
      * Remove um item fazendo o mapeamento de acordo com a instancia do objeto.
      * OS Empréstimos relacionados ao item também são removidos.
      *
-     * @param Item Objeto do tipo item a ser removido
-     * @throws PersonalCollectionsException
+     * @param o Objeto do tipo item a ser removido
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void removerItem(Item o) throws PersonalCollectionsException {
         if (o instanceof Tabuleiro) {
@@ -225,7 +225,7 @@ public class Gerenciador {
      * objeto, atualizando o item relacionado ao tipo de item.
      *
      * @param o Objeto do tipo item a ser inserido
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void atualizarItem(Object o) throws PersonalCollectionsException {
         if (o instanceof Tabuleiro) {
@@ -246,10 +246,10 @@ public class Gerenciador {
     /**
      * Pesquisa por item de acordo com o id e o tipo
      *
-     * @param id
-     * @param tipo
-     * @return
-     * @throws PersonalCollectionsException
+     * @param id Id do item
+     * @param tipo Tipo do Item
+     * @return O Item
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Item pesquisarItem(int id, TipoItem tipo) throws PersonalCollectionsException {
         Object o = null;
@@ -272,11 +272,11 @@ public class Gerenciador {
     }
 
     /**
-     * Pesquisa por item de acordo com o id
+     * Pesquisa por item de acordo com o id.
      *
-     * @param id
-     * @return
-     * @throws PersonalCollectionsException
+     * @param id O id do item
+     * @return O Item
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Item pesquisarItem(int id) throws PersonalCollectionsException {
         Item item = null;
@@ -297,9 +297,10 @@ public class Gerenciador {
      * Busca por itens utilizando o filtro. Simula um like %termo% do SQL.
      * Maiuscula e minuscula são ignorados.
      *
-     * @param filtro
-     * @param termo
-     * @return
+     * @param filtro Filtro da pesquisa
+     * @param termo String contendo o que pesquisar
+     * @return Lista de item encontrados da pesquisa ou null caso não encontre
+     * nada.
      */
     public List<Item> pesquisarItem(FiltroItem filtro, String termo) {
         List<Item> lista_search = new LinkedList<>();
@@ -420,7 +421,7 @@ public class Gerenciador {
      *
      * @param id do Objeto HQ a ser pesquisado
      * @return O objeto encontrado, ou null caso não encontre
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public HQ pesquisarHQ(int id) throws PersonalCollectionsException {
         return hq.pesquisar(id);
@@ -431,7 +432,7 @@ public class Gerenciador {
      *
      * @param id do Objeto Mídia a ser pesquisado
      * @return O objeto encontrado, ou null caso não encontre
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Midia pesquisarMidia(int id) throws PersonalCollectionsException {
         return midia.pesquisar(id);
@@ -442,7 +443,7 @@ public class Gerenciador {
      *
      * @param id do objeto Game a ser pesquisado
      * @return O objeto encontrado, ou null caso não encontre
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Game pesquisarGame(int id) throws PersonalCollectionsException {
         return game.pesquisar(id);
@@ -453,7 +454,7 @@ public class Gerenciador {
      *
      * @param id id do objeto Tabuleiro a ser pesquisado
      * @return Tabuleiro encontrado
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Tabuleiro pesquisarTabuleiro(int id) throws PersonalCollectionsException {
         return tabuleiro.pesquisar(id);
@@ -470,7 +471,7 @@ public class Gerenciador {
      *
      * @param id Código da HQ a ser removido
      * @return true se a remoção foi bem sucedida e false caso não foi
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerHQ(int id) throws PersonalCollectionsException {
         HQ h = hq.pesquisar(id);
@@ -491,7 +492,7 @@ public class Gerenciador {
      * Atualiza o item que esteja associado a uma série.
      *
      * @param o Item
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void atualizarItemAssociadoSerie(Item o) throws PersonalCollectionsException {
         /**
@@ -522,7 +523,7 @@ public class Gerenciador {
      *
      * @param id Código da Mídia a ser removida
      * @return true se a remoção foi bem sucedida e false caso não foi
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerMidia(int id) throws PersonalCollectionsException {
         Midia m = midia.pesquisar(id);
@@ -549,7 +550,7 @@ public class Gerenciador {
      *
      * @param id Código do Game a ser removido
      * @return true se a remoção foi bem sucedida e false caso não foi
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerGame(int id) throws PersonalCollectionsException {
         Game g = game.pesquisar(id);
@@ -576,7 +577,7 @@ public class Gerenciador {
      *
      * @param id Código do Tabuleiro a ser removido
      * @return true se a remoção foi bem sucedida e false caso não foi
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerTabuleiro(int id) throws PersonalCollectionsException {
         Tabuleiro t = tabuleiro.pesquisar(id);
@@ -595,11 +596,11 @@ public class Gerenciador {
     /**
      * Autentica o usuário Adminn no sistema
      *
-     * @param login
-     * @param password
+     * @param login Login do usuário
+     * @param password Password do usuário
      * @return O Usuário caso a autenticação seja bem sucedida ou null caso não
      * seja
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Usuario autenticar(String login, char[] password) throws PersonalCollectionsException {
         return usuario.autenticar(login, password);
@@ -627,7 +628,7 @@ public class Gerenciador {
      * Recpera lista de amigos.
      *
      * @return Lista de amigos
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Amigo> listarAmigos() throws PersonalCollectionsException {
         listaDeAmigos.clear();
@@ -640,7 +641,7 @@ public class Gerenciador {
      * Insere um novo amigo.
      *
      * @param a Amigo a ser inserido
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void inserirAmigo(Amigo a) throws PersonalCollectionsException {
         amigo.save(a);
@@ -650,7 +651,7 @@ public class Gerenciador {
      * Atualiza dados do Amigo.
      *
      * @param a Amigo a ser atualizado
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void atualizarAmigo(Amigo a) throws PersonalCollectionsException {
         amigo.atualizar(a);
@@ -664,7 +665,7 @@ public class Gerenciador {
      *
      * @param id Código do Amigo a ser removido
      * @return true se a remoção foi bem sucedida e false caso não foi
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerAmigo(int id) throws PersonalCollectionsException {
         Amigo a = amigo.pesquisar(id);
@@ -683,7 +684,7 @@ public class Gerenciador {
      *
      * @param id do objeto Amigo a ser pesquisado
      * @return O objeto caso encontrado ou null caso não seja
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Amigo pesquisarAmigo(int id) throws PersonalCollectionsException {
         return amigo.pesquisar(id);
@@ -693,7 +694,7 @@ public class Gerenciador {
      * Recupera lista de emprestimos.
      *
      * @return Lista de Emprestimos
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Emprestimo> listarEmprestimos() throws PersonalCollectionsException {
         listaDeEmprestimos.clear();
@@ -706,8 +707,8 @@ public class Gerenciador {
      * Recupera lista de emprestimos vencidos.
      *
      * @return Lista com os empréstimos vencidos
-     * @throws PersonalCollectionsException
-     * @throws ParseException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
+     * @throws ParseException se ocorrer uma exceção ao converter data
      */
     public List<Emprestimo> listarEmprestimosVencidos() throws PersonalCollectionsException, ParseException {
         List<Emprestimo> listaDeEmprestimosVencidos = new LinkedList<>();
@@ -731,7 +732,7 @@ public class Gerenciador {
      * Insere um novo empretismo.
      *
      * @param e O Emprestimo a ser inserido
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void inserirEmprestimo(Emprestimo e) throws PersonalCollectionsException {
         emprestimo.save(e);
@@ -742,7 +743,7 @@ public class Gerenciador {
      * Atualiza o empretismo.
      *
      * @param e O Emprestimo a ser atualizado
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void atualizarEmprestimo(Emprestimo e) throws PersonalCollectionsException {
         emprestimo.atualizar(e);
@@ -755,7 +756,7 @@ public class Gerenciador {
      *
      * @param id Id do empréstimo a ser procurado
      * @return O objeto emprestimo encontrado, ou null caso não encontre
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Emprestimo pesquisarEmprestimo(int id) throws PersonalCollectionsException {
         return emprestimo.pesquisar(id);
@@ -769,8 +770,8 @@ public class Gerenciador {
      *
      * @param e O objeto Empréstimo a ser removido
      * @return Se o empréstimo for removido com sucesso return true, se não
-     * return false
-     * @throws PersonalCollectionsException
+     * return false ou true
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerEmprestimo(Emprestimo e) throws PersonalCollectionsException {
         if (e != null) {
@@ -807,7 +808,7 @@ public class Gerenciador {
      * Remove todos os empréstimos relacionados ao amigo.
      *
      * @param idAmigo Id do item removido
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     private void removeAllEmprestimoAmigo(int idAmigo) throws PersonalCollectionsException {
         List<Emprestimo> lista = new ArrayList<>(emprestimo.listar());
@@ -826,7 +827,7 @@ public class Gerenciador {
      * empréstimos.
      *
      * @param e O objeto Emprestimo
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void finalizarEmprestimo(Emprestimo e) throws PersonalCollectionsException {
         if (e != null) {
@@ -841,8 +842,8 @@ public class Gerenciador {
     /**
      * Utilizado o insertionSort
      *
-     * @return
-     * @throws PersonalCollectionsException
+     * @return Lista de itens no hank de mais emprestados
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Item> rankingEmprestimo() throws PersonalCollectionsException {
         int i = 0;
@@ -868,8 +869,8 @@ public class Gerenciador {
     /**
      * Utilizado o insertionSort
      *
-     * @return
-     * @throws PersonalCollectionsException
+     * @return lista de item no hank com maior nota
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Item> rankingNota() throws PersonalCollectionsException {
         int i = 0;
@@ -954,8 +955,7 @@ public class Gerenciador {
     /**
      * Percorre a lista de emprestimos e seta o auto_increment com o maior id
      * (último) cadastrado.
-     *
-     * @throws PersonalCollectionsException
+     * 
      */
     public void setIdEmprestimo() {
         try {
@@ -976,14 +976,16 @@ public class Gerenciador {
     /**
      * Checa se tem item cadastrado
      *
-     * @return
+     * @return false ou true
      */
     public boolean temItem() {
         return listaDeItens.isEmpty();
     }
 
     /**
-     * Limpa lista de items
+     * Limpa lista de items.
+     * 
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void cleanItems() throws PersonalCollectionsException {
         listarItens().clear();
@@ -992,7 +994,8 @@ public class Gerenciador {
     /**
      * Retorna lista de séries cadastradas.
      *
-     * @return @throws PersonalCollectionsException
+     * @return Lista de series
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Serie> listarSeries() throws PersonalCollectionsException {
         listaDeSeries.clear();
@@ -1004,7 +1007,7 @@ public class Gerenciador {
      * Insere uma nova serie.
      *
      * @param s Serie a ser inserida
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void inserirSerie(Serie s) throws PersonalCollectionsException {
         serie.save(s);
@@ -1014,7 +1017,7 @@ public class Gerenciador {
      * Atualiza série.
      *
      * @param s Serie a ser atualizada
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void atualizarSerie(Serie s) throws PersonalCollectionsException {
         serie.atualizar(s);
@@ -1025,7 +1028,7 @@ public class Gerenciador {
      *
      * @param id Código da Série a ser removida
      * @return true se a remoção foi bem sucedida e false caso não foi
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerSerie(int id) throws PersonalCollectionsException {
         Serie s = serie.pesquisar(id);
@@ -1037,13 +1040,14 @@ public class Gerenciador {
         return false;
     }
 
+
     /**
      * Retorna lista com os itens que estão disponíveis para cadastro de novas
      * séries. Se um item estiver cadastrado em alguma série ele automaticamente
      * estará indisponivel par anovas séries.
      *
-     * @return <code>List<Item> </code> Lista com os itens disponíveis
-     * @throws PersonalCollectionsException
+     * @return <code>List</code> Lista com os itens disponíveis
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<Item> getItensDisponivelSerie() throws PersonalCollectionsException {
         List<Item> result = new LinkedList<>();
@@ -1069,7 +1073,7 @@ public class Gerenciador {
      *
      * @param id do objeto Série a ser pesquisado
      * @return O objeto caso encontrado ou null caso não seja encontrado
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public Serie pesquisarSerie(int id) throws PersonalCollectionsException {
         return serie.pesquisar(id);
@@ -1078,7 +1082,8 @@ public class Gerenciador {
     /**
      * Retorna lista de desejo cadastrada.
      *
-     * @return @throws PersonalCollectionsException
+     * @return Lista de Desejo
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public List<ListaDeDesejo> listarListaDeDesejo() throws PersonalCollectionsException {
         listaDeDesejos.clear();
@@ -1090,7 +1095,9 @@ public class Gerenciador {
      * Retorna lista de desejo com itens disponíveis para compra de acordo com a
      * data de lançamento.
      *
-     * @return @throws PersonalCollectionsException
+     * @return Lista de Desejo
+     * @throws PersonalCollectionsException se ocorrer uma exceção
+     * @throws ParseException se ocorrer uma exceção no converter datas
      */
     public List<ListaDeDesejo> listarListaDeDesejoDisponiveis() throws PersonalCollectionsException, ParseException {
         List<ListaDeDesejo> listaDesejoisponivel = new LinkedList<>();
@@ -1115,7 +1122,7 @@ public class Gerenciador {
      * Insere um novo item na lista de desejo.
      *
      * @param o ListaDeDesejo contendo o item a ser inserido
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void inserirItemListaDeDesejo(ListaDeDesejo o) throws PersonalCollectionsException {
         whishlist.save(o);
@@ -1125,7 +1132,7 @@ public class Gerenciador {
      * Atualiza item da lista de desejo.
      *
      * @param o ListaDeDesejo contendo o item a ser atualizado
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public void atualizarItemListaDeDesejo(ListaDeDesejo o) throws PersonalCollectionsException {
         whishlist.atualizar(o);
@@ -1133,11 +1140,11 @@ public class Gerenciador {
 
     /**
      * Remove o item da Lista de Desejo de acordo com o id do item.
-     *
-     * @param ListaDeDesejo Objeto contendo item a ser removido da lista de
+     * 
+     * @param o Objeto contendo item a ser removido da lista de
      * desejo
      * @return true se a remoção foi bem sucedida e false caso não foi
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public boolean removerItemListaDeDesejo(ListaDeDesejo o) throws PersonalCollectionsException {
         if (whishlist.remove(o)) {
@@ -1149,10 +1156,10 @@ public class Gerenciador {
     /**
      * Pesquisa por item na lista de desejo.
      *
-     * @param String Título do Item a ser pesquisado
+     * @param titulo Título do Item a ser pesquisado
      * @return ListaDeDesejo contendo Item caso encontrado ou null caso não seja
      * encontrado
-     * @throws PersonalCollectionsException
+     * @throws PersonalCollectionsException se ocorrer uma exceção
      */
     public ListaDeDesejo pesquisarItemListaDeDesejo(String titulo) throws PersonalCollectionsException {
         return whishlist.pesquisar(titulo);

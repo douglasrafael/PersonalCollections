@@ -15,7 +15,7 @@ public enum Estado {
     /**
      * Método construtor.
      *
-     * @param título
+     * @param título O título
      */
     Estado(String titulo) {
         this.titulo = titulo;

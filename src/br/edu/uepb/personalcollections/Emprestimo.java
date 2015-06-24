@@ -20,13 +20,13 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     private Amigo amigo;
 
     /**
-     * Método Construtor.
+     * Método Construtor sem o id. É utilizado o auto_increment
      *
-     * @param dataEmprestimo
-     * @param dataRetono
-     * @param finalizado
-     * @param amigo
-     * @param item
+     * @param dataEmprestimo A data em que o empréstimo foi realizado
+     * @param dataRetono A data que deverá ser finalizado
+     * @param finalizado Se o emprestimo estar finalizado (true) caso contrário (false)
+     * @param amigo O amigo que pegou o item emprestado
+     * @param item O item emprestado
      */
     public Emprestimo(String dataEmprestimo, String dataRetono, boolean finalizado, Amigo amigo, Item item) {
         this.id = ++auto_increment;
@@ -40,12 +40,12 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     /**
      * Construtor com id. Não utiliza o auto_increment
      *
-     * @param id
-     * @param dataEmprestimo
-     * @param dataRetono
-     * @param finalizado
-     * @param amigo
-     * @param item
+     * @param id O id do empréstimo
+     * @param dataEmprestimo A data em que o empréstimo foi realizado
+     * @param dataRetono A data que deverá ser finalizado
+     * @param finalizado Se o emprestimo estar finalizado (true) caso contrário (false)
+     * @param amigo O amigo que pegou o item emprestado
+     * @param item O item emprestado
      */
     public Emprestimo(int id, String dataEmprestimo, String dataRetono, boolean finalizado, Amigo amigo, Item item) {
         this.id = id;
@@ -77,7 +77,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     /**
      * Recupera o id
      *
-     * @return
+     * @return O id do empréstimo
      */
     public int getId() {
         return id;
@@ -86,7 +86,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     /**
      * Seta o id
      *
-     * @param id
+     * @param id O id
      */
     public void setId(int id) {
         this.id = id;
@@ -104,7 +104,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     /**
      * Seta a data em que o emprestimo foi realizado
      *
-     * @param dataEmprestimo
+     * @param dataEmprestimo A data emq ue foi realizado o empréstimo
      */
     public void setDataEmprestimo(String dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
@@ -122,7 +122,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     /**
      * Seta a data em que o item deverá ser devolvido
      *
-     * @param dataRetono
+     * @param dataRetono A data de retorno
      */
     public void setDataRetono(String dataRetono) {
         this.dataRetono = dataRetono;
@@ -140,7 +140,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     /**
      * Seta o item
      *
-     * @param item
+     * @param item O item emprestado
      */
     public void setItem(Item item) {
         this.item = item;
@@ -158,7 +158,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     /**
      * Seta o amigo
      *
-     * @param amigo
+     * @param amigo O amigo que realizou o emprestimo
      */
     public void setAmigo(Amigo amigo) {
         this.amigo = amigo;
@@ -177,7 +177,7 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
      * Seta se o estado do empréstimo como finalizado ou não. True para
      * finalizado e False para não.
      *
-     * @param finalizado
+     * @param finalizado false ou true
      */
     public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;

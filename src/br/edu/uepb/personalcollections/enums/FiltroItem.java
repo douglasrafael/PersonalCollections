@@ -15,6 +15,11 @@ public enum FiltroItem {
 
     private String titulo;
 
+    /**
+     * Método construtor
+     * 
+     * @param titulo O título
+     */
     FiltroItem(String titulo) {
         this.titulo = titulo;
     }
@@ -22,7 +27,7 @@ public enum FiltroItem {
     /**
      * Recupera o título do filtro.
      *
-     * @return
+     * @return Titulo
      */
     public String getTitulo() {
         return titulo;
