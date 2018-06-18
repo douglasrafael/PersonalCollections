@@ -1,11 +1,11 @@
 # Personal Collections
-###*Gerenciador de Coleções Pessoais*
+### *Gerenciador de Coleções Pessoais*
 
-######- Contexto
+###### - Contexto
 Nem sempre temos um gerenciador eficiente para controlar as nossas coleções dos mais variados itens, bem como saber 
 por onde anda e para quem emprestou determinado item, a ferramenta visa ter um melhor controle sobre esses itens.
 
-######- Descrição
+###### - Descrição
 O projeto consiste em ser um gerenciador de coleções pessoais, onde ele
 conterá várias funções como: gerenciamento de empréstimos de itens, relações dos
 itens cadastrados, quais estão faltando para completar a coleção, sistema de ranking,
